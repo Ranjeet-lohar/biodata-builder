@@ -17,7 +17,6 @@ const colorAdjust: React.CSSProperties = {
 
 const noBreak: React.CSSProperties = {
   breakInside: "avoid",
-  WebkitColumnBreakInside: "avoid",
   pageBreakInside: "avoid",
 };
 

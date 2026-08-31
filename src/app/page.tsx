@@ -111,11 +111,11 @@ export default function Home() {
     setDoc(profile.doc);
   }
 
-  function handleNew() {
-    setId(newId());
-    setName("New Biodata");
-    setDoc(emptyDocument());
-  }
+ function handleNew() {
+  setId(newId());
+  setName("New Biodata");
+  setDoc(emptyDocument());
+}
 
   if (!authChecked) {
     return <div className="min-h-screen bg-ambient" />;

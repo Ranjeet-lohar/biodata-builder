@@ -7215,7 +7215,6 @@ const colorAdjust = {
 };
 const noBreak = {
     breakInside: "avoid",
-    WebkitColumnBreakInside: "avoid",
     pageBreakInside: "avoid"
 };
 function CornerMark({ theme, position }) {
@@ -7239,7 +7238,7 @@ function CornerMark({ theme, position }) {
                 opacity: "0.55"
             }, void 0, false, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 33,
+                lineNumber: 32,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("circle", {
@@ -7250,13 +7249,13 @@ function CornerMark({ theme, position }) {
                 opacity: "0.55"
             }, void 0, false, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 34,
+                lineNumber: 33,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-        lineNumber: 32,
+        lineNumber: 31,
         columnNumber: 5
     }, this);
 }
@@ -7275,7 +7274,7 @@ function MeshBackground({ theme }) {
                 }
             }, void 0, false, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 42,
+                lineNumber: 41,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7291,7 +7290,7 @@ function MeshBackground({ theme }) {
                 }
             }, void 0, false, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 43,
+                lineNumber: 42,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7307,7 +7306,7 @@ function MeshBackground({ theme }) {
                 }
             }, void 0, false, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 44,
+                lineNumber: 43,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7323,7 +7322,7 @@ function MeshBackground({ theme }) {
                 }
             }, void 0, false, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 45,
+                lineNumber: 44,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7335,13 +7334,13 @@ function MeshBackground({ theme }) {
                 }
             }, void 0, false, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 46,
+                lineNumber: 45,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-        lineNumber: 41,
+        lineNumber: 40,
         columnNumber: 5
     }, this);
 }
@@ -7362,7 +7361,7 @@ function BadgeNumber({ n, theme }) {
                 strokeWidth: "1.25"
             }, void 0, false, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 54,
+                lineNumber: 53,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("circle", {
@@ -7373,7 +7372,7 @@ function BadgeNumber({ n, theme }) {
                 opacity: "0.08"
             }, void 0, false, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 55,
+                lineNumber: 54,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("text", {
@@ -7386,13 +7385,13 @@ function BadgeNumber({ n, theme }) {
                 children: String(n).padStart(2, "0")
             }, void 0, false, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 56,
+                lineNumber: 55,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-        lineNumber: 53,
+        lineNumber: 52,
         columnNumber: 5
     }, this);
 }
@@ -7411,12 +7410,12 @@ function WaveRule({ theme }) {
             opacity: "0.5"
         }, void 0, false, {
             fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-            lineNumber: 64,
+            lineNumber: 63,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-        lineNumber: 63,
+        lineNumber: 62,
         columnNumber: 5
     }, this);
 }
@@ -7503,7 +7502,7 @@ function BannerLayout({ doc, fonts, theme }) {
                 theme: theme
             }, void 0, false, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 162,
+                lineNumber: 161,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7515,7 +7514,7 @@ function BannerLayout({ doc, fonts, theme }) {
                 }
             }, void 0, false, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 164,
+                lineNumber: 163,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(CornerMark, {
@@ -7523,7 +7522,7 @@ function BannerLayout({ doc, fonts, theme }) {
                 position: "tl"
             }, void 0, false, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 165,
+                lineNumber: 164,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(CornerMark, {
@@ -7531,7 +7530,7 @@ function BannerLayout({ doc, fonts, theme }) {
                 position: "tr"
             }, void 0, false, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 166,
+                lineNumber: 165,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(CornerMark, {
@@ -7539,7 +7538,7 @@ function BannerLayout({ doc, fonts, theme }) {
                 position: "bl"
             }, void 0, false, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 167,
+                lineNumber: 166,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(CornerMark, {
@@ -7547,7 +7546,7 @@ function BannerLayout({ doc, fonts, theme }) {
                 position: "br"
             }, void 0, false, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 168,
+                lineNumber: 167,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7573,7 +7572,7 @@ function BannerLayout({ doc, fonts, theme }) {
                                         children: doc.invocation.text
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                        lineNumber: 181,
+                                        lineNumber: 180,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -7585,7 +7584,7 @@ function BannerLayout({ doc, fonts, theme }) {
                                         children: lang === "hi" && doc.fullNameHi || doc.fullName || L("Full Name", "पूरा नाम")
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                        lineNumber: 185,
+                                        lineNumber: 184,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -7597,13 +7596,13 @@ function BannerLayout({ doc, fonts, theme }) {
                                         children: L("Marriage Biodata", "विवाह हेतु बायोडाटा")
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                        lineNumber: 188,
+                                        lineNumber: 187,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                lineNumber: 179,
+                                lineNumber: 178,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7627,12 +7626,12 @@ function BannerLayout({ doc, fonts, theme }) {
                                                 strokeWidth: "1.5"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                                lineNumber: 196,
+                                                lineNumber: 195,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                            lineNumber: 195,
+                                            lineNumber: 194,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7651,7 +7650,7 @@ function BannerLayout({ doc, fonts, theme }) {
                                                 crossOrigin: "anonymous"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                                lineNumber: 204,
+                                                lineNumber: 203,
                                                 columnNumber: 19
                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "w-full h-full flex items-center justify-center text-xs",
@@ -7662,29 +7661,29 @@ function BannerLayout({ doc, fonts, theme }) {
                                                 children: L("Photo", "फोटो")
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                                lineNumber: 206,
+                                                lineNumber: 205,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                            lineNumber: 198,
+                                            lineNumber: 197,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                    lineNumber: 194,
+                                    lineNumber: 193,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                lineNumber: 193,
+                                lineNumber: 192,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                        lineNumber: 178,
+                        lineNumber: 177,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7702,7 +7701,7 @@ function BannerLayout({ doc, fonts, theme }) {
                                 children: lang === "hi" && aboutSection.fields[0]?.valueHi || aboutSection.fields[0]?.value || ""
                             }, void 0, false, {
                                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                lineNumber: 217,
+                                lineNumber: 216,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7719,7 +7718,7 @@ function BannerLayout({ doc, fonts, theme }) {
                                                         theme: theme
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                                        lineNumber: 227,
+                                                        lineNumber: 226,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -7731,20 +7730,20 @@ function BannerLayout({ doc, fonts, theme }) {
                                                         children: lang === "hi" ? section.titleHi || section.titleEn : section.titleEn
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                                        lineNumber: 228,
+                                                        lineNumber: 227,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                                lineNumber: 226,
+                                                lineNumber: 225,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(WaveRule, {
                                                 theme: theme
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                                lineNumber: 232,
+                                                lineNumber: 231,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -7761,31 +7760,31 @@ function BannerLayout({ doc, fonts, theme }) {
                                                                 children: lang === "hi" ? f.labelHi || f.labelEn : f.labelEn
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                                                lineNumber: 236,
+                                                                lineNumber: 235,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 children: f.value?.trim() ? f.value : "—"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                                                lineNumber: 239,
+                                                                lineNumber: 238,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, f.id, true, {
                                                         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                                        lineNumber: 235,
+                                                        lineNumber: 234,
                                                         columnNumber: 23
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                                lineNumber: 233,
+                                                lineNumber: 232,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, section.id, true, {
                                         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                        lineNumber: 225,
+                                        lineNumber: 224,
                                         columnNumber: 17
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "avoid-break",
@@ -7799,7 +7798,7 @@ function BannerLayout({ doc, fonts, theme }) {
                                                         theme: theme
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                                        lineNumber: 247,
+                                                        lineNumber: 246,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -7811,20 +7810,20 @@ function BannerLayout({ doc, fonts, theme }) {
                                                         children: lang === "hi" ? section.titleHi || section.titleEn : section.titleEn
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                                        lineNumber: 248,
+                                                        lineNumber: 247,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                                lineNumber: 246,
+                                                lineNumber: 245,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(WaveRule, {
                                                 theme: theme
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                                lineNumber: 252,
+                                                lineNumber: 251,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -7832,36 +7831,36 @@ function BannerLayout({ doc, fonts, theme }) {
                                                 children: lang === "hi" && section.fields[0]?.valueHi || section.fields[0]?.value || "—"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                                lineNumber: 253,
+                                                lineNumber: 252,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, section.id, true, {
                                         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                        lineNumber: 245,
+                                        lineNumber: 244,
                                         columnNumber: 17
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                                lineNumber: 222,
+                                lineNumber: 221,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                        lineNumber: 215,
+                        lineNumber: 214,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-                lineNumber: 170,
+                lineNumber: 169,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/templates/layouts/CenteredLayout.tsx",
-        lineNumber: 147,
+        lineNumber: 146,
         columnNumber: 5
     }, this);
 }
@@ -9331,8 +9330,19 @@ __turbopack_context__.s([
     "extraThemes",
     ()=>extraThemes
 ]);
+function createTheme(theme) {
+    return {
+        ...theme,
+        // Map the existing theme colors into the newer Theme API.
+        accent: theme.accent ?? theme.secondary,
+        accentSoft: theme.accentSoft ?? `${theme.secondary}22`,
+        // Safe defaults for the newer theme properties.
+        style: theme.style ?? "classic",
+        radius: theme.radius ?? "md"
+    };
+}
 const extraThemes = [
-    {
+    createTheme({
         id: "emerald-garden",
         name: "Emerald Garden",
         description: "Opulent emerald and gold with artistic paisley corners",
@@ -9350,9 +9360,11 @@ const extraThemes = [
         headingFont: "'Playfair Display', 'Noto Serif Devanagari', serif",
         bodyFont: "'Cormorant Garamond', 'Noto Serif Devanagari', serif",
         photoShape: "rect",
-        corner: "paisley"
-    },
-    {
+        corner: "paisley",
+        shadow: "none",
+        background: "floral"
+    }),
+    createTheme({
         id: "midnight-gold",
         name: "Midnight Gold",
         description: "A polished charcoal band with rich golden accents",
@@ -9370,9 +9382,11 @@ const extraThemes = [
         headingFont: "'Cinzel', 'Noto Serif Devanagari', serif",
         bodyFont: "'EB Garamond', 'Noto Serif Devanagari', serif",
         photoShape: "rounded",
-        corner: "none"
-    },
-    {
+        corner: "none",
+        shadow: "none",
+        background: "floral"
+    }),
+    createTheme({
         id: "sunset-peach",
         name: "Sunset Peach",
         description: "Warm peach and coral tones with a welcoming center focus",
@@ -9390,9 +9404,11 @@ const extraThemes = [
         headingFont: "'Playfair Display', 'Noto Serif Devanagari', serif",
         bodyFont: "'Cormorant Garamond', 'Noto Serif Devanagari', serif",
         photoShape: "circle",
-        corner: "dots"
-    },
-    {
+        corner: "dots",
+        shadow: "none",
+        background: "floral"
+    }),
+    createTheme({
         id: "ivory-lace",
         name: "Ivory Lace",
         description: "Soft ivory and silver with delicate diamond detailing",
@@ -9410,9 +9426,11 @@ const extraThemes = [
         headingFont: "'Source Serif 4', 'Noto Serif Devanagari', serif",
         bodyFont: "'Lora', 'Noto Serif Devanagari', serif",
         photoShape: "rounded",
-        corner: "diamonds"
-    },
-    {
+        corner: "diamonds",
+        shadow: "none",
+        background: "floral"
+    }),
+    createTheme({
         id: "teal-bloom",
         name: "Teal Bloom",
         description: "Fresh teal styling with a confident modern sidebar",
@@ -9430,9 +9448,11 @@ const extraThemes = [
         headingFont: "'Poppins', 'Noto Sans Devanagari', sans-serif",
         bodyFont: "'Inter', 'Noto Sans Devanagari', sans-serif",
         photoShape: "rect",
-        corner: "none"
-    },
-    {
+        corner: "none",
+        shadow: "none",
+        background: "floral"
+    }),
+    createTheme({
         id: "crimson-regal",
         name: "Crimson Regal",
         description: "Bold crimson and gold with an ornate festive frame",
@@ -9450,9 +9470,11 @@ const extraThemes = [
         headingFont: "'Playfair Display', 'Noto Serif Devanagari', serif",
         bodyFont: "'Cormorant Garamond', 'Noto Serif Devanagari', serif",
         photoShape: "rect",
-        corner: "paisley"
-    },
-    {
+        corner: "paisley",
+        shadow: "none",
+        background: "floral"
+    }),
+    createTheme({
         id: "sage-simplicity",
         name: "Sage Simplicity",
         description: "Muted sage tones with an understated modern sidebar",
@@ -9470,9 +9492,11 @@ const extraThemes = [
         headingFont: "'Poppins', 'Noto Sans Devanagari', sans-serif",
         bodyFont: "'Inter', 'Noto Sans Devanagari', sans-serif",
         photoShape: "rounded",
-        corner: "none"
-    },
-    {
+        corner: "none",
+        shadow: "none",
+        background: "floral"
+    }),
+    createTheme({
         id: "lavender-dream",
         name: "Lavender Dream",
         description: "Soft lavender romance in a balanced centered layout",
@@ -9490,9 +9514,11 @@ const extraThemes = [
         headingFont: "'Playfair Display', 'Noto Serif Devanagari', serif",
         bodyFont: "'Cormorant Garamond', 'Noto Serif Devanagari', serif",
         photoShape: "circle",
-        corner: "dots"
-    },
-    {
+        corner: "dots",
+        shadow: "none",
+        background: "floral"
+    }),
+    createTheme({
         id: "charcoal-professional",
         name: "Charcoal Professional",
         description: "Steel blue and charcoal with a clean professional finish",
@@ -9510,9 +9536,11 @@ const extraThemes = [
         headingFont: "'Source Serif 4', 'Noto Serif Devanagari', serif",
         bodyFont: "'Inter', 'Noto Sans Devanagari', sans-serif",
         photoShape: "rect",
-        corner: "none"
-    },
-    {
+        corner: "none",
+        shadow: "none",
+        background: "floral"
+    }),
+    createTheme({
         id: "marigold-festive",
         name: "Marigold Festive",
         description: "Joyful marigold orange tones in a bright split layout",
@@ -9530,9 +9558,11 @@ const extraThemes = [
         headingFont: "'Playfair Display', 'Noto Serif Devanagari', serif",
         bodyFont: "'Cormorant Garamond', 'Noto Serif Devanagari', serif",
         photoShape: "rounded",
-        corner: "diamonds"
-    },
-    {
+        corner: "diamonds",
+        shadow: "none",
+        background: "floral"
+    }),
+    createTheme({
         id: "rosewood-heritage",
         name: "Rosewood Heritage",
         description: "Warm rosewood, antique gold, and a refined heritage frame",
@@ -9550,9 +9580,11 @@ const extraThemes = [
         headingFont: "'Playfair Display', 'Noto Serif Devanagari', serif",
         bodyFont: "'Lora', 'Noto Serif Devanagari', serif",
         photoShape: "rect",
-        corner: "diamonds"
-    },
-    {
+        corner: "diamonds",
+        shadow: "none",
+        background: "floral"
+    }),
+    createTheme({
         id: "ocean-pearl",
         name: "Ocean Pearl",
         description: "Airy blue-green tones with a calm circular profile layout",
@@ -9570,9 +9602,11 @@ const extraThemes = [
         headingFont: "'Source Serif 4', 'Noto Serif Devanagari', serif",
         bodyFont: "'Inter', 'Noto Sans Devanagari', sans-serif",
         photoShape: "circle",
-        corner: "dots"
-    },
-    {
+        corner: "dots",
+        shadow: "none",
+        background: "floral"
+    }),
+    createTheme({
         id: "terracotta-mosaic",
         name: "Terracotta Mosaic",
         description: "Earthy terracotta and saffron accents in a lively split layout",
@@ -9590,9 +9624,11 @@ const extraThemes = [
         headingFont: "'Cormorant Garamond', 'Noto Serif Devanagari', serif",
         bodyFont: "'Inter', 'Noto Sans Devanagari', sans-serif",
         photoShape: "rounded",
-        corner: "diamonds"
-    },
-    {
+        corner: "diamonds",
+        shadow: "none",
+        background: "floral"
+    }),
+    createTheme({
         id: "pine-ink",
         name: "Pine Ink",
         description: "Deep pine, parchment, and soft copper in a modern sidebar",
@@ -9610,9 +9646,11 @@ const extraThemes = [
         headingFont: "'Cinzel', 'Noto Serif Devanagari', serif",
         bodyFont: "'Inter', 'Noto Sans Devanagari', sans-serif",
         photoShape: "rounded",
-        corner: "none"
-    },
-    {
+        corner: "none",
+        shadow: "none",
+        background: "floral"
+    }),
+    createTheme({
         id: "sapphire-saffron",
         name: "Sapphire Saffron",
         description: "Confident sapphire with saffron highlights and a polished band",
@@ -9630,8 +9668,10 @@ const extraThemes = [
         headingFont: "'Playfair Display', 'Noto Serif Devanagari', serif",
         bodyFont: "'Inter', 'Noto Sans Devanagari', sans-serif",
         photoShape: "rect",
-        corner: "none"
-    }
+        corner: "none",
+        shadow: "none",
+        background: "floral"
+    })
 ];
 }),
 "[project]/src/lib/defaultSections.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
