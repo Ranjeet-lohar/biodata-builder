@@ -33,3 +33,19 @@
 {"timestamp":"00:37:11.474","source":"Browser","level":"DEBUG","message":"#3 1038ms Starting renderer for element at -99999,0 with size 794x1123"}
 {"timestamp":"00:37:11.474","source":"Browser","level":"DEBUG","message":"#3 1042ms Canvas renderer initialized (794x1123) with scale 3"}
 {"timestamp":"00:37:11.474","source":"Browser","level":"DEBUG","message":"#3 1125ms Finished rendering"}
+{"timestamp":"01:19:50.366","source":"Server","level":"LOG","message":"✓ Compiled in 1457ms"}
+{"timestamp":"01:20:28.695","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"01:23:51.807","source":"Server","level":"LOG","message":"✓ Compiled in 1726ms"}
+{"timestamp":"01:27:02.034","source":"Server","level":"LOG","message":"✓ Compiled in 6.9s"}
+{"timestamp":"01:30:59.652","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"01:32:03.573","source":"Server","level":"LOG","message":"○ Compiling /about ..."}
+{"timestamp":"01:34:54.475","source":"Server","level":"LOG","message":"✓ Compiled in 700ms"}
+{"timestamp":"01:35:00.551","source":"Server","level":"LOG","message":"✓ Compiled in 307ms"}
+{"timestamp":"01:35:55.897","source":"Server","level":"LOG","message":"✓ Compiled in 1408ms"}
+{"timestamp":"01:38:49.713","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"01:40:39.974","source":"Server","level":"LOG","message":"✓ Compiled in 357ms"}
+{"timestamp":"01:42:21.666","source":"Server","level":"LOG","message":"✓ Compiled in 854ms"}
+{"timestamp":"01:42:29.652","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"01:44:39.303","source":"Server","level":"LOG","message":"✓ Compiled in 547ms"}
+{"timestamp":"01:44:45.202","source":"Server","level":"LOG","message":"✓ Compiled in 440ms"}
+{"timestamp":"01:44:52.828","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
