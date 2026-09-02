@@ -114,9 +114,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-ambient flex-col flex justify-between">
-      {/* HEADER — h-14 on mobile / h-16 on sm+. Everything that sticks below it
-          must offset by the same amount or it will scroll underneath (z-40). */}
-      <header className="sticky top-0 z-40 border-b border-white/50 bg-white/75 backdrop-blur-xl">
+      <header className="sticky hidden top-0 z-40 border-b border-white/50 bg-white/75 backdrop-blur-xl">
         <div className="mx-auto flex h-14 max-w-[1500px] items-center justify-between px-3 sm:h-16 sm:px-6">
           <Link href="/" className="shrink-0">
             <img
@@ -125,11 +123,6 @@ export default function Home() {
               className="h-8 w-auto object-contain xs:h-9 sm:h-12 lg:h-14"
             />
           </Link>
-
-          <nav className="hidden md:flex items-center gap-1 text-sm font-medium text-stone-700">
-            {/* links */}
-          </nav>
-
           <div className="flex items-center gap-2">
             <Link
               href="/login"
@@ -180,17 +173,15 @@ export default function Home() {
       </header>
 
       <main className="max-w-[1500px] mx-auto px-3 sm:px-6 py-4 sm:py-6 overflow-x-hidden relative">
-        {/* Toolbar — sticky offset now matches header height (top-14 / sm:top-16)
-            instead of top-0, so it settles just under the header instead of
-            disappearing behind it while scrolling. */}
         <div className="sticky top-0 z-20 mb-4 sm:mb-5">
           <div className="flex flex-col gap-3 rounded-2xl border border-white/60 bg-white/60 p-3 shadow-lg shadow-stone-900/5 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:gap-4">
             <div className="flex items-center gap-2 flex-wrap min-w-0">
               <LanguageToggle value={doc.language} onChange={(v) => patchDoc({ language: v })} />
               <FontPackSelector value={doc.fontPackId} onChange={(v) => patchDoc({ fontPackId: v })} />
+              {/* was lg:inline-flex — now available as soon as the split layout appears at md */}
               <button
                 onClick={() => setEditorHidden((h) => !h)}
-                className="icon-btn border border-white/60 bg-white/50 backdrop-blur hidden lg:inline-flex shadow-sm"
+                className="icon-btn border border-white/60 bg-white/50 backdrop-blur hidden md:inline-flex shadow-sm"
                 title={editorHidden ? "Show editor panel" : "Hide editor panel"}
                 aria-label={editorHidden ? "Show editor panel" : "Hide editor panel"}
               >
@@ -199,8 +190,6 @@ export default function Home() {
               <ExportBar targetRef={exportRef} filename={name.replace(/\s+/g, "_") || "biodata"} />
             </div>
 
-            {/* Wrap so ProfilesBar drops to its own row on very narrow screens
-                instead of squeezing/overflowing the toolbar */}
             <div className="w-full min-w-0 sm:w-auto">
               <ProfilesBar
                 currentId={id}
@@ -214,60 +203,58 @@ export default function Home() {
         </div>
 
         <div className="flex gap-3 sm:gap-4">
-          {/* Mobile tab switcher — larger tap targets, safe-area aware so it
-              clears the iOS home indicator instead of sitting flush on it */}
+          {/* phone-only floating tab switcher — hidden once the md split kicks in */}
           <div
-            className="flex lg:hidden fixed left-1/2 -translate-x-1/2 z-30 gap-1 rounded-full border border-white/60 bg-white/85 backdrop-blur-xl p-1 shadow-lg shadow-stone-900/10"
+            className="flex md:hidden fixed left-1/2 -translate-x-1/2 z-30 gap-1 rounded-full border border-white/60 bg-white/85 backdrop-blur-xl p-1 shadow-lg shadow-stone-900/10"
             style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 1rem)" }}
           >
             <button
               type="button"
               onClick={() => { setMobileTab("edit"); setEditorHidden(false); }}
-              className={`min-w-[84px] px-4 py-2.5 rounded-full text-sm font-medium transition ${
-                mobileTab === "edit" && !editorHidden ? "bg-stone-900 text-white" : "text-stone-600"
-              }`}
+              className={`min-w-[84px] px-4 py-2.5 rounded-full text-sm font-medium transition ${mobileTab === "edit" && !editorHidden ? "bg-stone-900 text-white" : "text-stone-600"
+                }`}
             >
               Edit
             </button>
             <button
               type="button"
               onClick={() => { setMobileTab("preview"); setEditorHidden(true); }}
-              className={`min-w-[84px] px-4 py-2.5 rounded-full text-sm font-medium transition ${
-                mobileTab === "preview" || editorHidden ? "bg-stone-900 text-white" : "text-stone-600"
-              }`}
+              className={`min-w-[84px] px-4 py-2.5 rounded-full text-sm font-medium transition ${mobileTab === "preview" || editorHidden ? "bg-stone-900 text-white" : "text-stone-600"
+                }`}
             >
               Preview
             </button>
           </div>
 
-          <div className="flex-1 min-w-0 pb-24 lg:pb-0">
+          {/* pb-24 only matters on phones where the floating bar overlaps content */}
+          <div className="flex-1 min-w-0 pb-24 md:pb-0">
             <div className="mb-4 sm:mb-6">
               <button
                 onClick={() => setShowTemplates((s) => !s)}
-                className="lg:hidden w-full flex items-center justify-between text-sm font-semibold text-stone-800 mb-2 px-1"
+                className="md:hidden w-full flex items-center justify-between text-sm font-semibold text-stone-800 mb-2 px-1"
               >
                 <span className="flex items-center gap-1.5">
                   <LayoutTemplate className="w-4 h-4" /> Choose a design ({templates.length})
                 </span>
                 <span className="text-stone-400 text-xs">{showTemplates ? "Hide" : "Show"}</span>
               </button>
-              <p className="hidden lg:block text-sm font-semibold text-stone-800 mb-2">
+              <p className="hidden md:block text-sm font-semibold text-stone-800 mb-2">
                 Choose a design ({templates.length} templates)
               </p>
-              <div className={`${showTemplates ? "block" : "hidden"} lg:block rounded-[10px] p-2 sm:p-[10px] bg-gray-100 border border-white/70 shadow-sm overflow-x-auto`}>
+              <div className={`${showTemplates ? "block" : "hidden"} md:block w-[335px] sm:w-full rounded-[10px] p-2 sm:p-[10px] bg-white/70 border border-white/70 shadow-sm overflow-x-auto`}>
                 <TemplateSelector value={templateId} onChange={setTemplateId} />
               </div>
             </div>
 
             <div
-              className={`grid gap-4 items-start transition-[grid-template-columns] duration-200 ${
-                editorHidden ? "lg:grid-cols-[0px_minmax(0,1fr)]" : "lg:grid-cols-[minmax(280px,38rem)_minmax(0,1fr)]"
-              }`}
+              className={`grid gap-4 items-start transition-[grid-template-columns] duration-200 grid-cols-1 ${editorHidden
+                  ? "md:grid-cols-[0px_minmax(0,1fr)] lg:grid-cols-[0px_minmax(0,1fr)]"
+                  : "md:grid-cols-[minmax(260px,32rem)_minmax(0,1fr)] lg:grid-cols-[minmax(280px,38rem)_minmax(0,1fr)]"
+                }`}
             >
               <div
-                className={`${mobileTab === "preview" ? "hidden" : "block"} ${
-                  editorHidden ? "lg:hidden" : "lg:block"
-                } min-w-0 lg:sticky lg:top-[132px] lg:max-h-[calc(100vh-152px)] lg:overflow-y-auto lg:pr-1`}
+                className={`${mobileTab === "preview" ? "hidden" : "block"} ${editorHidden ? "md:hidden" : "md:block"
+                  } min-w-0 md:sticky md:top-[132px] md:max-h-[calc(100vh-152px)] md:overflow-y-auto md:pr-1`}
               >
                 <div className="glass-panel rounded-2xl p-3 sm:p-4 space-y-4">
                   <HeaderCard doc={doc} onChange={patchDoc} />
@@ -281,21 +268,19 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className={`${mobileTab === "edit" ? "hidden" : "block"} lg:block lg:sticky lg:top-[132px] min-w-0`}>
+              <div className={`${mobileTab === "edit" ? "hidden" : "block"} md:block md:sticky md:top-[132px] min-w-0`}>
                 {editorHidden && (
                   <button
                     onClick={() => setEditorHidden(false)}
-                    className="hidden lg:inline-flex btn-outline mb-3"
+                    className="hidden md:inline-flex btn-outline mb-3"
                   >
                     <PanelLeftOpen className="w-3.5 h-3.5" /> Show editor
                   </button>
                 )}
 
-                {/* On phones the A4 preview is scaled down and centered so the
-                    full page is visible without horizontal scrolling */}
                 <div className="glass-well rounded-2xl overflow-x-auto">
                   <div
-                    className="mx-auto my-3 sm:m-4 shadow-2xl shadow-stone-900/20 rounded-sm w-full origin-top"
+                    className="mx-auto sm:my-3 sm:m-4 shadow-2xl shadow-stone-900/20 sm:rounded-sm w-full origin-top"
                     style={{ maxWidth: 794 }}
                   >
                     <PreviewScaler zoom={zoom}>
@@ -309,15 +294,14 @@ export default function Home() {
         </div>
       </main>
 
-      {/* Hidden full-resolution copy used purely for PDF/PNG export */}
       <div className="fixed top-0 left-[-99999px] pointer-events-none pdf html print-area" aria-hidden="true">
         <Template doc={doc} fonts={fonts} ref={exportRef} />
       </div>
 
-      <footer className="mt-12 w-full border-t border-stone-200 bg-[#18181b] text-stone-200">
+      <footer className="footer_bg mt-12 w-full border-t border-stone-200 bg-[#18181b] text-stone-200">
         <div className="mx-auto grid max-w-[1500px] gap-8 px-3 py-10 sm:px-6 sm:py-12 lg:grid-cols-[1.3fr_0.8fr_0.9fr] lg:px-8">
           <div>
-            <img src="/logo.png" alt="Biodata Builder" width={180} height={50} className="h-9 w-auto sm:h-10" />
+            <img src="/logo.png" alt="Biodata Builder" width={120} height={50}  />
             <p className="mt-4 max-w-md text-sm leading-7 text-stone-300">
               Create elegant marriage biodatas with beautiful templates, personal details,
               multilingual support, and print-ready exports in minutes.
@@ -347,7 +331,7 @@ export default function Home() {
               </a>
               <div className="flex items-center gap-2 text-stone-400">
                 <MessageCircle className="h-4 w-4 shrink-0 text-[#1e98d7]" />
-                Organiser: Mamta Sarma
+                Organiser: Mamta Sharma
               </div>
             </div>
           </div>
