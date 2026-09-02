@@ -91,3 +91,65 @@
 {"timestamp":"02:30:15.860","source":"Server","level":"LOG","message":"✓ Compiled in 171ms"}
 {"timestamp":"02:54:47.138","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
 {"timestamp":"03:22:19.964","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"04:25:12.004","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"04:36:10.977","source":"Server","level":"LOG","message":"✓ Compiled in 770ms"}
+{"timestamp":"04:39:11.818","source":"Browser","level":"DEBUG","message":"#1 0ms Starting document clone with size 794x1123 scrolled to 0,0"}
+{"timestamp":"04:39:12.686","source":"Browser","level":"DEBUG","message":"#1 909ms Document cloned, element located at -99999,0 with size 793.6875x1122.515625 using computed rendering"}
+{"timestamp":"04:39:12.686","source":"Browser","level":"DEBUG","message":"#1 911ms Starting DOM parsing"}
+{"timestamp":"04:39:12.686","source":"Browser","level":"DEBUG","message":"#1 953ms Added image data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCALHAhUDAREAAhEBA"}
+{"timestamp":"04:39:12.686","source":"Browser","level":"DEBUG","message":"#1 1086ms Starting renderer for element at -99999,0 with size 794x1123"}
+{"timestamp":"04:39:12.686","source":"Browser","level":"DEBUG","message":"#1 1087ms Canvas renderer initialized (794x1123) with scale 3"}
+{"timestamp":"04:39:12.686","source":"Browser","level":"DEBUG","message":"#1 1149ms Finished rendering"}
+{"timestamp":"04:45:01.921","source":"Server","level":"LOG","message":"✓ Compiled in 387ms"}
+{"timestamp":"04:52:13.431","source":"Server","level":"LOG","message":"✓ Compiled in 248ms"}
+{"timestamp":"04:52:35.719","source":"Server","level":"LOG","message":"✓ Compiled in 198ms"}
+{"timestamp":"04:52:47.349","source":"Server","level":"LOG","message":"✓ Compiled in 238ms"}
+{"timestamp":"04:52:58.945","source":"Server","level":"LOG","message":"✓ Compiled in 254ms"}
+{"timestamp":"04:53:08.717","source":"Server","level":"LOG","message":"✓ Compiled in 435ms"}
+{"timestamp":"04:53:16.714","source":"Server","level":"LOG","message":"✓ Compiled in 493ms"}
+{"timestamp":"04:53:24.566","source":"Server","level":"LOG","message":"✓ Compiled in 532ms"}
+{"timestamp":"04:53:38.438","source":"Server","level":"LOG","message":"✓ Compiled in 180ms"}
+{"timestamp":"04:53:52.962","source":"Server","level":"LOG","message":"✓ Compiled in 265ms"}
+{"timestamp":"04:53:54.482","source":"Server","level":"LOG","message":"✓ Compiled in 591ms"}
+{"timestamp":"04:54:07.392","source":"Server","level":"LOG","message":"✓ Compiled in 255ms"}
+{"timestamp":"04:54:54.293","source":"Server","level":"LOG","message":"✓ Compiled in 432ms"}
+{"timestamp":"04:56:15.588","source":"Server","level":"LOG","message":"✓ Compiled in 209ms"}
+{"timestamp":"04:58:01.029","source":"Server","level":"LOG","message":"✓ Compiled in 216ms"}
+{"timestamp":"04:58:17.217","source":"Server","level":"LOG","message":"✓ Compiled in 206ms"}
+{"timestamp":"04:58:37.688","source":"Server","level":"LOG","message":"✓ Compiled in 258ms"}
+{"timestamp":"05:00:33.975","source":"Server","level":"LOG","message":"✓ Compiled in 181ms"}
+{"timestamp":"05:00:44.283","source":"Server","level":"LOG","message":"✓ Compiled in 206ms"}
+{"timestamp":"05:01:09.702","source":"Server","level":"LOG","message":"✓ Compiled in 149ms"}
+{"timestamp":"05:02:14.967","source":"Server","level":"LOG","message":"✓ Compiled in 480ms"}
+{"timestamp":"05:04:26.426","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"05:06:03.930","source":"Server","level":"LOG","message":"✓ Compiled in 274ms"}
+{"timestamp":"05:06:15.846","source":"Server","level":"LOG","message":"✓ Compiled in 182ms"}
+{"timestamp":"05:06:22.943","source":"Server","level":"LOG","message":"✓ Compiled in 191ms"}
+{"timestamp":"05:08:28.206","source":"Server","level":"LOG","message":"✓ Compiled in 266ms"}
+{"timestamp":"05:08:50.870","source":"Server","level":"LOG","message":"✓ Compiled in 246ms"}
+{"timestamp":"05:08:56.692","source":"Server","level":"LOG","message":"✓ Compiled in 231ms"}
+{"timestamp":"05:09:14.000","source":"Server","level":"LOG","message":"✓ Compiled in 376ms"}
+{"timestamp":"05:12:41.920","source":"Server","level":"LOG","message":"✓ Compiled in 235ms"}
+{"timestamp":"05:13:08.966","source":"Server","level":"LOG","message":"✓ Compiled in 173ms"}
+{"timestamp":"05:15:14.781","source":"Server","level":"LOG","message":"✓ Compiled in 178ms"}
+{"timestamp":"05:17:06.986","source":"Server","level":"LOG","message":"✓ Compiled in 348ms"}
+{"timestamp":"05:18:11.879","source":"Server","level":"LOG","message":"✓ Compiled in 221ms"}
+{"timestamp":"05:21:23.239","source":"Server","level":"LOG","message":"✓ Compiled in 180ms"}
+{"timestamp":"05:21:24.682","source":"Server","level":"LOG","message":"✓ Compiled in 597ms"}
+{"timestamp":"05:39:48.937","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"05:40:58.730","source":"Server","level":"LOG","message":"✓ Compiled in 361ms"}
+{"timestamp":"05:41:01.265","source":"Browser","level":"ERROR","message":"Uncaught ReferenceError: Camera is not defined\n    at HeaderCard (src/components/HeaderCard.tsx:85:8)\n    at Home (src/app/page.tsx:260:19)\n  \u001b[90m83 |\u001b[0m   <div className=\u001b[32m\"mb-4 flex items-center gap-2.5\"\u001b[0m>\n  \u001b[90m84 |\u001b[0m     <div className=\u001b[32m\"flex h-6 w-6 items-center justify-center rounded-full bg-rose-50 ring-1 ring-rose-200/70\"\u001b[0m>\n\u001b[31m\u001b[1m>\u001b[0m \u001b[90m85 |\u001b[0m       <\u001b[33mCamera\u001b[0m className=\u001b[32m\"h-3.5 w-3.5 text-rose-500\"\u001b[0m strokeWidth={\u001b[35m2.5\u001b[0m} />\n  \u001b[90m   |\u001b[0m        \u001b[31m\u001b[1m^\u001b[0m\n  \u001b[90m86 |\u001b[0m     </div>\n  \u001b[90m87 |\u001b[0m     <p className=\u001b[32m\"text-xs font-bold uppercase tracking-[0.14em] text-stone-500\"\u001b[0m>\n  \u001b[90m88 |\u001b[0m       \u001b[33mProfile\u001b[0m \u001b[33mPhoto\u001b[0m"}
+{"timestamp":"05:41:01.276","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31mUncaught ReferenceError: Camera is not defined\\u001b[39m\\n\\u001b[31m    at HeaderCard (src/components/HeaderCard.tsx:85:8)\\n    at Home (src/app/page.tsx:260:19)\\u001b[39m\\n  \\u001b[90m83 |\\u001b[0m   <div className=\\u001b[32m\\\"mb-4 flex items-center gap-2.5\\\"\\u001b[0m>\\n  \\u001b[90m84 |\\u001b[0m     <div className=\\u001b[32m\\\"flex h-6 w-6 items-center justify-center rounded-full bg-rose-50 ring-1 ring-rose-200/70\\\"\\u001b[0m>\\n\\u001b[31m\\u001b[1m>\\u001b[0m \\u001b[90m85 |\\u001b[0m       <\\u001b[33mCamera\\u001b[0m className=\\u001b[32m\\\"h-3.5 w-3.5 text-rose-500\\\"\\u001b[0m strokeWidth={\\u001b[35m2.5\\u001b[0m} />\\n  \\u001b[90m   |\\u001b[0m        \\u001b[31m\\u001b[1m^\\u001b[0m\\n  \\u001b[90m86 |\\u001b[0m     </div>\\n  \\u001b[90m87 |\\u001b[0m     <p className=\\u001b[32m\\\"text-xs font-bold uppercase tracking-[0.14em] text-stone-500\\\"\\u001b[0m>\\n  \\u001b[90m88 |\\u001b[0m       \\u001b[33mProfile\\u001b[0m \\u001b[33mPhoto\\u001b[0m\""}
+{"timestamp":"05:41:27.520","source":"Server","level":"WARN","message":"⚠ Fast Refresh had to perform a full reload due to a runtime error."}
+{"timestamp":"05:41:27.595","source":"Server","level":"LOG","message":"✓ Compiled in 2s"}
+{"timestamp":"05:41:28.787","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"05:41:54.810","source":"Server","level":"LOG","message":"✓ Compiled in 216ms"}
+{"timestamp":"05:42:02.797","source":"Server","level":"LOG","message":"✓ Compiled in 230ms"}
+{"timestamp":"05:42:09.463","source":"Server","level":"LOG","message":"✓ Compiled in 261ms"}
+{"timestamp":"05:43:26.018","source":"Server","level":"LOG","message":"✓ Compiled in 663ms"}
+{"timestamp":"05:44:01.294","source":"Server","level":"LOG","message":"✓ Compiled in 265ms"}
+{"timestamp":"05:44:20.990","source":"Server","level":"LOG","message":"✓ Compiled in 185ms"}
+{"timestamp":"05:44:35.045","source":"Server","level":"LOG","message":"✓ Compiled in 212ms"}
+{"timestamp":"05:44:52.804","source":"Server","level":"LOG","message":"✓ Compiled in 705ms"}
+{"timestamp":"05:45:01.347","source":"Server","level":"LOG","message":"✓ Compiled in 167ms"}
+{"timestamp":"05:46:18.838","source":"Server","level":"LOG","message":"✓ Compiled in 158ms"}

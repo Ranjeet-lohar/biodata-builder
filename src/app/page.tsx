@@ -114,7 +114,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-ambient flex-col flex justify-between">
-      <header className="sticky hidden top-0 z-40 border-b border-white/50 bg-white/75 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-white/50 bg-white/75 backdrop-blur-xl">
         <div className="mx-auto flex h-14 max-w-[1500px] items-center justify-between px-3 sm:h-16 sm:px-6">
           <Link href="/" className="shrink-0">
             <img
@@ -126,7 +126,7 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <Link
               href="/login"
-              className="hidden rounded-xl border border-stone-200 bg-white/70 px-3 py-2 text-sm font-medium sm:inline-flex"
+              className="hidden rounded-full border border-stone-200 bg-white/70 px-3 py-2 text-sm font-medium sm:inline-flex"
             >
               Login
             </Link>
@@ -139,13 +139,13 @@ export default function Home() {
               <LogIn className="h-4 w-4" />
             </Link>
 
-            <div className="flex rounded-xl border border-stone-200 bg-white/80 p-1 shadow-sm md:hidden">
+            <div className="flex rounded-full border border-stone-200 bg-white/80 p-1 shadow-sm md:hidden">
               <button
                 onClick={() => {
                   setMobileTab("edit");
                   setEditorHidden(false);
                 }}
-                className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold sm:px-3 ${
+                className={`rounded-full px-2.5 py-1.5 text-xs font-semibold sm:px-3 ${
                   mobileTab === "edit"
                     ? "bg-stone-900 text-white"
                     : "text-stone-600"
@@ -159,7 +159,7 @@ export default function Home() {
                   setMobileTab("preview");
                   setEditorHidden(true);
                 }}
-                className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold sm:px-3 ${
+                className={`rounded-full px-2.5 py-1.5 text-xs font-semibold sm:px-3 ${
                   mobileTab === "preview"
                     ? "bg-stone-900 text-white"
                     : "text-stone-600"
@@ -254,7 +254,7 @@ export default function Home() {
             >
               <div
                 className={`${mobileTab === "preview" ? "hidden" : "block"} ${editorHidden ? "md:hidden" : "md:block"
-                  } min-w-0 md:sticky md:top-[132px] md:max-h-[calc(100vh-152px)] md:overflow-y-auto md:pr-1`}
+                  } min-w-0 md:sticky md:top-[132px] md:pr-1`}
               >
                 <div className="glass-panel rounded-2xl p-3 sm:p-4 space-y-4">
                   <HeaderCard doc={doc} onChange={patchDoc} />

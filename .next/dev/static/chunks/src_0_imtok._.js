@@ -148,7 +148,7 @@ function Home() {
         className: "min-h-screen bg-ambient flex-col flex justify-between",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
-                className: "sticky hidden top-0 z-40 border-b border-white/50 bg-white/75 backdrop-blur-xl",
+                className: "sticky top-0 z-40 border-b border-white/50 bg-white/75 backdrop-blur-xl",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "mx-auto flex h-14 max-w-[1500px] items-center justify-between px-3 sm:h-16 sm:px-6",
                     children: [
@@ -174,7 +174,7 @@ function Home() {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                     href: "/login",
-                                    className: "hidden rounded-xl border border-stone-200 bg-white/70 px-3 py-2 text-sm font-medium sm:inline-flex",
+                                    className: "hidden rounded-full border border-stone-200 bg-white/70 px-3 py-2 text-sm font-medium sm:inline-flex",
                                     children: "Login"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/page.tsx",
@@ -198,14 +198,14 @@ function Home() {
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex rounded-xl border border-stone-200 bg-white/80 p-1 shadow-sm md:hidden",
+                                    className: "flex rounded-full border border-stone-200 bg-white/80 p-1 shadow-sm md:hidden",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                             onClick: ()=>{
                                                 setMobileTab("edit");
                                                 setEditorHidden(false);
                                             },
-                                            className: `rounded-lg px-2.5 py-1.5 text-xs font-semibold sm:px-3 ${mobileTab === "edit" ? "bg-stone-900 text-white" : "text-stone-600"}`,
+                                            className: `rounded-full px-2.5 py-1.5 text-xs font-semibold sm:px-3 ${mobileTab === "edit" ? "bg-stone-900 text-white" : "text-stone-600"}`,
                                             children: "Edit"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/page.tsx",
@@ -217,7 +217,7 @@ function Home() {
                                                 setMobileTab("preview");
                                                 setEditorHidden(true);
                                             },
-                                            className: `rounded-lg px-2.5 py-1.5 text-xs font-semibold sm:px-3 ${mobileTab === "preview" ? "bg-stone-900 text-white" : "text-stone-600"}`,
+                                            className: `rounded-full px-2.5 py-1.5 text-xs font-semibold sm:px-3 ${mobileTab === "preview" ? "bg-stone-900 text-white" : "text-stone-600"}`,
                                             children: "Preview"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/page.tsx",
@@ -468,7 +468,7 @@ function Home() {
                                         className: `grid gap-4 items-start transition-[grid-template-columns] duration-200 grid-cols-1 ${editorHidden ? "md:grid-cols-[0px_minmax(0,1fr)] lg:grid-cols-[0px_minmax(0,1fr)]" : "md:grid-cols-[minmax(260px,32rem)_minmax(0,1fr)] lg:grid-cols-[minmax(280px,38rem)_minmax(0,1fr)]"}`,
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: `${mobileTab === "preview" ? "hidden" : "block"} ${editorHidden ? "md:hidden" : "md:block"} min-w-0 md:sticky md:top-[132px] md:max-h-[calc(100vh-152px)] md:overflow-y-auto md:pr-1`,
+                                                className: `${mobileTab === "preview" ? "hidden" : "block"} ${editorHidden ? "md:hidden" : "md:block"} min-w-0 md:sticky md:top-[132px] md:pr-1`,
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "glass-panel rounded-2xl p-3 sm:p-4 space-y-4",
                                                     children: [
@@ -1162,6 +1162,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$PhotoUp
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Field$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/Field.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$sparkles$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Sparkles$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/sparkles.mjs [app-client] (ecmascript) <export default as Sparkles>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$flower$2d$2$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Flower2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/flower-2.mjs [app-client] (ecmascript) <export default as Flower2>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$camera$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Camera$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/camera.mjs [app-client] (ecmascript) <export default as Camera>");
 "use client";
 ;
 ;
@@ -1170,7 +1171,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 ;
 function HeaderCard({ doc, onChange }) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "\n        relative overflow-hidden\n        rounded-[26px]\n        border border-[#e8dfd1]\n        bg-[#fffdf8]/90\n        p-5\n        shadow-[0_18px_60px_rgba(92,68,42,0.08)]\n        backdrop-blur-xl\n      ",
+        className: "\n        relative overflow-hidden\n        rounded\n        border border-[#e8dfd1]\n        bg-[#fffdf8]/90\n        p-5\n        shadow-[0_18px_60px_rgba(92,68,42,0.08)]\n        backdrop-blur-xl\n      ",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "pointer-events-none absolute -left-20 -top-20 h-48 w-48 rounded-full bg-rose-200/30 blur-3xl"
@@ -1267,16 +1268,38 @@ function HeaderCard({ doc, onChange }) {
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "\n            rounded-2xl\n            border border-stone-200/80\n            bg-white/65\n            p-4\n            shadow-sm\n          ",
+                        className: "group relative overflow-hidden rounded border border-white/60 p-4 sm:p-5 shadow-sm shadow-stone-900/5 transition-shadow hover:shadow-md hover:shadow-stone-900/10",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "mb-3 flex items-center gap-2",
+                                className: "absolute inset-0 -z-10 animate-gradient-shift bg-[length:200%_200%] bg-gradient-to-br from-rose-50 via-white to-amber-50"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/HeaderCard.tsx",
+                                lineNumber: 84,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "absolute inset-0 -z-10 bg-white/50 backdrop-blur-xl"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/HeaderCard.tsx",
+                                lineNumber: 86,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "mb-4 flex items-center gap-2.5",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "h-1.5 w-1.5 rounded-full bg-rose-400"
+                                        className: "flex h-6 w-6 items-center justify-center rounded-full bg-rose-50 ring-1 ring-rose-200/70",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$camera$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Camera$3e$__["Camera"], {
+                                            className: "h-3.5 w-3.5 text-rose-500",
+                                            strokeWidth: 2.5
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/HeaderCard.tsx",
+                                            lineNumber: 90,
+                                            columnNumber: 15
+                                        }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/HeaderCard.tsx",
-                                        lineNumber: 92,
+                                        lineNumber: 89,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1284,13 +1307,13 @@ function HeaderCard({ doc, onChange }) {
                                         children: "Profile Photo"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/HeaderCard.tsx",
-                                        lineNumber: 94,
+                                        lineNumber: 92,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/HeaderCard.tsx",
-                                lineNumber: 91,
+                                lineNumber: 88,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$PhotoUpload$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1300,7 +1323,7 @@ function HeaderCard({ doc, onChange }) {
                                     })
                             }, void 0, false, {
                                 fileName: "[project]/src/components/HeaderCard.tsx",
-                                lineNumber: 99,
+                                lineNumber: 97,
                                 columnNumber: 11
                             }, this)
                         ]
@@ -1310,7 +1333,6 @@ function HeaderCard({ doc, onChange }) {
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "\n            rounded-2xl\n            border border-stone-200/80\n            bg-white/55\n            p-4\n          ",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "mb-4 flex items-center gap-2",
@@ -1319,7 +1341,7 @@ function HeaderCard({ doc, onChange }) {
                                         className: "h-px flex-1 bg-gradient-to-r from-transparent via-stone-200 to-transparent"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/HeaderCard.tsx",
-                                        lineNumber: 115,
+                                        lineNumber: 106,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1327,20 +1349,20 @@ function HeaderCard({ doc, onChange }) {
                                         children: "Name"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/HeaderCard.tsx",
-                                        lineNumber: 117,
+                                        lineNumber: 108,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         className: "h-px flex-1 bg-gradient-to-r from-transparent via-stone-200 to-transparent"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/HeaderCard.tsx",
-                                        lineNumber: 121,
+                                        lineNumber: 112,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/HeaderCard.tsx",
-                                lineNumber: 114,
+                                lineNumber: 105,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1355,7 +1377,7 @@ function HeaderCard({ doc, onChange }) {
                                         placeholder: "e.g. Ananya Sharma"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/HeaderCard.tsx",
-                                        lineNumber: 125,
+                                        lineNumber: 116,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Field$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TextField"], {
@@ -1367,36 +1389,36 @@ function HeaderCard({ doc, onChange }) {
                                         placeholder: "जैसे अनन्या शर्मा"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/HeaderCard.tsx",
-                                        lineNumber: 132,
+                                        lineNumber: 123,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/HeaderCard.tsx",
-                                lineNumber: 124,
+                                lineNumber: 115,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/HeaderCard.tsx",
-                        lineNumber: 106,
+                        lineNumber: 104,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "\n            relative overflow-hidden\n            rounded-2xl\n            border border-amber-200/70\n            bg-gradient-to-br\n            from-amber-50/80\n            via-white/60\n            to-rose-50/60\n            p-4\n          ",
+                        className: "\n            relative overflow-hidden\n            rounded\n            border border-amber-200/70\n            bg-gradient-to-br\n            from-amber-50/80\n            via-white/60\n            to-rose-50/60\n            p-4\n          ",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "pointer-events-none absolute -right-8 -top-8 h-20 w-20 rounded-full border border-amber-300/30"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/HeaderCard.tsx",
-                                lineNumber: 155,
+                                lineNumber: 146,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "pointer-events-none absolute -right-4 -top-4 h-12 w-12 rounded-full border border-rose-300/20"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/HeaderCard.tsx",
-                                lineNumber: 156,
+                                lineNumber: 147,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -1417,7 +1439,7 @@ function HeaderCard({ doc, onChange }) {
                                                 className: "\n                  peer\n                  h-4 w-4\n                  cursor-pointer\n                  appearance-none\n                  rounded\n                  border border-stone-300\n                  bg-white\n                  shadow-sm\n                  transition-colors duration-150\n                  hover:border-amber-400\n                  checked:border-amber-500\n                  checked:bg-amber-500\n                  focus-visible:outline-none\n                  focus-visible:ring-2\n                  focus-visible:ring-amber-200\n                  focus-visible:ring-offset-1\n                "
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/HeaderCard.tsx",
-                                                lineNumber: 160,
+                                                lineNumber: 151,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
@@ -1432,18 +1454,18 @@ function HeaderCard({ doc, onChange }) {
                                                     strokeLinejoin: "round"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/HeaderCard.tsx",
-                                                    lineNumber: 204,
+                                                    lineNumber: 195,
                                                     columnNumber: 17
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/HeaderCard.tsx",
-                                                lineNumber: 191,
+                                                lineNumber: 182,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/HeaderCard.tsx",
-                                        lineNumber: 159,
+                                        lineNumber: 150,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1453,7 +1475,7 @@ function HeaderCard({ doc, onChange }) {
                                                 className: "mt-0.5 h-4 w-4 shrink-0 text-amber-500"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/HeaderCard.tsx",
-                                                lineNumber: 215,
+                                                lineNumber: 206,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1463,7 +1485,7 @@ function HeaderCard({ doc, onChange }) {
                                                         children: "Show invocation header"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/HeaderCard.tsx",
-                                                        lineNumber: 218,
+                                                        lineNumber: 209,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1476,31 +1498,31 @@ function HeaderCard({ doc, onChange }) {
                                                                 children: "श्री गणेशाय नमः"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/HeaderCard.tsx",
-                                                                lineNumber: 224,
+                                                                lineNumber: 215,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/HeaderCard.tsx",
-                                                        lineNumber: 222,
+                                                        lineNumber: 213,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/HeaderCard.tsx",
-                                                lineNumber: 217,
+                                                lineNumber: 208,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/HeaderCard.tsx",
-                                        lineNumber: 214,
+                                        lineNumber: 205,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/HeaderCard.tsx",
-                                lineNumber: 158,
+                                lineNumber: 149,
                                 columnNumber: 11
                             }, this),
                             doc.invocation.enabled && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1513,7 +1535,7 @@ function HeaderCard({ doc, onChange }) {
                                                 children: "Choose a preset"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/HeaderCard.tsx",
-                                                lineNumber: 236,
+                                                lineNumber: 227,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1546,30 +1568,30 @@ function HeaderCard({ doc, onChange }) {
                                                                 className: "mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-amber-500"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/HeaderCard.tsx",
-                                                                lineNumber: 275,
+                                                                lineNumber: 266,
                                                                 columnNumber: 27
                                                             }, this),
                                                             p
                                                         ]
                                                     }, p, true, {
                                                         fileName: "[project]/src/components/HeaderCard.tsx",
-                                                        lineNumber: 245,
+                                                        lineNumber: 236,
                                                         columnNumber: 23
                                                     }, this);
                                                 })
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/HeaderCard.tsx",
-                                                lineNumber: 240,
+                                                lineNumber: 231,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/HeaderCard.tsx",
-                                        lineNumber: 235,
+                                        lineNumber: 226,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "rounded-xl border border-white/80 bg-white/60 p-3 shadow-sm",
+                                        className: "border border-white/80 bg-white/60",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Field$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TextField"], {
                                             label: "Custom invocation text",
                                             value: doc.invocation.text,
@@ -1582,54 +1604,24 @@ function HeaderCard({ doc, onChange }) {
                                             placeholder: "Type your own line…"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/HeaderCard.tsx",
-                                            lineNumber: 287,
+                                            lineNumber: 278,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/HeaderCard.tsx",
-                                        lineNumber: 286,
+                                        lineNumber: 277,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/HeaderCard.tsx",
-                                lineNumber: 233,
+                                lineNumber: 224,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/HeaderCard.tsx",
-                        lineNumber: 142,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex items-center gap-3 px-4 pt-1",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "h-px flex-1 bg-gradient-to-r from-transparent to-rose-200"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/HeaderCard.tsx",
-                                lineNumber: 307,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$flower$2d$2$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Flower2$3e$__["Flower2"], {
-                                className: "h-3.5 w-3.5 text-rose-300"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/HeaderCard.tsx",
-                                lineNumber: 309,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "h-px flex-1 bg-gradient-to-l from-transparent to-amber-200"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/HeaderCard.tsx",
-                                lineNumber: 311,
-                                columnNumber: 11
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/components/HeaderCard.tsx",
-                        lineNumber: 306,
+                        lineNumber: 133,
                         columnNumber: 9
                     }, this)
                 ]
@@ -2861,7 +2853,7 @@ function SectionsEditor({ sections, onChange, onResetDefaults }) {
         sections
     ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "space-y-4",
+        className: "space-y-8",
         children: [
             sections.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex items-center justify-between flex-wrap gap-2",

@@ -319,7 +319,7 @@ export default function SectionsEditor({
   const visibleCount = useMemo(() => sections.filter((s) => s.visible).length, [sections]);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-8">
       {sections.length > 0 && (
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div className="text-sm text-stone-500">

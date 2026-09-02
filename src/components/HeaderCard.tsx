@@ -3,7 +3,7 @@
 import { BiodataDocument, invocationPresets } from "@/lib/types";
 import PhotoUpload from "./PhotoUpload";
 import { TextField } from "./Field";
-import { Sparkles, Flower2 } from "lucide-react";
+import { Sparkles, Flower2, Camera } from "lucide-react";
 
 export default function HeaderCard({
   doc,
@@ -16,7 +16,7 @@ export default function HeaderCard({
     <div
       className="
         relative overflow-hidden
-        rounded-[26px]
+        rounded
         border border-[#e8dfd1]
         bg-[#fffdf8]/90
         p-5
@@ -79,18 +79,16 @@ export default function HeaderCard({
         </div>
 
         {/* Photo */}
-        <div
-          className="
-            rounded-2xl
-            border border-stone-200/80
-            bg-white/65
-            p-4
-            shadow-sm
-          "
-        >
-          <div className="mb-3 flex items-center gap-2">
-            <div className="h-1.5 w-1.5 rounded-full bg-rose-400" />
+        <div className="group relative overflow-hidden rounded border border-white/60 p-4 sm:p-5 shadow-sm shadow-stone-900/5 transition-shadow hover:shadow-md hover:shadow-stone-900/10">
+          {/* animated gradient layer */}
+          <div className="absolute inset-0 -z-10 animate-gradient-shift bg-[length:200%_200%] bg-gradient-to-br from-rose-50 via-white to-amber-50" />
+          {/* glass overlay on top of the gradient so content stays readable */}
+          <div className="absolute inset-0 -z-10 bg-white/50 backdrop-blur-xl" />
 
+          <div className="mb-4 flex items-center gap-2.5">
+            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-rose-50 ring-1 ring-rose-200/70">
+              <Camera className="h-3.5 w-3.5 text-rose-500" strokeWidth={2.5} />
+            </div>
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-stone-500">
               Profile Photo
             </p>
@@ -103,14 +101,7 @@ export default function HeaderCard({
         </div>
 
         {/* Name */}
-        <div
-          className="
-            rounded-2xl
-            border border-stone-200/80
-            bg-white/55
-            p-4
-          "
-        >
+        <div>
           <div className="mb-4 flex items-center gap-2">
             <span className="h-px flex-1 bg-gradient-to-r from-transparent via-stone-200 to-transparent" />
 
@@ -142,7 +133,7 @@ export default function HeaderCard({
         <div
           className="
             relative overflow-hidden
-            rounded-2xl
+            rounded
             border border-amber-200/70
             bg-gradient-to-br
             from-amber-50/80
@@ -283,7 +274,7 @@ export default function HeaderCard({
               </div>
 
               {/* Custom text */}
-              <div className="rounded-xl border border-white/80 bg-white/60 p-3 shadow-sm">
+              <div className="border border-white/80 bg-white/60">
                 <TextField
                   label="Custom invocation text"
                   value={doc.invocation.text}
@@ -302,14 +293,6 @@ export default function HeaderCard({
           )}
         </div>
 
-        {/* Bottom decorative line */}
-        <div className="flex items-center gap-3 px-4 pt-1">
-          <span className="h-px flex-1 bg-gradient-to-r from-transparent to-rose-200" />
-
-          <Flower2 className="h-3.5 w-3.5 text-rose-300" />
-
-          <span className="h-px flex-1 bg-gradient-to-l from-transparent to-amber-200" />
-        </div>
       </div>
     </div>
   );
