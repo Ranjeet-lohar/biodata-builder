@@ -12,24 +12,16 @@ html {
   font-family: var(--font-inter);
 }
 
-
 body {
   background: var(--background);
+  overflow-x: hidden;
   color: var(--foreground);
   font-family: var(--font-inter);
-  background-color: #f3f1ec;
-  background-image:
-    radial-gradient(60rem 40rem at 8% -10%, rgba(244, 63, 94, 0.14), transparent 60%),
-    radial-gradient(50rem 36rem at 108% 0%, rgba(217, 164, 65, 0.16), transparent 60%),
-    radial-gradient(46rem 40rem at 50% 115%, rgba(91, 124, 153, 0.14), transparent 60%);
-  background-attachment: fixed;
+  background-image: repeating-linear-gradient(0deg, rgb(163, 163, 163) 0px, rgb(163, 163, 163) 1px,transparent 1px, transparent 21px),repeating-linear-gradient(90deg, rgb(163, 163, 163) 0px, rgb(163, 163, 163) 1px,transparent 1px, transparent 21px),linear-gradient(90deg, hsl(334,0%,62%),hsl(334,0%,62%));
 }
+
 .footer_bg {
-  background-color: #18181b;
-  background-image:
-    radial-gradient(60rem 40rem at 8% -10%, rgba(244, 63, 94, 0.14), transparent 60%),
-    radial-gradient(50rem 36rem at 108% 0%, rgba(217, 164, 65, 0.16), transparent 60%),
-    radial-gradient(46rem 40rem at 50% 115%, rgba(91, 124, 153, 0.14), transparent 60%);
+    background-image: repeating-linear-gradient(45deg, hsla(207,0%,63%,0.05) 0px, hsla(207,0%,63%,0.05) 1px,transparent 1px, transparent 11px,hsla(207,0%,63%,0.05) 11px, hsla(207,0%,63%,0.05) 12px,transparent 12px, transparent 32px),repeating-linear-gradient(0deg, hsla(207,0%,63%,0.05) 0px, hsla(207,0%,63%,0.05) 1px,transparent 1px, transparent 11px,hsla(207,0%,63%,0.05) 11px, hsla(207,0%,63%,0.05) 12px,transparent 12px, transparent 32px),repeating-linear-gradient(135deg, hsla(207,0%,63%,0.05) 0px, hsla(207,0%,63%,0.05) 1px,transparent 1px, transparent 11px,hsla(207,0%,63%,0.05) 11px, hsla(207,0%,63%,0.05) 12px,transparent 12px, transparent 32px),repeating-linear-gradient(90deg, hsla(207,0%,63%,0.05) 0px, hsla(207,0%,63%,0.05) 1px,transparent 1px, transparent 11px,hsla(207,0%,63%,0.05) 11px, hsla(207,0%,63%,0.05) 12px,transparent 12px, transparent 32px),linear-gradient(90deg, rgb(17, 17, 17),rgb(66, 66, 66));
     
 }
 
@@ -141,7 +133,7 @@ body {
 
 @layer utilities {
   .bg-ambient {
-   background-image: repeating-linear-gradient(67.5deg, hsla(145,0%,97%,0.2) 0px, hsla(145,0%,97%,0.2) 0px,transparent 0px, transparent 1px,hsla(145,0%,97%,0.2) 1px, hsla(145,0%,97%,0.2) 4px,transparent 4px, transparent 5px,hsla(145,0%,97%,0.2) 5px, hsla(145,0%,97%,0.2) 8px),repeating-linear-gradient(0deg, hsla(145,0%,97%,0.2) 0px, hsla(145,0%,97%,0.2) 0px,transparent 0px, transparent 1px,hsla(145,0%,97%,0.2) 1px, hsla(145,0%,97%,0.2) 4px,transparent 4px, transparent 5px,hsla(145,0%,97%,0.2) 5px, hsla(145,0%,97%,0.2) 8px),linear-gradient(135deg, rgb(237, 237, 237),rgb(199, 199, 199));
+ background-image: linear-gradient(90deg, rgb(116, 216, 252),rgb(156, 153, 254));
   }
 }
 

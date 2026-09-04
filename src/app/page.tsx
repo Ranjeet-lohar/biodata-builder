@@ -22,7 +22,10 @@ import {
   PanelLeftOpen,
   Phone, Mail, MessageCircle,
   LogIn,
+  ChevronDown,
 } from "lucide-react";
+import AppFooter from "@/components/AppFooter";
+import AppHeader from "@/components/AppHeader";
 
 interface Draft {
   id: string;
@@ -114,63 +117,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-ambient flex-col flex justify-between">
-      <header className="sticky top-0 z-40 border-b border-white/50 bg-white/75 backdrop-blur-xl">
-        <div className="mx-auto flex h-14 max-w-[1500px] items-center justify-between px-3 sm:h-16 sm:px-6">
-          <Link href="/" className="shrink-0">
-            <img
-              src="/logo.png"
-              alt="Biodata Builder"
-              className="h-8 w-auto object-contain xs:h-9 sm:h-12 lg:h-14"
-            />
-          </Link>
-          <div className="flex items-center gap-2">
-            <Link
-              href="/login"
-              className="hidden rounded-full border border-stone-200 bg-white/70 px-3 py-2 text-sm font-medium sm:inline-flex"
-            >
-              Login
-            </Link>
-            {/* Mobile-only login icon so the action isn't lost below sm */}
-            <Link
-              href="/login"
-              aria-label="Login"
-              className="icon-btn h-9 w-9 rounded-xl border border-stone-200 bg-white/70 text-stone-700 sm:hidden"
-            >
-              <LogIn className="h-4 w-4" />
-            </Link>
-
-            <div className="flex rounded-full border border-stone-200 bg-white/80 p-1 shadow-sm md:hidden">
-              <button
-                onClick={() => {
-                  setMobileTab("edit");
-                  setEditorHidden(false);
-                }}
-                className={`rounded-full px-2.5 py-1.5 text-xs font-semibold sm:px-3 ${
-                  mobileTab === "edit"
-                    ? "bg-stone-900 text-white"
-                    : "text-stone-600"
-                }`}
-              >
-                Edit
-              </button>
-
-              <button
-                onClick={() => {
-                  setMobileTab("preview");
-                  setEditorHidden(true);
-                }}
-                className={`rounded-full px-2.5 py-1.5 text-xs font-semibold sm:px-3 ${
-                  mobileTab === "preview"
-                    ? "bg-stone-900 text-white"
-                    : "text-stone-600"
-                }`}
-              >
-                Preview
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <AppHeader/>
 
       <main className="max-w-[1500px] mx-auto px-3 sm:px-6 py-4 sm:py-6 overflow-x-hidden relative">
         <div className="sticky top-0 z-20 mb-4 sm:mb-5">
@@ -227,21 +174,34 @@ export default function Home() {
           </div>
 
           {/* pb-24 only matters on phones where the floating bar overlaps content */}
-          <div className="flex-1 min-w-0 pb-24 md:pb-0">
-            <div className="mb-4 sm:mb-6">
+          <div className="w-full min-w-0 pb-24 md:pb-0 overflow-hidden">
+            <div className="mb-4 sm:mb-6 ">
               <button
-                onClick={() => setShowTemplates((s) => !s)}
-                className="md:hidden w-full flex items-center justify-between text-sm font-semibold text-stone-800 mb-2 px-1"
-              >
-                <span className="flex items-center gap-1.5">
-                  <LayoutTemplate className="w-4 h-4" /> Choose a design ({templates.length})
-                </span>
-                <span className="text-stone-400 text-xs">{showTemplates ? "Hide" : "Show"}</span>
-              </button>
+                  onClick={() => setShowTemplates((s) => !s)}
+                  aria-expanded={showTemplates}
+                  className="md:hidden w-full flex items-center justify-between rounded-xl border border-white/60 bg-white/60 px-3 py-2.5 mb-2 shadow-sm backdrop-blur-md transition active:scale-[0.99]"
+                >
+                  <span className="flex items-center gap-2 text-sm font-semibold text-stone-800">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#1e98d7]/10 text-[#1e98d7]">
+                      <LayoutTemplate className="h-3.5 w-3.5" />
+                    </span>
+                    Choose a design
+                    <span className="text-xs font-normal text-stone-400">({templates.length})</span>
+                  </span>
+
+                  <ChevronDown
+                    className={`h-4 w-4 text-stone-400 transition-transform duration-200 ${
+                      showTemplates ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
               <p className="hidden md:block text-sm font-semibold text-stone-800 mb-2">
                 Choose a design ({templates.length} templates)
               </p>
-              <div className={`${showTemplates ? "block" : "hidden"} md:block w-[335px] sm:w-full rounded-[10px] p-2 sm:p-[10px] bg-white/70 border border-white/70 shadow-sm overflow-x-auto`}>
+              <div
+                className={`${showTemplates ? "block" : "hidden"} md:block w-full rounded-[10px] p-2 sm:p-[10px] bg-white/70 border border-white/70 shadow-sm`}
+                style={{ ["--fade-bg" as unknown as string]: "rgba(255,255,255,0.75)" }}
+              >
                 <TemplateSelector value={templateId} onChange={setTemplateId} />
               </div>
             </div>
@@ -298,52 +258,7 @@ export default function Home() {
         <Template doc={doc} fonts={fonts} ref={exportRef} />
       </div>
 
-      <footer className="footer_bg mt-12 w-full border-t border-stone-200 bg-[#18181b] text-stone-200">
-        <div className="mx-auto grid max-w-[1500px] gap-8 px-3 py-10 sm:px-6 sm:py-12 lg:grid-cols-[1.3fr_0.8fr_0.9fr] lg:px-8">
-          <div>
-            <img src="/logo.png" alt="Biodata Builder" width={120} height={50}  />
-            <p className="mt-4 max-w-md text-sm leading-7 text-stone-300">
-              Create elegant marriage biodatas with beautiful templates, personal details,
-              multilingual support, and print-ready exports in minutes.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-stone-400">Quick links</h3>
-            <ul className="mt-4 space-y-3 text-sm text-stone-300">
-              <li><Link href="/" className="transition hover:text-white">Builder</Link></li>
-              <li><Link href="/features" className="transition hover:text-white">Features</Link></li>
-              <li><Link href="/about" className="transition hover:text-white">About</Link></li>
-              <li><Link href="/pricing" className="transition hover:text-white">Pricing</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-stone-400">Contact</h3>
-            <div className="mt-4 space-y-3 text-sm text-stone-300">
-              <a href="tel:+919259903000" className="flex items-center gap-2 transition hover:text-white break-all">
-                <Phone className="h-4 w-4 shrink-0 text-[#1e98d7]" />
-                +91 92599 03000
-              </a>
-              <a href="mailto:ranjeet@drupaltechie.com" className="flex items-center gap-2 transition hover:text-white break-all">
-                <Mail className="h-4 w-4 shrink-0 text-[#1e98d7]" />
-                ranjeet@drupaltechie.com
-              </a>
-              <div className="flex items-center gap-2 text-stone-400">
-                <MessageCircle className="h-4 w-4 shrink-0 text-[#1e98d7]" />
-                Organiser: Mamta Sharma
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-white/10">
-          <div className="mx-auto flex max-w-[1500px] flex-col gap-2 px-3 py-4 text-xs text-stone-400 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-            <p>© 2026 Biodata Builder. All rights reserved.</p>
-            <p>Create beautifully • Customize freely • Share confidently</p>
-          </div>
-        </div>
-      </footer>
+      <AppFooter />
     </div>
   );
 }

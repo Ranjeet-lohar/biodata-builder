@@ -84,7 +84,7 @@ const socialLinks = [
 
 export default function AppFooter() {
   return (
-    <footer className="mt-12 w-full border-t border-stone-200 bg-[#18181b] text-stone-200">
+    <footer className="mt-12 footer_bg w-full border-t border-stone-200 bg-[#18181b] text-stone-200">
       <div className="mx-auto grid max-w-[1500px] gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.4fr_0.8fr_0.8fr] lg:px-8">
         {/* First column: Logo, description, social icons */}
         <div>
