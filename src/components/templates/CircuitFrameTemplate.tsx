@@ -17,6 +17,35 @@ const trace = {
   teal: "#2fe0c4",
 };
 
+function Elbow({
+  x1,
+  y1,
+  x2,
+  y2,
+  x3,
+  y3,
+}: {
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  x3: number;
+  y3: number;
+}) {
+  return (
+    <>
+      <path
+        d={`M ${x1},${y1} L ${x2},${y2} L ${x3},${y3}`}
+        fill="none"
+        stroke={trace.green}
+        strokeOpacity="0.45"
+        strokeWidth="1.5"
+      />
+      <circle cx={x2} cy={y2} r="3" fill={trace.green} fillOpacity="0.6" />
+    </>
+  );
+}
+
 // Fixed page geometry — do NOT rely on flex-1/percent sizing to lay out
 // the page. html2canvas/jsPDF-style capture pipelines frequently fail to
 // resolve flex-grow or 100% widths on cloned/offscreen nodes, which can
@@ -33,14 +62,6 @@ const CircuitFrame = () => {
   const W = 794;
   const H = 1123;
   const m = 30; // margin of the trace loop from the page edge
-
-  // Helper: a right-angled trace segment with a via-pad at the elbow
-  const Elbow = ({ x1, y1, x2, y2, x3, y3 }: { x1: number; y1: number; x2: number; y2: number; x3: number; y3: number }) => (
-    <>
-      <path d={`M ${x1},${y1} L ${x2},${y2} L ${x3},${y3}`} fill="none" stroke={trace.green} strokeOpacity="0.45" strokeWidth="1.5" />
-      <circle cx={x2} cy={y2} r="3" fill={trace.green} fillOpacity="0.6" />
-    </>
-  );
 
   return (
     <svg
