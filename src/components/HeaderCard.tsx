@@ -149,6 +149,7 @@ export default function HeaderCard({
           <label className="flex cursor-pointer items-start gap-3">
             <span className="relative mt-0.5 inline-flex h-4 w-4 shrink-0">
               <input
+                name="invocation-enabled"
                 type="checkbox"
                 checked={doc.invocation.enabled}
                 onChange={(e) =>

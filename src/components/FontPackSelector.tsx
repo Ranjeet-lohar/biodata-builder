@@ -14,6 +14,7 @@ export default function FontPackSelector({
     <label className="inline-flex items-center gap-1.5 text-sm border border-stone-300 rounded px-2.5 py-2 bg-white shadow-sm hover:border-stone-400 transition-colors">
       <Type className="w-3.5 h-3.5 text-stone-500 shrink-0" />
       <select
+        name="font-pack"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="bg-transparent focus:outline-none text-stone-700 max-w-[140px] sm:max-w-none"

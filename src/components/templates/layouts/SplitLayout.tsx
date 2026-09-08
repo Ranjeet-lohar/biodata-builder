@@ -7,7 +7,7 @@ function GeoBackground({ theme }: { theme: Theme }) {
   return (
     <svg
       className="absolute inset-0 w-full h-full pointer-events-none"
-      viewBox="0 0 0 0 694 1435"
+      viewBox="0 0 694 1435"
       preserveAspectRatio="xMidYMid slice"
     >
       <defs>
@@ -109,7 +109,6 @@ export default function TimelineLayout({
               </div>
             )}
           </HexFrame>
-
           <div>
             {doc.invocation.enabled && (
               <p className="text-[12px] tracking-[0.2em] uppercase mb-2" style={{ color: theme.secondary }}>
@@ -119,12 +118,24 @@ export default function TimelineLayout({
             <h1 className="text-[34px] font-semibold leading-tight" style={{ fontFamily: heading, color: theme.primary }}>
               {(lang === "hi" && doc.fullNameHi) || doc.fullName || L("Full Name", "पूरा नाम")}
             </h1>
-            <div className="mt-2 flex items-center gap-2">
-              <span className="h-[2px] w-8" style={{ backgroundColor: theme.primary }} />
-              <p className="text-[12px] tracking-[0.3em] uppercase" style={{ color: theme.secondary }}>
-                {L("Marriage Biodata", "विवाह हेतु बायोडाटा")}
-              </p>
-            </div>
+          <div className="mt-2 flex items-center gap-2">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                fill={theme.primary}
+              />
+            </svg>
+            {/* <span className="h-[2px] w-8" style={{ backgroundColor: theme.primary }} /> */}
+            <p className="text-[12px] tracking-[0.3em] uppercase" style={{ color: theme.secondary }}>
+              {L("Marriage Biodata", "विवाह हेतु बायोडाटा")}
+            </p>
+          </div>
           </div>
         </div>
 

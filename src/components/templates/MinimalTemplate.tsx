@@ -37,6 +37,7 @@ const MinimalTemplate = forwardRef<
               </div>
             )}
           </div>
+          
           {doc.invocation.enabled && (
             <p className="text-[11px] text-[#b9c2ab] mb-1">{doc.invocation.text}</p>
           )}

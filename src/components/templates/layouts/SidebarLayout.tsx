@@ -36,8 +36,7 @@ export default function SidebarLayout({
         <div className="w-[260px] shrink-0 px-8 py-12 flex flex-col min-h-[297mm]" style={{ backgroundColor: theme.primary, color: theme.bg }}>
           <div
             className={`w-[150px] h-[186px] overflow-hidden mb-6 ${photoShapeClass(theme.photoShape)}`}
-            style={{ backgroundColor: theme.secondary }}
-          >
+            style={{ backgroundColor: theme.secondary }}>
             {doc.photo ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={doc.photo} alt="Profile" className="w-full h-full object-cover" />

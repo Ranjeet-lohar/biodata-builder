@@ -6,6 +6,12 @@ import MinimalTemplate from "./MinimalTemplate";
 import FloralTemplate from "./FloralTemplate";
 import ClassicTemplate from "./ClassicTemplate";
 import LotusEditorialTemplate from "./LotusEditorialTemplate";
+import CircuitFrameTemplate from "./CircuitFrameTemplate";
+import AuroraTemplate from "./AuroraTemplate";
+import FuturisticTemplate from "./FuturisticTemplate";
+import HoloCardTemplate from "./HoloCardTemplate";
+import NeoGlassTemplate from "./NeoGlassTemplate";
+import QuantumGridTemplate from "./QuantumGridTemplate";
 import FrameLayout from "./layouts/FrameLayout";
 import BandLayout from "./layouts/BandLayout";
 import CenteredLayout from "./layouts/CenteredLayout";
@@ -87,6 +93,48 @@ export const templates: TemplateMeta[] = [
     description: "An asymmetric editorial profile with teal and coral accents",
     swatch: ["#176b72", "#c86b52", "#f7f2e8"],
     Component: LotusEditorialTemplate,
+  },
+  {
+    id: "circuit-frame",
+    name: "Circuit Frame",
+    description: "A dark technical layout with luminous circuit traces and node accents",
+    swatch: ["#0a0f0c", "#39ff9d", "#c6ff5e"],
+    Component: CircuitFrameTemplate,
+  },
+  {
+    id: "aurora",
+    name: "Aurora",
+    description: "A cool atmospheric layout with flowing aurora bands and luminous accents",
+    swatch: ["#080b14", "#2ee6c6", "#4f8bff"],
+    Component: AuroraTemplate,
+  },
+  {
+    id: "futuristic",
+    name: "Futuristic",
+    description: "A sleek HUD-inspired layout with precise brackets and cyan glow",
+    swatch: ["#080b14", "#22d3ee", "#8b5cf6"],
+    Component: FuturisticTemplate,
+  },
+  {
+    id: "holo-card",
+    name: "Holo Card",
+    description: "A holographic identity-card design with pink, violet, and cyan highlights",
+    swatch: ["#0c0a14", "#ff5fae", "#4fd8ff"],
+    Component: HoloCardTemplate,
+  },
+  {
+    id: "neo-glass",
+    name: "Neo Glass",
+    description: "A dark glass-panel layout with a slim luminous accent rail",
+    swatch: ["#0a0c12", "#2dd4ff", "#fb7dc4"],
+    Component: NeoGlassTemplate,
+  },
+  {
+    id: "quantum-grid",
+    name: "Quantum Grid",
+    description: "A technical hex-grid layout with cyan, green, and amber data accents",
+    swatch: ["#070a10", "#38d6ff", "#ffb84d"],
+    Component: QuantumGridTemplate,
   },
   ...themedTemplates,
 ];

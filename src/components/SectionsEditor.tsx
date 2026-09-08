@@ -62,18 +62,21 @@ function SectionFieldRow({
     <div className="group/field rounded border border-stone-200 bg-white p-3 shadow-sm transition-all hover:shadow-md hover:border-stone-300">
       <div className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.5fr)_auto] gap-2 items-start">
         <input
+          name={`${field.id}-label-en`}
           className="field-input-sm min-w-0 rounded border-stone-200 focus:border-[#1e98d7] focus:ring-2 focus:ring-[#1e98d7]/20 transition-all"
           value={field.labelEn}
           placeholder="Label (English)"
           onChange={(e) => onChange({ labelEn: e.target.value })}
         />
         <input
+          name={`${field.id}-label-hi`}
           className="field-input-sm min-w-0 rounded border-stone-200 focus:border-[#1e98d7] focus:ring-2 focus:ring-[#1e98d7]/20 transition-all"
           value={field.labelHi}
           placeholder="Label (Hindi)"
           onChange={(e) => onChange({ labelHi: e.target.value })}
         />
         <input
+          name={`${field.id}-value`}
           className="field-input-sm min-w-0 rounded border-stone-200 focus:border-[#1e98d7] focus:ring-2 focus:ring-[#1e98d7]/20 transition-all"
           value={field.value}
           placeholder="Value"

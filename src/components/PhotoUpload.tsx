@@ -40,6 +40,7 @@ export default function PhotoUpload({
         )}
         <input
           ref={inputRef}
+          name="profile-photo"
           type="file"
           accept="image/*"
           className="hidden"

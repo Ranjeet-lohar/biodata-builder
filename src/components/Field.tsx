@@ -18,6 +18,7 @@ export function TextField({
       <span className="field-label">{label}</span>
       {textarea ? (
         <textarea
+          name={label}
           className="field-input min-h-[84px] resize-y leading-relaxed"
           value={value}
           placeholder={placeholder}
@@ -25,6 +26,7 @@ export function TextField({
         />
       ) : (
         <input
+          name={label}
           className="field-input"
           value={value}
           placeholder={placeholder}
@@ -50,6 +52,7 @@ export function SelectField({
     <label className="flex flex-col gap-1.5 text-sm w-full">
       <span className="field-label">{label}</span>
       <select
+        name={label}
         className="field-input bg-white"
         value={value}
         onChange={(e) => onChange(e.target.value)}

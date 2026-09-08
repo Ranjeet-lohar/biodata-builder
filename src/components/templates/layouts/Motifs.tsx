@@ -59,3 +59,50 @@ export function photoShapeClass(shape: Theme["photoShape"]) {
   if (shape === "rounded") return "rounded-2xl";
   return "rounded-none";
 }
+
+
+export function GradientHexFrame({
+  theme,
+  className = "",
+}: {
+  theme: Theme;
+  className?: string;
+}) {
+  return (
+    <svg
+      viewBox="0 0 200 200"
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <linearGradient id="photoFrameGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor={theme.primary} />
+          <stop offset="50%" stopColor={theme.secondary} />
+          <stop offset="100%" stopColor={theme.primary} />
+        </linearGradient>
+        <linearGradient id="photoFrameGradInner" x1="100%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor={theme.secondary} />
+          <stop offset="100%" stopColor={theme.primary} />
+        </linearGradient>
+      </defs>
+
+      {/* outer gradient hexagon */}
+      <polygon
+        points="100,4 186,52 186,148 100,196 14,148 14,52"
+        fill="none"
+        stroke="url(#photoFrameGrad)"
+        strokeWidth="5"
+        strokeLinejoin="round"
+      />
+      {/* inner accent hexagon */}
+      <polygon
+        points="100,14 178,58 178,142 100,186 22,142 22,58"
+        fill="none"
+        stroke="url(#photoFrameGradInner)"
+        strokeWidth="1.5"
+        opacity="0.7"
+      />
+    </svg>
+  );
+}

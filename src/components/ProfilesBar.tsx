@@ -56,6 +56,7 @@ export default function ProfilesBar({
   return (
     <div className="flex flex-wrap items-center gap-2">
       <input
+        name="biodata-name"
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Biodata name"
