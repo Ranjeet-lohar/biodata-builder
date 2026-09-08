@@ -133,9 +133,8 @@ body {
 
 @layer utilities {
   .bg-ambient {
- background-color: #21235f;
+background-color: #612121;
 background-image: url("https://www.transparenttextures.com/patterns/brick-wall.png");
-/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
   }
 }

@@ -48,7 +48,7 @@ export const invocationPresets = [
   "ॐ नमः शिवाय",
   "श्री राधे कृष्णाय नमः",
   "जय श्री राम",
-  // "God is one",
+  "God is one",
 ];
 
 let counter = 0;

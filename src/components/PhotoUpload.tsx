@@ -7,6 +7,7 @@ import {
   Upload,
   Loader2,
   AlertCircle,
+  Trash2,
 } from "lucide-react";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -150,33 +151,11 @@ export default function PhotoUpload({
             <img
               src={value}
               alt="Profile photo preview"
-              className="
-                w-full h-full
-                object-cover
-                transition-transform duration-200
-                group-hover:scale-105
-              "
+              className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
             />
-
-            {/* Hover overlay */}
-            <div
-              className="
-                absolute inset-0
-                bg-black/45
-                opacity-0
-                group-hover:opacity-100
-                group-focus-visible:opacity-100
-                transition-opacity
-                flex flex-col
-                items-center
-                justify-center
-                gap-1
-              "
-            >
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-black/45 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
               <Upload className="w-5 h-5 text-white" />
-              <span className="text-[10px] font-medium text-white">
-                Change
-              </span>
+              <span className="text-[10px] font-medium text-white">Change</span>
             </div>
           </>
         ) : (
@@ -184,16 +163,12 @@ export default function PhotoUpload({
             {isDragging ? (
               <>
                 <Upload className="w-6 h-6 text-stone-600" />
-                <span className="text-[10px] font-medium text-stone-600">
-                  Drop here
-                </span>
+                <span className="text-[10px] font-medium text-stone-600">Drop here</span>
               </>
             ) : (
               <>
                 <ImagePlus className="w-6 h-6 text-stone-300 group-hover:text-stone-500 transition-colors" />
-                <span className="text-[10px] text-stone-400">
-                  Add photo
-                </span>
+                <span className="text-[10px] text-stone-400">Add photo</span>
               </>
             )}
           </div>
@@ -201,7 +176,7 @@ export default function PhotoUpload({
       </button>
 
       {/* Controls */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-3">
         <button
           type="button"
           onClick={openFilePicker}
@@ -232,8 +207,9 @@ export default function PhotoUpload({
             className="
               btn-outline
               w-fit
-              !py-1
-              !px-2.5
+              !py-2
+              !px-5.5
+              min-w-[142px]
               text-xs
               inline-flex
               items-center

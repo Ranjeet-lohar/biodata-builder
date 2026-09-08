@@ -214,6 +214,7 @@ HTMLDivElement,
                 {L("Biodata", "बायोडाटा")}
               </span>
             </div>
+            
           </div>
         </div>
       </div>
