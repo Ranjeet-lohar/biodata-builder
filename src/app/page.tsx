@@ -195,7 +195,7 @@ export default function Home() {
                     }`}
                   />
                 </button>
-              <p className="hidden md:block text-sm font-semibold text-stone-800 mb-2">
+              <p className="hidden md:block text-sm font-semibold text-stone-300 mb-2">
                 Choose a design ({templates.length} templates)
               </p>
               <div

@@ -8,7 +8,7 @@ const palette = {
   ink: "#f1eefb",
   sub: "#9089ad",
   line: "#262238",
-  label: "#5a5378",
+  label: "#9089AD",
 };
 
 const holo = {
@@ -29,6 +29,7 @@ const HEADER_HEIGHT_MM = 92;
 // Diagonal holographic band across the top — the sheen gradient sweeps
 // corner to corner like a foil ID card, cut with a single angled edge
 // instead of a straight horizontal split.
+
 const HoloBand = () => {
   const W = 794;
   const H = 348; // ~92mm at 96dpi/mm≈3.78 -> kept generous, clipped by parent
@@ -104,8 +105,8 @@ const ChipPortrait = ({ children }: { children: React.ReactNode }) => (
 
 const LaserDivider = ({ label }: { label: string }) => (
   <div className="flex items-center gap-3">
-    <span
-      className="text-[10px] px-2 py-[3px] rounded-full tracking-[0.15em] uppercase shrink-0"
+    <div
+      className="text-[10px] px-2 h-5 pb-[3px] flex items-center justify-center rounded-full tracking-[0.15em] uppercase shrink-0"
       style={{
         color: holo.cyan,
         border: `1px solid ${holo.cyan}55`,
@@ -113,8 +114,8 @@ const LaserDivider = ({ label }: { label: string }) => (
       }}
     >
       {label}
-    </span>
-    <span
+    </div>
+    <div
       className="flex-1 h-px"
       style={{
         background: `linear-gradient(90deg, ${holo.cyan}66, ${palette.line} 40%)`,
@@ -124,7 +125,7 @@ const LaserDivider = ({ label }: { label: string }) => (
 );
 
 const RowMark = () => (
-  <svg width="7" height="7" viewBox="0 0 7 7" className="shrink-0 mt-[7px]">
+  <svg width="7" height="7" viewBox="0 0 7 7" className="shrink-0 self-certify-start mt-1">
     <path d="M3.5,0 L7,3.5 L3.5,7 L0,3.5 Z" fill="none" stroke={holo.pink} strokeWidth="1.1" />
   </svg>
 );
@@ -248,9 +249,9 @@ HTMLDivElement,
                 {section.fields.map((f) => (
                   <div key={f.id} className="flex gap-2 items-start avoid-break">
                     <RowMark />
-                    <div className="flex flex-col">
+                    <div className="flex flex-col self-certify-start">
                       <span
-                        className="text-[9.5px] tracking-[0.08em] uppercase"
+                        className="text-[9.5px] block tracking-[0.08em] uppercase"
                         style={{ color: palette.label }}
                       >
                         {lang === "hi" ? f.labelHi || f.labelEn : f.labelEn}

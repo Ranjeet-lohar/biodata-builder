@@ -104,7 +104,7 @@ export default function TemplateSelector({
   return (
     <div className="flex flex-col gap-2">
       {/* Search / filter */}
-      <div className="relative w-full max-w-xs">
+      <div className="relative w-full max-w-xs lg:ml-12">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" />
         <input
           name="template-search"
@@ -206,7 +206,7 @@ export default function TemplateSelector({
         </button>
       </div>
 
-      <p className="text-xs text-stone-400">
+      <p className="text-xs text-stone-500 lg:pl-12">
         {filtered.length} of {templates.length} templates
       </p>
     </div>

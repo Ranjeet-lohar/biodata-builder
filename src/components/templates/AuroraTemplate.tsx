@@ -217,7 +217,7 @@ HTMLDivElement,
       </div>
 
       {/* Sections */}
-      <div className="relative px-14 pb-14 space-y-7">
+      <div className="relative px-10 pb-10 space-y-7">
         {otherSections.map((section, idx) =>
           section.type === "grid" ? (
             <div key={section.id} className="avoid-break">

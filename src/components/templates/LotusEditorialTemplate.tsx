@@ -492,7 +492,7 @@ const LotusEditorialTemplate = forwardRef<
         {/* ABOUT */}
         {aboutSection && (
           <section className="mt-10 avoid-break">
-            <div className="grid grid-cols-[90px_1fr] gap-7">
+            <div className="grid grid-cols-[40px_1fr] gap-7">
               <div>
                 <p
                   className="text-[9px] font-semibold uppercase tracking-[0.22em]"
@@ -540,7 +540,7 @@ const LotusEditorialTemplate = forwardRef<
               heading={heading}
             />
 
-            <div className="mt-6 grid grid-cols-2 gap-x-12 gap-y-6 pl-9">
+            <div className="mt-6 grid grid-cols-2 gap-x-12 gap-y-6">
               {gridSections.map((section) => (
                 <div
                   key={section.id}

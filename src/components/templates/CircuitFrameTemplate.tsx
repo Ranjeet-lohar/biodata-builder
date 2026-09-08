@@ -160,7 +160,7 @@ const SectionHeading = ({ index, label }: { index: number; label: string }) => (
 );
 
 const RowMark = () => (
-  <svg width="8" height="8" viewBox="0 0 8 8" className="shrink-0 mt-[6px]">
+  <svg width="8" height="8" viewBox="0 0 8 8" className="shrink-0 ">
     <rect x="0.5" y="0.5" width="7" height="7" fill="none" stroke={trace.teal} strokeWidth="1" />
   </svg>
 );
@@ -225,7 +225,7 @@ HTMLDivElement,
             </p>
           )}
           <h1
-            className="text-[31px] leading-tight font-bold truncate"
+            className="text-[31px] leading-normal font-bold truncate"
             style={{ fontFamily: heading, color: palette.ink }}
           >
             {(lang === "hi" && doc.fullNameHi) || doc.fullName || L("Full Name", "पूरा नाम")}
