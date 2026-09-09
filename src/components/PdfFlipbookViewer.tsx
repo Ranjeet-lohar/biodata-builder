@@ -18,6 +18,14 @@
  *     () => import("@/components/PdfFlipbookViewer"),
  *     { ssr: false }
  *   );
+ *
+ * THEMING
+ * -------
+ * The book's colors are driven by the `theme` prop instead of being
+ * hardcoded, so a selected TemplateSelector template can restyle the
+ * whole book (cover gradient, ribbon/controls, header leaf) live.
+ * See `templateToFlipbookTheme()` in TemplateSelector's module for the
+ * mapping from a template's swatch to this shape.
  */
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
@@ -30,11 +38,29 @@ import "react-pdf/dist/Page/TextLayer.css";
 // pdfjs-dist (`npm ls pdfjs-dist`) if this ever drifts out of sync.
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
+export interface FlipbookTheme {
+  /** Cover gradient start (top) — also used for the "page X of Y" text. */
+  primary: string;
+  /** Cover gradient end (bottom) — the darker shade of the spine. */
+  secondary: string;
+  /** Gold/foil accent — subtitle text, control-button borders. */
+  accent: string;
+  /** Background of the inner "page well" the PDF sits in. Usually a cream/paper tone. */
+  pageWell: string;
+}
+
+const DEFAULT_THEME: FlipbookTheme = {
+  primary: "#7a1f2b",
+  secondary: "#5c1620",
+  accent: "#b08d57",
+  pageWell: "#fbf5e9",
+};
+
 interface HeaderPage {
   title: string;
   subtitle?: string;
   description?: string;
-  /** Any valid CSS color for the cover background. Defaults to the book's maroon. */
+  /** Any valid CSS color for the cover background. Defaults to theme.primary. */
   accentColor?: string;
 }
 
@@ -47,6 +73,8 @@ interface PdfFlipbookViewerProps {
   headerPage?: HeaderPage;
   /** Aspect ratio of a single page. Defaults to A4 portrait. */
   pageAspectRatio?: number; // width / height
+  /** Color theme for the book. Defaults to the original maroon/gold look. */
+  theme?: FlipbookTheme;
 }
 
 const A4_RATIO = 210 / 297;
@@ -56,6 +84,7 @@ export default function PdfFlipbookViewer({
   title,
   headerPage,
   pageAspectRatio = A4_RATIO,
+  theme = DEFAULT_THEME,
 }: PdfFlipbookViewerProps) {
   const [numPages, setNumPages] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
@@ -95,7 +124,10 @@ export default function PdfFlipbookViewer({
   return (
     <div className="w-full flex flex-col items-center">
       {title && (
-        <p className="mb-3 text-sm tracking-wide text-[#8a6a1f] font-serif italic">
+        <p
+          className="mb-3 text-sm tracking-wide font-serif italic"
+          style={{ color: theme.accent }}
+        >
           {title}
         </p>
       )}
@@ -107,24 +139,40 @@ export default function PdfFlipbookViewer({
         {/* Book shadow / stand, so the pages don't float on nothing */}
         <div className="absolute bottom-[-14px] left-1/2 -translate-x-1/2 w-[85%] h-6 rounded-full bg-[#3d2b1f]/25 blur-lg" />
 
-        <div className="relative rounded-[6px] p-3 sm:p-5 bg-gradient-to-b from-[#7a1f2b] to-[#5c1620] shadow-[0_18px_40px_-12px_rgba(61,43,31,0.55)]">
+        <div
+          className="relative rounded-[6px] p-3 sm:p-5 shadow-[0_18px_40px_-12px_rgba(61,43,31,0.55)]"
+          style={{
+            backgroundImage: `linear-gradient(to bottom, ${theme.primary}, ${theme.secondary})`,
+          }}
+        >
           {/* Inner "page well" so covers read as bound leather, not a card */}
-          <div className="rounded-[3px] bg-[#fbf5e9] p-1">
+          <div
+            className="rounded-[3px] p-1"
+            style={{ backgroundColor: theme.pageWell }}
+          >
             <Document
               file={fileUrl}
               onLoadSuccess={onDocumentLoadSuccess}
               loading={
                 <div
-                  style={{ width: pageWidth * 2, height: pageHeight }}
-                  className="flex items-center justify-center text-[#7a1f2b] text-sm font-serif"
+                  style={{
+                    width: pageWidth * 2,
+                    height: pageHeight,
+                    color: theme.primary,
+                  }}
+                  className="flex items-center justify-center text-sm font-serif"
                 >
                   Opening the biodata…
                 </div>
               }
               error={
                 <div
-                  style={{ width: pageWidth * 2, height: pageHeight }}
-                  className="flex items-center justify-center text-center px-6 text-[#7a1f2b] text-sm"
+                  style={{
+                    width: pageWidth * 2,
+                    height: pageHeight,
+                    color: theme.primary,
+                  }}
+                  className="flex items-center justify-center text-center px-6 text-sm"
                 >
                   Couldn&apos;t open this PDF. Double-check the file and try
                   again.
@@ -152,19 +200,28 @@ export default function PdfFlipbookViewer({
                     <div
                       className="flex flex-col items-center justify-center text-center px-8"
                       style={{
-                        background: headerPage.accentColor ?? "#7a1f2b",
+                        background: headerPage.accentColor ?? theme.primary,
                       }}
                     >
-                      <h2 className="font-serif text-2xl sm:text-3xl text-[#fbf5e9] mb-3">
+                      <h2
+                        className="font-serif text-2xl sm:text-3xl mb-3"
+                        style={{ color: theme.pageWell }}
+                      >
                         {headerPage.title}
                       </h2>
                       {headerPage.subtitle && (
-                        <p className="text-sm tracking-wide uppercase text-[#e8c98a] mb-4">
+                        <p
+                          className="text-sm tracking-wide uppercase mb-4"
+                          style={{ color: theme.accent }}
+                        >
                           {headerPage.subtitle}
                         </p>
                       )}
                       {headerPage.description && (
-                        <p className="text-xs text-[#fbf5e9]/80 max-w-xs">
+                        <p
+                          className="text-xs max-w-xs"
+                          style={{ color: `${theme.pageWell}cc` }}
+                        >
                           {headerPage.description}
                         </p>
                       )}
@@ -197,12 +254,16 @@ export default function PdfFlipbookViewer({
             onClick={goPrev}
             disabled={currentPage === 0}
             aria-label="Previous page"
-            className="w-9 h-9 rounded-full border border-[#b08d57] text-[#7a1f2b] flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#b08d57]/10 transition-colors"
+            style={{ borderColor: theme.accent, color: theme.primary }}
+            className="w-9 h-9 rounded-full border flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#b08d57]/10 transition-colors"
           >
             ‹
           </button>
 
-          <span className="font-serif text-sm text-[#5c1620] tabular-nums">
+          <span
+            className="font-serif text-sm tabular-nums"
+            style={{ color: theme.secondary }}
+          >
             Page {currentPage + 1} of {numPages + (headerPage ? 1 : 0)}
           </span>
 
@@ -210,7 +271,8 @@ export default function PdfFlipbookViewer({
             onClick={goNext}
             disabled={currentPage >= numPages - 1 + (headerPage ? 1 : 0)}
             aria-label="Next page"
-            className="w-9 h-9 rounded-full border border-[#b08d57] text-[#7a1f2b] flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#b08d57]/10 transition-colors"
+            style={{ borderColor: theme.accent, color: theme.primary }}
+            className="w-9 h-9 rounded-full border flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#b08d57]/10 transition-colors"
           >
             ›
           </button>

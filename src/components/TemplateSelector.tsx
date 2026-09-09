@@ -3,8 +3,32 @@
 import { useEffect, useRef, useState } from "react";
 import { templates } from "./templates";
 import { Check, ChevronLeft, ChevronRight, Search } from "lucide-react";
+import type { FlipbookTheme } from "./PdfFlipbookViewer";
 
 const CARD_WIDTH = 220;
+
+/** Look up a template by id, e.g. after TemplateSelector's onChange fires. */
+export function getTemplateById(id: string) {
+  return templates.find((t) => t.id === id) ?? templates[0];
+}
+
+/**
+ * Maps a template's swatch (the 2-3 color dots shown on its card) to the
+ * flipbook's theme shape, so selecting a template can restyle the book's
+ * cover, controls, and header leaf. Swatch order is assumed
+ * [primary, secondary, accent]; missing entries fall back to sensible
+ * defaults so a 1-2 color swatch still produces a coherent theme.
+ */
+export function templateToFlipbookTheme(templateId: string): FlipbookTheme {
+  const template = getTemplateById(templateId);
+  const [primary, secondary, accent] = template.swatch;
+  return {
+    primary: primary ?? "#7a1f2b",
+    secondary: secondary ?? primary ?? "#5c1620",
+    accent: accent ?? secondary ?? "#b08d57",
+    pageWell: "#fbf5e9",
+  };
+}
 
 export default function TemplateSelector({
   value,

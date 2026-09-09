@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { templates, getTemplate } from "@/components/templates";
+import { templates } from "@/components/templates";
 import AppHeader from "@/components/AppHeader";
 import AppFooter from "@/components/AppFooter";
 import { ArrowRight } from "lucide-react";
@@ -27,17 +27,24 @@ export default function AllTemplatesPage() {
             {/* Templates Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {templates.map((template) => {
-                const meta = getTemplate(template.id);
                 return (
                   <div
                     key={template.id}
                     className="group rounded-2xl overflow-hidden bg-white border border-white/60 shadow-lg hover:shadow-2xl transition-all duration-300 hover:border-white/80"
                   >
-                    {/* Template Preview */}
+                    {/* Template Preview — swatch strip stands in for a live render */}
                     <div className="relative h-80 bg-white/50 overflow-hidden">
                       <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-stone-50 to-stone-100">
                         <div className="text-center p-4">
-                          <div className="text-5xl mb-2">{template.emoji}</div>
+                          <div className="flex items-center justify-center gap-2 mb-3">
+                            {template.swatch.map((color, i) => (
+                              <span
+                                key={i}
+                                className="w-8 h-8 rounded-full border border-white shadow-sm"
+                                style={{ backgroundColor: color }}
+                              />
+                            ))}
+                          </div>
                           <p className="text-sm text-stone-600">Preview</p>
                         </div>
                       </div>
@@ -46,23 +53,11 @@ export default function AllTemplatesPage() {
                     {/* Template Info */}
                     <div className="p-5 sm:p-6">
                       <h3 className="text-xl font-semibold text-stone-900 mb-2">
-                        {template.label}
+                        {template.name}
                       </h3>
-                      <p className="text-sm text-stone-600 mb-4 min-h-10">
+                      <p className="text-sm text-stone-600 mb-6 min-h-10">
                         {template.description}
                       </p>
-
-                      {/* Features/Tags */}
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {meta.tags?.slice(0, 2).map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-xs px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-100"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
 
                       {/* Use This Template Button */}
                       <Link
