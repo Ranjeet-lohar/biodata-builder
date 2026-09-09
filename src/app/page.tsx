@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { BiodataDocument, SavedBiodata } from "@/lib/types";
 import { emptyDocument, sampleDocument } from "@/lib/defaultSections";
 import { loadDraft, saveDraft } from "@/lib/storage";
@@ -20,12 +21,27 @@ import {
   LayoutTemplate,
   PanelLeftClose,
   PanelLeftOpen,
-  Phone, Mail, MessageCircle,
-  LogIn,
+  BookOpen,
+  X,
   ChevronDown,
 } from "lucide-react";
 import AppFooter from "@/components/AppFooter";
 import AppHeader from "@/components/AppHeader";
+
+// react-pdf / react-pageflip touch the DOM directly at mount time, so this
+// must stay out of the server render pass entirely.
+// NOTE: casing must match the real filename exactly — PdfFlipbookViewer.tsx.
+const PdfFlipbookViewer = dynamic(
+  () => import("@/components/PdfFlipbookViewer"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="w-full py-16 flex items-center justify-center text-[#7a1f2b] font-serif text-sm">
+        Preparing the flipbook…
+      </div>
+    ),
+  }
+);
 
 interface Draft {
   id: string;
@@ -56,6 +72,12 @@ export default function Home() {
   const [showTemplates, setShowTemplates] = useState(false);
   const [editorHidden, setEditorHidden] = useState(false);
   const [zoom] = useState(1);
+
+  // Flipbook preview state — pdfUrl stays null until the user actually
+  // asks for a preview, so PdfFlipbookViewer never mounts against an
+  // empty/invalid source.
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [flipbookLoading, setFlipbookLoading] = useState(false);
 
   const exportRef = useRef<HTMLDivElement>(null);
 
@@ -90,6 +112,14 @@ export default function Home() {
     saveDraft<Draft>({ id, name, templateId, doc });
   }, [id, name, templateId, doc, hydrated]);
 
+  // Release the generated blob URL when it's replaced or the page unmounts,
+  // so we don't leak memory across repeated previews.
+  useEffect(() => {
+    return () => {
+      if (pdfUrl) URL.revokeObjectURL(pdfUrl);
+    };
+  }, [pdfUrl]);
+
   const meta = getTemplate(templateId);
   const Template = meta.Component;
   const fonts = getFontPack(doc.fontPackId);
@@ -111,6 +141,45 @@ export default function Home() {
     setDoc(emptyDocument());
   }
 
+  async function handlePreviewFlipbook() {
+    if (!exportRef.current || flipbookLoading) return;
+    setFlipbookLoading(true);
+    try {
+      const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
+        import("html2canvas"),
+        import("jspdf"),
+      ]);
+
+      const node = exportRef.current;
+      const canvas = await html2canvas(node, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+      });
+      const imgData = canvas.toDataURL("image/png");
+
+      const pdf = new jsPDF({
+        orientation: canvas.width >= canvas.height ? "landscape" : "portrait",
+        unit: "px",
+        format: [canvas.width, canvas.height],
+      });
+      pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+
+      const blob = pdf.output("blob");
+      if (pdfUrl) URL.revokeObjectURL(pdfUrl);
+      setPdfUrl(URL.createObjectURL(blob));
+    } catch (err) {
+      console.error("Failed to build flipbook preview:", err);
+    } finally {
+      setFlipbookLoading(false);
+    }
+  }
+
+  function closeFlipbook() {
+    if (pdfUrl) URL.revokeObjectURL(pdfUrl);
+    setPdfUrl(null);
+  }
+
   if (!authChecked) {
     return <div className="min-h-screen bg-ambient" />;
   }
@@ -125,7 +194,6 @@ export default function Home() {
             <div className="flex items-center gap-2 flex-wrap min-w-0">
               <LanguageToggle value={doc.language} onChange={(v) => patchDoc({ language: v })} />
               <FontPackSelector value={doc.fontPackId} onChange={(v) => patchDoc({ fontPackId: v })} />
-              {/* was lg:inline-flex — now available as soon as the split layout appears at md */}
               <button
                 onClick={() => setEditorHidden((h) => !h)}
                 className="icon-btn border border-white/60 bg-white/50 backdrop-blur hidden md:inline-flex shadow-sm"
@@ -133,6 +201,18 @@ export default function Home() {
                 aria-label={editorHidden ? "Show editor panel" : "Hide editor panel"}
               >
                 {editorHidden ? <PanelLeftOpen className="w-4 h-4" /> : <PanelLeftClose className="w-4 h-4" />}
+              </button>
+              <button
+                onClick={handlePreviewFlipbook}
+                disabled={flipbookLoading}
+                className="p-1.5 rounded border border-white/60 bg-white/50 backdrop-blur inline-flex items-center gap-1.5 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                title="Preview as flipbook"
+                aria-label="Preview as flipbook"
+              >
+                <BookOpen className="w-4 h-4" />
+                <span className="hidden sm:inline text-sm">
+                  {flipbookLoading ? "Preparing…" : "Flipbook"}
+                </span>
               </button>
               <ExportBar targetRef={exportRef} filename={name.replace(/\s+/g, "_") || "biodata"} />
             </div>
@@ -257,6 +337,30 @@ export default function Home() {
       <div className="fixed top-0 left-[-99999px] pointer-events-none pdf html print-area" aria-hidden="true">
         <Template doc={doc} fonts={fonts} ref={exportRef} />
       </div>
+
+      {/* Flipbook preview overlay — only mounted once a real PDF blob exists */}
+      {pdfUrl && (
+        <div className="fixed inset-0 z-50 bg-[#2b2420]/70 backdrop-blur-sm flex flex-col items-center justify-center px-4 py-8 overflow-y-auto">
+          <button
+            onClick={closeFlipbook}
+            aria-label="Close flipbook preview"
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 w-9 h-9 rounded-full bg-white/90 text-[#5c1620] flex items-center justify-center hover:bg-white transition-colors"
+          >
+            <X className="w-4 h-4" />
+          </button>
+          <PdfFlipbookViewer
+            fileUrl={pdfUrl}
+            title={name}
+            headerPage={{
+              title: "Wedding Invitation",
+              subtitle: "Aarav & Sneha",
+              description:
+                "Together with their families, we invite you to celebrate this joyful occasion.",
+              accentColor: "#8a6a1f",
+            }}
+          />
+        </div>
+      )}
 
       <AppFooter />
     </div>

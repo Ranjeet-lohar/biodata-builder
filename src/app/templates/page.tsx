@@ -66,7 +66,7 @@ export default function AllTemplatesPage() {
 
                       {/* Use This Template Button */}
                       <Link
-                        href="/?template=" + template.id
+                        href={`/?template=${template.id}`}
                         className="inline-flex items-center justify-center w-full gap-2 px-4 py-2.5 bg-[#1e98d7] hover:bg-[#1787c3] text-white font-medium rounded-lg transition-all group/btn"
                       >
                         Use This Template

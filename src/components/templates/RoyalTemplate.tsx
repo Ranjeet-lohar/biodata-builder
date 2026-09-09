@@ -17,76 +17,191 @@ const palette = {
 const BotanicalCorner = ({
   className = "",
   flip = false,
+  animated = false,
+  colors,
 }: {
   className?: string;
   flip?: boolean;
-}) => (
-  <svg
-    viewBox="0 0 300 340"
-    className={className}
-    fill="none"
-    style={{ transform: flip ? "scaleX(-1)" : undefined }}
-  >
-    <path
-      d="M12 330 C28 270 48 218 82 166 C122 106 184 56 288 8"
-      stroke={palette.olive}
-      strokeWidth="1.15"
-      opacity="0.8"
-    />
+  animated?: boolean;
+  colors?: Partial<typeof palette>;
+}) => {
+  const p = { ...palette, ...colors };
 
-    <path
-      d="M42 278 C82 250 112 220 142 176"
-      stroke={palette.gold}
-      strokeWidth="0.8"
-      opacity="0.55"
-    />
+  return (
+    <svg
+      viewBox="0 0 300 340"
+      className={className}
+      fill="none"
+      aria-hidden="true"
+      style={{
+        transform: flip ? "scaleX(-1)" : undefined,
+        transformOrigin: "center",
+      }}
+    >
+      <g className={animated ? "origin-bottom-left animate-[breathe_9s_ease-in-out_infinite]" : undefined}>
 
-    {[
-      [58, 248, -32],
-      [82, 208, 24],
-      [108, 174, -20],
-      [136, 140, 30],
-      [165, 108, -18],
-      [198, 78, 24],
-      [230, 52, -15],
-    ].map(([x, y, rot], i) => (
-      <g
-        key={i}
-        transform={`translate(${x},${y}) rotate(${rot})`}
-        opacity="0.8"
-      >
+        {/* ── Scalloped lace border along the two edges ── */}
+        {Array.from({ length: 9 }).map((_, i) => (
+          <circle
+            key={`scallop-h-${i}`}
+            cx={22 + i * 33}
+            cy={326}
+            r="7"
+            stroke={p.gold}
+            strokeWidth="0.8"
+            opacity={0.5 + i * 0.05}
+          />
+        ))}
+        {Array.from({ length: 10 }).map((_, i) => (
+          <circle
+            key={`scallop-v-${i}`}
+            cx={14}
+            cy={300 - i * 31}
+            r="7"
+            stroke={p.gold}
+            strokeWidth="0.8"
+            opacity={0.55 + i * 0.04}
+          />
+        ))}
+
+        {/* ── Concentric quarter arcs (fan) ── */}
+        {[290, 258, 226, 194].map((r, i) => (
+          <path
+            key={`arc-${i}`}
+            d={`M ${-60 + i * 8} 400 A ${r} ${r} 0 0 1 400 ${-60 + i * 8}`}
+            stroke={p.olive}
+            strokeWidth={1.4 - i * 0.25}
+            opacity={0.75 - i * 0.15}
+            strokeLinecap="round"
+            transform="translate(-6, -6)"
+          />
+        ))}
+
+        {/* ── Diagonal stem ── */}
         <path
-          d="M0 0 C12 -10 28 -11 39 -2 C28 6 12 9 0 0Z"
-          stroke={palette.olive}
-          strokeWidth="0.9"
+          d="M26 318 C60 268 96 214 146 158 C196 102 246 56 296 18"
+          stroke={p.olive}
+          strokeWidth="1.3"
+          strokeLinecap="round"
+          opacity="0.85"
+          strokeDasharray="none"
         />
 
-        <path
-          d="M4 -1 C14 -4 25 -5 35 -3"
-          stroke={palette.olive}
-          strokeWidth="0.55"
-        />
-      </g>
-    ))}
+        {/* ── Teardrop / paisley leaves along stem ── */}
+        {[
+          [52, 282, -42, 1.15],
+          [78, 246, 30, 1],
+          [106, 208, -38, 1.1],
+          [136, 172, 28, 0.95],
+          [168, 136, -34, 1.05],
+          [200, 102, 30, 0.9],
+          [232, 72, -28, 0.85],
+          [262, 46, 24, 0.75],
+        ].map(([x, y, rot, s], i) => (
+          <g
+            key={`drop-${i}`}
+            transform={`translate(${x},${y}) rotate(${rot}) scale(${s})`}
+            opacity="0.9"
+          >
+            {/* Teardrop body */}
+            <path
+              d="M0 14 C-9 8 -13 -2 -8 -10 C-4 -16 4 -16 8 -10 C13 -2 9 8 0 14 Z"
+              fill={p.olive}
+              fillOpacity="0.1"
+              stroke={p.olive}
+              strokeWidth="0.9"
+              strokeLinejoin="round"
+            />
+            {/* Inner spiral dot */}
+            <circle cx="0" cy="-4" r="1.4" fill={p.gold} />
+            {/* Tiny tail line */}
+            <path d="M0 14 L0 20" stroke={p.olive} strokeWidth="0.7" strokeLinecap="round" />
+          </g>
+        ))}
 
-    {/* Small flowers */}
-    {[
-      [88, 195],
-      [153, 120],
-      [216, 64],
-    ].map(([x, y], i) => (
-      <g key={i} transform={`translate(${x},${y})`}>
-        <circle cx="0" cy="-7" r="4" stroke={palette.rose} strokeWidth="0.8" />
-        <circle cx="6" cy="0" r="4" stroke={palette.rose} strokeWidth="0.8" />
-        <circle cx="0" cy="7" r="4" stroke={palette.rose} strokeWidth="0.8" />
-        <circle cx="-6" cy="0" r="4" stroke={palette.rose} strokeWidth="0.8" />
-        <circle cx="0" cy="0" r="2" fill={palette.gold} />
-      </g>
-    ))}
+        {/* ── Diamond flowers ── */}
+        {[
+          [92, 228, 1],
+          [156, 154, 0.85],
+          [220, 88, 0.7],
+        ].map(([x, y, s], i) => (
+          <g key={`flower-${i}`} transform={`translate(${x},${y}) scale(${s})`}>
+            {/* 4 diamond petals */}
+            {[45, 135, 225, 315].map((deg) => (
+              <path
+                key={deg}
+                d="M0 -4 L4.5 -10 L0 -16 L-4.5 -10 Z"
+                transform={`rotate(${deg})`}
+                fill={p.rose}
+                fillOpacity="0.1"
+                stroke={p.rose}
+                strokeWidth="0.8"
+                strokeLinejoin="round"
+              />
+            ))}
+            {/* Center ring + dot */}
+            <circle r="3" stroke={p.gold} strokeWidth="0.8" fill={p.gold} fillOpacity="0.15" />
+            <circle r="1.2" fill={p.gold} />
+            {/* Orbiting dots */}
+            {[0, 90, 180, 270].map((deg) => (
+              <circle
+                key={deg}
+                cx={Math.cos((deg * Math.PI) / 180) * 12}
+                cy={Math.sin((deg * Math.PI) / 180) * 12}
+                r="1"
+                fill={p.gold}
+                opacity="0.6"
+              />
+            ))}
+          </g>
+        ))}
 
-    <circle cx="288" cy="8" r="2.2" fill={palette.gold} />
-  </svg>
-);
+        {/* ── Chevron accents on the arcs ── */}
+        {[
+          [120, 258],
+          [176, 220],
+          [222, 168],
+          [258, 108],
+        ].map(([x, y], i) => (
+          <g key={`chev-${i}`} transform={`translate(${x},${y}) rotate(45)`} opacity="0.65">
+            <path d="M-4 0 L0 -4 L4 0" stroke={p.gold} strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round" />
+          </g>
+        ))}
+
+        {/* ── Corner jewel ── */}
+        <g transform="translate(292, 12)">
+          <path
+            d="M0 -7 L5 0 L0 7 L-5 0 Z"
+            fill={p.gold}
+            fillOpacity="0.2"
+            stroke={p.gold}
+            strokeWidth="0.9"
+            strokeLinejoin="round"
+          />
+          <circle r="1.5" fill={p.gold} />
+        </g>
+
+        {/* ── Scattered pin dots ── */}
+        {[
+          [64, 300],
+          [118, 240],
+          [186, 176],
+          [248, 116],
+          [280, 70],
+        ].map(([x, y], i) => (
+          <circle key={`pin-${i}`} cx={x} cy={y} r="1.2" fill={p.rose} opacity="0.55" />
+        ))}
+      </g>
+
+      <style>{`
+        @keyframes breathe {
+          0%, 100% { transform: rotate(0deg) scale(1); }
+          50% { transform: rotate(-1.2deg) scale(1.01); }
+        }
+      `}</style>
+    </svg>
+  );
+};
 
 const SmallFloral = () => (
   <svg width="52" height="18" viewBox="0 0 52 18" fill="none">
@@ -121,21 +236,38 @@ const SmallFloral = () => (
 const UnderlineSwash = ({ width = 150 }: { width?: number }) => (
   <svg
     width={width}
-    height="12"
-    viewBox={`0 0 ${width} 12`}
+    height="16"
+    viewBox={`0 0 ${width} 16`}
     fill="none"
+    aria-hidden="true"
   >
+    {/* Main flourish */}
     <path
-      d={`M2 8 Q ${width * 0.25} 2, ${width * 0.5} 7 T ${width - 2} 5`}
+      d={`M2 9
+          C ${width * 0.12} 3,
+            ${width * 0.22} 3,
+            ${width * 0.32} 8
+          C ${width * 0.42} 13,
+            ${width * 0.55} 12,
+            ${width * 0.64} 7
+          C ${width * 0.73} 2,
+            ${width * 0.87} 3,
+            ${width - 2} 7`}
       stroke={palette.rose}
-      strokeWidth="1"
+      strokeWidth="1.2"
+      strokeLinecap="round"
     />
 
+    {/* Fine gold underline */}
     <path
-      d={`M${width * 0.15} 10 Q ${width * 0.5} 8, ${width * 0.82} 9`}
+      d={`M${width * 0.18} 12
+          C ${width * 0.38} 10,
+            ${width * 0.62} 10,
+            ${width * 0.82} 11`}
       stroke={palette.gold}
-      strokeWidth="0.6"
-      opacity="0.65"
+      strokeWidth="0.7"
+      strokeLinecap="round"
+      opacity="0.7"
     />
   </svg>
 );
@@ -162,11 +294,6 @@ const SectionHeading = ({
 }) => (
   <div className="mb-5 flex items-center gap-3">
     <NumberMark n={number} />
-
-    <span
-      className="h-px w-8"
-      style={{ backgroundColor: palette.line }}
-    />
 
     <h2
       className="text-[11px] font-semibold uppercase tracking-[0.22em]"
@@ -257,12 +384,6 @@ const LineTemplate = forwardRef<
             <div className="max-w-[125mm]">
               {doc.invocation.enabled && (
                 <div className="mb-5 flex items-center gap-3">
-                  <span
-                    className="h-px w-8"
-                    style={{
-                      backgroundColor: palette.gold,
-                    }}
-                  />
 
                   <p
                     className="text-[10px] tracking-[0.22em]"
@@ -296,7 +417,7 @@ const LineTemplate = forwardRef<
               </h1>
 
               <div className="mt-4">
-                <UnderlineSwash width={155} />
+                <UnderlineSwash width={195} />
               </div>
             </div>
 

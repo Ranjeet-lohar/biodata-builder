@@ -226,7 +226,7 @@ HTMLDivElement,
                 label={lang === "hi" ? section.titleHi || section.titleEn : section.titleEn}
               />
               <div
-                className="grid grid-cols-2 gap-x-8 gap-y-3 pl-9 py-4 pr-5 rounded-[10px]"
+                className="grid grid-cols-2 gap-x-8 gap-y-3 pl-9 py-3 pr-5 rounded-[10px]"
                 style={{ backgroundColor: palette.panel, border: `1px solid ${palette.line}` }}
               >
                 {section.fields.map((f) => (

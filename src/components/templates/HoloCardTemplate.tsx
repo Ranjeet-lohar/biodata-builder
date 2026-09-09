@@ -106,7 +106,7 @@ const ChipPortrait = ({ children }: { children: React.ReactNode }) => (
 const LaserDivider = ({ label }: { label: string }) => (
   <div className="flex items-center gap-3">
     <div
-      className="text-[10px] px-2 h-5 pb-[3px] flex items-center justify-center rounded-full tracking-[0.15em] uppercase shrink-0"
+      className="text-[10px] px-2 h-5 pt-[3px] pb-[0px] flex items-center justify-center rounded-full tracking-[0.15em] uppercase shrink-0"
       style={{
         color: holo.cyan,
         border: `1px solid ${holo.cyan}55`,
@@ -214,7 +214,7 @@ HTMLDivElement,
                 {L("Biodata", "बायोडाटा")}
               </span>
             </div>
-            
+
           </div>
         </div>
       </div>

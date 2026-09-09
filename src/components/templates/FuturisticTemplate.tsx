@@ -192,7 +192,7 @@ HTMLDivElement,
             </p>
           )}
           <h1
-            className="text-[30px] leading-tight font-semibold truncate"
+            className="text-[30px] leading-normal font-semibold truncate"
             style={{ fontFamily: heading, color: palette.ink }}
           >
             {(lang === "hi" && doc.fullNameHi) || doc.fullName || L("Full Name", "पूरा नाम")}

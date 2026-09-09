@@ -14,7 +14,7 @@ export function TextField({
   textarea?: boolean;
 }) {
   return (
-    <label className="flex flex-col gap-1.5 text-sm w-full">
+    <label className="flex flex-col gap-0 text-sm w-full">
       <span className="field-label">{label}</span>
       {textarea ? (
         <textarea
@@ -27,7 +27,7 @@ export function TextField({
       ) : (
         <input
           name={label}
-          className="field-input"
+          className="field-input mb-1.5"
           value={value}
           placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
@@ -49,7 +49,7 @@ export function SelectField({
   options: string[];
 }) {
   return (
-    <label className="flex flex-col gap-1.5 text-sm w-full">
+    <label className="flex flex-col gap-0 text-sm w-full">
       <span className="field-label">{label}</span>
       <select
         name={label}

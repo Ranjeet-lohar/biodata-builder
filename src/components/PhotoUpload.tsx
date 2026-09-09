@@ -176,7 +176,7 @@ export default function PhotoUpload({
       </button>
 
       {/* Controls */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-2">
         <button
           type="button"
           onClick={openFilePicker}
@@ -187,6 +187,8 @@ export default function PhotoUpload({
             inline-flex
             items-center
             gap-1.5
+            !py-2.5
+            height-[42px]
             focus:outline-none
             focus-visible:ring-2
             focus-visible:ring-stone-500
@@ -207,7 +209,7 @@ export default function PhotoUpload({
             className="
               btn-outline
               w-fit
-              !py-2
+              !py-2.5
               !px-5.5
               min-w-[142px]
               text-xs
@@ -227,7 +229,7 @@ export default function PhotoUpload({
         )}
 
         {/* File hint */}
-        <span className="text-[10px] text-stone-400">
+        <span className="text-[10px] text-stone-400 mt-1">
           JPG, PNG, WEBP · Max 5MB
         </span>
 

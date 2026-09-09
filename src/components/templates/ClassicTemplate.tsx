@@ -204,9 +204,9 @@ const ClassicTemplate = forwardRef<HTMLDivElement, { doc: BiodataDocument; fonts
         >
           {/* Identity card */}
           <div
-            className="flex items-center gap-7 rounded-[28px] px-9 py-7 avoid-break"
+            className="flex items-center gap-7 rounded-lg px-9 py-7 avoid-break"
             style={{ backgroundColor: palette.card, boxShadow: "0 8px 30px rgba(34,38,43,0.06)", border: `1px solid ${palette.line}` }}
-          >
+           >
             <div className="relative shrink-0">
               <div
                 className="w-[112px] h-[112px] rounded-full overflow-hidden"
@@ -249,7 +249,7 @@ const ClassicTemplate = forwardRef<HTMLDivElement, { doc: BiodataDocument; fonts
 
           {/* About */}
           {aboutSection && (
-            <div className="mt-5 rounded-[20px] px-8 py-5 avoid-break" style={{ backgroundColor: palette.card, border: `1px solid ${palette.line}` }}>
+            <div className="mt-5 rounded-lg px-8 py-5 avoid-break" style={{ backgroundColor: palette.card, border: `1px solid ${palette.line}` }}>
               <p className="text-[14px] leading-relaxed" style={{ color: palette.ink, opacity: 0.82 }}>
                 {(lang === "hi" && aboutSection.fields[0]?.valueHi) || aboutSection.fields[0]?.value || ""}
               </p>
@@ -261,7 +261,7 @@ const ClassicTemplate = forwardRef<HTMLDivElement, { doc: BiodataDocument; fonts
             {gridSections.map((section) => (
               <div
                 key={section.id}
-                className="avoid-break rounded-[20px] px-7 py-5"
+                className="avoid-break rounded px-7 py-5"
                 style={{ backgroundColor: palette.card, border: `1px solid ${palette.line}`, boxShadow: "0 4px 16px rgba(34,38,43,0.03)" }}
               >
                 <h2 className="text-[13px] font-semibold uppercase tracking-[0.14em]" style={{ color: palette.primary, fontFamily: heading }}>
