@@ -3,6 +3,51 @@ import { FontPack } from "@/lib/fontPacks";
 import { Theme } from "./theme";
 import { photoShapeClass } from "./Motifs";
 
+function PageFrame({ theme }: { theme: Theme }) {
+  // A4 in mm, viewBox in mm so all coordinates map 1:1 — avoids px/rem
+  // rounding drift under html2canvas capture (see other templates' notes).
+  const W = 210;
+  const H = 297;
+  const MARGIN = 8; // mm inset from the page edge
+  const TICK = 10; // mm length of each corner tick
+
+  return (
+    <svg
+      width={`${W}mm`}
+      height={`${H}mm`}
+      viewBox={`0 0 ${W} ${H}`}
+      style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}
+    >
+      {/* Outer hairline border */}
+      <rect
+        x={MARGIN}
+        y={MARGIN}
+        width={W - MARGIN * 2}
+        height={H - MARGIN * 2}
+        fill="none"
+        stroke={theme.border}
+        strokeWidth={0.4}
+      />
+
+      {/* Corner ticks, quiet accent in the primary color */}
+      {[
+        { x: MARGIN, y: MARGIN, dx: 1, dy: 1 },
+        { x: W - MARGIN, y: MARGIN, dx: -1, dy: 1 },
+        { x: W - MARGIN, y: H - MARGIN, dx: -1, dy: -1 },
+        { x: MARGIN, y: H - MARGIN, dx: 1, dy: -1 },
+      ].map(({ x, y, dx, dy }, i) => (
+        <path
+          key={i}
+          d={`M${x},${y + TICK * dy} L${x},${y} L${x + TICK * dx},${y}`}
+          fill="none"
+          stroke={theme.primary}
+          strokeWidth={0.6}
+        />
+      ))}
+    </svg>
+  );
+}
+
 function StatUnit({
   theme,
   label,
@@ -15,6 +60,7 @@ function StatUnit({
   last?: boolean;
 }) {
   return (
+    
     <div
       className="flex flex-col px-6 first:pl-0"
       style={{
@@ -91,7 +137,6 @@ export default function ModernMinimalLayout({
     aboutSection?.fields[0]?.value ||
     "";
 
-  // Up to 5 key facts surface in the stat strip under the letterhead rule
   const firstGrid = restSections.find((s) => s.type === "grid");
   const headerStats = (firstGrid?.fields ?? []).slice(0, 5);
   const otherSections = restSections.filter((s) => s !== firstGrid);
@@ -101,6 +146,8 @@ export default function ModernMinimalLayout({
       className="relative a4-page w-[210mm] min-h-[297mm]"
       style={{ backgroundColor: theme.bg, color: theme.text, fontFamily: body }}
     >
+      <PageFrame theme={theme} />
+
       {/* Letterhead */}
       <div className="px-16 pt-14 pb-8 flex items-start justify-between gap-10">
         <div className="flex-1 min-w-0">
@@ -126,7 +173,6 @@ export default function ModernMinimalLayout({
           </h1>
         </div>
 
-        {/* Photo: quiet rectangle, hairline border, no shadow */}
         <div className="shrink-0">
           <div
             className={`w-[118px] h-[148px] overflow-hidden bg-white ${photoShapeClass(
@@ -149,7 +195,6 @@ export default function ModernMinimalLayout({
         </div>
       </div>
 
-      {/* Signature rule + stat strip, like a boarding-pass detail line */}
       <div className="px-16">
         <div className="h-[2px] w-full mb-6" style={{ backgroundColor: theme.primary }} />
         {headerStats.length > 0 && (
@@ -167,7 +212,6 @@ export default function ModernMinimalLayout({
         )}
       </div>
 
-      {/* Body */}
       <div className="px-16 pt-2 pb-14">
         {aboutSection && !isRichTextEmpty(aboutValue) && (
           <div className="mt-1 pl-5 " style={{ borderLeft: `2px solid ${theme.border}` }}>

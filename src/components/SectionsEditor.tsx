@@ -179,7 +179,7 @@ function SortableSectionCard({
         </button>
 
         <div className="flex items-center gap-0.5">
-          <button type="button" onClick={onDuplicate} className="icon-btn text-stone-400 hover:text-stone-600 hover:bg-stone-100 shrink-0" title="Duplicate">
+          <button type="button" onClick={onDuplicate} className="sm:block hidden icon-btn text-stone-400 hover:text-stone-600 hover:bg-stone-100 shrink-0" title="Duplicate">
             <Copy className="w-3.5 h-3.5" />
           </button>
           <button type="button" onClick={() => onChange({ visible: !section.visible })} className={`icon-btn shrink-0 ${section.visible ? "text-stone-500 hover:text-[#1e98d7]" : "text-stone-300 hover:text-stone-500"}`} title={section.visible ? "Visible" : "Hidden"}>

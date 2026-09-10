@@ -140,9 +140,9 @@ const NodePortrait = ({ children }: { children: React.ReactNode }) => (
 );
 
 const SectionHeading = ({ index, label }: { index: number; label: string }) => (
-  <div className="flex items-center gap-3 mb-4">
+  <div className="flex items-baseline gap-3 mb-4">
     <span
-      className="text-[10px] px-2 py-[3px] rounded-[3px] tracking-[0.15em]"
+      className="text-[10px] px-2 pt-1 h-6 rounded-[3px] flex items-center justify-center tracking-[0.15em]"
       style={{
         fontFamily: "monospace",
         color: trace.lime,

@@ -276,7 +276,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Mission */}
+                {/* Mission */}
         <section className="mt-8 overflow-hidden border border-pink-100 bg-gradient-to-br from-pink-50 via-white to-amber-50 p-7 text-center sm:p-12">
           <div className="mx-auto flex h-14 w-14 items-center justify-center bg-white text-pink-600 shadow-sm">
             <Heart className="h-6 w-6 fill-pink-500" />
@@ -295,14 +295,6 @@ export default function AboutPage() {
             design skills or complicated software. It should be an easy,
             enjoyable way to present who you are and what matters to you.
           </p>
-
-          <Link
-            href="/"
-            className="group mt-7 inline-flex items-center gap-2 bg-stone-900 px-7 py-3.5 text-sm font-bold text-white shadow-lg transition hover:bg-stone-800"
-          >
-            Create Your Biodata
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
         </section>
 
         {/* Footer */}
@@ -315,3 +307,4 @@ export default function AboutPage() {
     </main>
   );
 }
+  

@@ -189,46 +189,7 @@ export default function Home() {
       <AppHeader/>
 
       <main className="max-w-[1720px] w-full mx-auto px-3 sm:px-6 py-4 sm:py-6 overflow-x-hidden relative">
-        <div className="sticky top-0 z-20 mb-4 sm:mb-5">
-          <div className="flex flex-col gap-3 rounded border border-white/60 bg-white/60 p-3 shadow-lg shadow-stone-900/5 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-            <div className="flex items-center gap-2 flex-wrap min-w-0">
-              <LanguageToggle value={doc.language} onChange={(v) => patchDoc({ language: v })} />
-              <FontPackSelector value={doc.fontPackId} onChange={(v) => patchDoc({ fontPackId: v })} />
-              <button
-                onClick={() => setEditorHidden((h) => !h)}
-                className="icon-btn border border-white/60 bg-white/50 backdrop-blur hidden md:inline-flex shadow-sm"
-                title={editorHidden ? "Show editor panel" : "Hide editor panel"}
-                aria-label={editorHidden ? "Show editor panel" : "Hide editor panel"}
-              >
-                {editorHidden ? <PanelLeftOpen className="w-4 h-4" /> : <PanelLeftClose className="w-4 h-4" />}
-              </button>
-              <button
-                onClick={handlePreviewFlipbook}
-                disabled={flipbookLoading}
-                className="p-1.5 rounded border border-white/60 bg-white/50 backdrop-blur inline-flex items-center gap-1.5 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
-                title="Preview as flipbook"
-                aria-label="Preview as flipbook"
-              >
-                <BookOpen className="w-4 h-4" />
-                <span className="hidden sm:inline text-sm">
-                  {flipbookLoading ? "Preparing…" : "Flipbook"}
-                </span>
-              </button>
-              <ExportBar targetRef={exportRef} filename={name.replace(/\s+/g, "_") || "biodata"} />
-            </div>
-
-            <div className="w-full min-w-0 sm:w-auto">
-              <ProfilesBar
-                currentId={id}
-                currentName={name}
-                onLoad={handleLoadProfile}
-                onNew={handleNew}
-                getSnapshot={() => ({ templateId, doc })}
-              />
-            </div>
-          </div>
-        </div>
-
+       
         <div className="flex gap-3 sm:gap-4">
           {/* phone-only floating tab switcher — hidden once the md split kicks in */}
           <div
@@ -285,6 +246,46 @@ export default function Home() {
                 <TemplateSelector value={templateId} onChange={setTemplateId} />
               </div>
             </div>
+{/* editor panel */}
+ <div className="sticky top-0 z-20 mb-4 sm:mb-5">
+          <div className="flex flex-col gap-2 rounded border border-white/60 bg-white/60 p-3 shadow-lg shadow-stone-900/5 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between ">
+            <div className="flex items-center gap-2 flex-wrap min-w-0">
+              <LanguageToggle value={doc.language} onChange={(v) => patchDoc({ language: v })} />
+              <FontPackSelector value={doc.fontPackId} onChange={(v) => patchDoc({ fontPackId: v })} />
+              <button
+                onClick={() => setEditorHidden((h) => !h)}
+                className="icon-btn border border-white/60 bg-white/50 backdrop-blur hidden md:inline-flex shadow-sm"
+                title={editorHidden ? "Show editor panel" : "Hide editor panel"}
+                aria-label={editorHidden ? "Show editor panel" : "Hide editor panel"}
+              >
+                {editorHidden ? <PanelLeftOpen className="w-4 h-4" /> : <PanelLeftClose className="w-4 h-4" />}
+              </button>
+              <button
+                onClick={handlePreviewFlipbook}
+                disabled={flipbookLoading}
+                className="p-1.5 rounded border border-white/60 bg-white/50 backdrop-blur inline-flex items-center gap-1.5 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                title="Preview as flipbook"
+                aria-label="Preview as flipbook"
+              >
+                <BookOpen className="w-4 h-4" />
+                <span className="hidden sm:inline text-sm">
+                  {flipbookLoading ? "Preparing…" : "Flipbook"}
+                </span>
+              </button>
+              <ExportBar targetRef={exportRef} filename={name.replace(/\s+/g, "_") || "biodata"} />
+            </div>
+
+            <div className="w-full min-w-0 sm:w-auto">
+              <ProfilesBar
+                currentId={id}
+                currentName={name}
+                onLoad={handleLoadProfile}
+                onNew={handleNew}
+                getSnapshot={() => ({ templateId, doc })}
+              />
+            </div>
+          </div>
+        </div>
 
             <div
               className={`grid gap-4 items-start transition-[grid-template-columns] duration-200 grid-cols-1 ${
@@ -319,9 +320,9 @@ export default function Home() {
                   </button>
                 )}
 
-                <div className="glass-well rounded overflow-x-auto w-fit ml-auto">
+                <div className="glass-well rounded overflow-x-auto w-fit mx-auto sm:ml-auto">
                   <div
-                    className="mx-auto sm:my-3 sm:m-4 shadow-2xl shadow-stone-900/20 sm:rounded-sm w-full origin-top"
+                    className="mx-auto sm:my-3 w-[calc(100vw-32px)] sm:m-4 shadow-2xl shadow-stone-900/20 sm:rounded-sm  origin-top"
                     style={{ maxWidth: 794 }}
                   >
                     <PreviewScaler zoom={zoom}>

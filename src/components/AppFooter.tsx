@@ -107,28 +107,16 @@ export default function AppFooter() {
           {/* Social Links */}
           <div className="mt-6 flex items-center gap-3">
             {socialLinks.map(({ href, label, icon }) => (
-              <a
-                key={label}
+              
+              <a  key={label}
                 href={href}
                 target="_blank"
                 rel="noreferrer"
                 aria-label={label}
-                className="rounded border p-2 transition-all duration-200 hover:-translate-y-0.5"
-                style={{
-                  borderColor: "rgba(79,216,255,0.2)",
-                  backgroundColor: "rgba(79,216,255,0.05)",
-                  color: "#9089ad",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "#4fd8ff";
-                  e.currentTarget.style.borderColor = "rgba(79,216,255,0.5)";
-                  e.currentTarget.style.backgroundColor = "rgba(79,216,255,0.12)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "#9089ad";
-                  e.currentTarget.style.borderColor = "rgba(79,216,255,0.2)";
-                  e.currentTarget.style.backgroundColor = "rgba(79,216,255,0.05)";
-                }}
+                className="rounded border p-2 text-[#9089ad] transition-all duration-200
+                  hover:-translate-y-0.5 hover:text-[#4fd8ff]
+                  border-[#4fd8ff]/20 bg-[#4fd8ff]/5
+                  hover:border-[#4fd8ff]/50 hover:bg-[#4fd8ff]/[0.12]"
               >
                 {icon}
               </a>

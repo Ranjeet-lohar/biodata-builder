@@ -117,7 +117,7 @@ const RadarPortrait = ({ children }: { children: React.ReactNode }) => (
 const SectionTag = ({ index, label }: { index: number; label: string }) => (
   <div className="flex items-center gap-2 mb-4">
     <span
-      className="text-[10px] px-2 py-[3px] rounded-[3px] tracking-[0.15em]"
+      className="text-[10px] leading-3 px-2 py-[3px] block rounded-[3px] tracking-[0.15em]"
       style={{
         fontFamily: "monospace",
         color: glow.green,
@@ -127,7 +127,7 @@ const SectionTag = ({ index, label }: { index: number; label: string }) => (
     >
       {String(index + 1).padStart(2, "0")}
     </span>
-    <h2 className="text-[16px] font-semibold tracking-wide" style={{ color: palette.ink }}>
+    <h2 className="text-[16px] leading-5 font-semibold tracking-wide" style={{ color: palette.ink }}>
       {label}
     </h2>
     <span className="flex-1 h-px ml-1" style={{ backgroundColor: palette.line }} />
@@ -243,7 +243,7 @@ HTMLDivElement,
         )}
 
         {/* Sections */}
-        <div className="relative px-12 pb-14 space-y-7">
+        <div className="relative px-12 pb-14 space-y-0">
           {otherSections.map((section, idx) =>
             section.type === "grid" ? (
               <div key={section.id} className="avoid-break">

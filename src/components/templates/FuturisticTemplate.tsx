@@ -223,7 +223,7 @@ HTMLDivElement,
           {otherSections.map((section, idx) =>
             section.type === "grid" ? (
               <div key={section.id} className="avoid-break">
-                <div className="flex items-baseline gap-3 mb-4">
+                <div className="flex items-center gap-3 mb-4">
                   <span
                     className="text-[24px] font-light leading-none"
                     style={{ color: glow.violet, fontFamily: heading }}
