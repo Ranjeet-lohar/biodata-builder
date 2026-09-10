@@ -29,7 +29,7 @@ export default function AppHeader() {
           }}
         />
 
-        <div className="mx-auto flex max-w-[1720px] items-center justify-between gap-3 px-3 py-3 sm:px-6">
+        <div className="mx-auto flex max-w-[1720px] items-center justify-between gap-3 px-3 py-2 sm:px-6">
           <Link href="/" className="flex items-center gap-3 shrink-0">
             <img
               src="/logo.png"

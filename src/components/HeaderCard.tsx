@@ -123,7 +123,7 @@ export default function HeaderCard({
               flex w-full
               items-center
               justify-between
-              rounded-xl
+              rounded-md
               border border-stone-200
               px-3.5 py-3
               text-left
@@ -185,7 +185,7 @@ export default function HeaderCard({
 
           {/* Invocation Panel */}
           {showInvocation && (
-            <div className="mt-3 rounded-xl bg-stone-50 p-3.5">
+            <div className="mt-3 rounded-md bg-stone-50 p-3.5">
               {/* Enable */}
               <label className="mb-3 flex cursor-pointer items-center gap-2.5">
                 <span className="relative flex h-4 w-4 shrink-0">

@@ -22,7 +22,6 @@ body {
 
 .footer_bg {
     background-image: repeating-linear-gradient(45deg, hsla(207,0%,63%,0.05) 0px, hsla(207,0%,63%,0.05) 1px,transparent 1px, transparent 11px,hsla(207,0%,63%,0.05) 11px, hsla(207,0%,63%,0.05) 12px,transparent 12px, transparent 32px),repeating-linear-gradient(0deg, hsla(207,0%,63%,0.05) 0px, hsla(207,0%,63%,0.05) 1px,transparent 1px, transparent 11px,hsla(207,0%,63%,0.05) 11px, hsla(207,0%,63%,0.05) 12px,transparent 12px, transparent 32px),repeating-linear-gradient(135deg, hsla(207,0%,63%,0.05) 0px, hsla(207,0%,63%,0.05) 1px,transparent 1px, transparent 11px,hsla(207,0%,63%,0.05) 11px, hsla(207,0%,63%,0.05) 12px,transparent 12px, transparent 32px),repeating-linear-gradient(90deg, hsla(207,0%,63%,0.05) 0px, hsla(207,0%,63%,0.05) 1px,transparent 1px, transparent 11px,hsla(207,0%,63%,0.05) 11px, hsla(207,0%,63%,0.05) 12px,transparent 12px, transparent 32px),linear-gradient(90deg, rgb(17, 17, 17),rgb(66, 66, 66));
-    
 }
 
 @layer components {
@@ -132,13 +131,142 @@ body {
   .glass-well {
     @apply bg-white/30 backdrop-blur-xl border border-white/40 shadow-inner;
   }
-}
 
+  /* Glass surfaces for use ON TOP of .bg-ambient (dark, neon-tinted) -- */
+  .glass-header-dark {
+    @apply bg-white/[0.06] backdrop-blur-xl border-b border-white/10;
+  }
+  .glass-panel-dark {
+    @apply bg-white/[0.05] backdrop-blur-xl border border-white/10 shadow-lg shadow-black/30;
+  }
+}
 @layer utilities {
   .bg-ambient {
-background-color: #612121;
-background-image: url("https://www.transparenttextures.com/patterns/brick-wall.png");
-/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+    /* background-color: #612121; */
+    /* background-image: url("https://www.transparenttextures.com/patterns/brick-wall.png"); */
+    /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+  }
+
+  /* Modern ambient gradient background --------------------------------
+     Slow, soft morphing gradient — apply to a section wrapper (hero,
+     landing page), NOT to <body>: the rest of the design system
+     (.glass-header, .panel-card, .field-input, etc.) is built for a
+     light background and will lose contrast on this. Use
+     .glass-header-dark / .glass-panel-dark for any glass surfaces
+     placed on top of this background instead. */
+  .bg-ambient {
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(ellipse at top left, #ff006e, transparent 55%),
+      radial-gradient(ellipse at top right, #8338ec, transparent 55%),
+      radial-gradient(ellipse at bottom left, #3a86ff, transparent 55%),
+      radial-gradient(ellipse at bottom right, #06ffa5, transparent 55%),
+      linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+    background-size: 140% 140%;
+    animation: ambientMorph 50s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+
+  .bg-ambient::before {
+    content: "";
+    position: absolute;
+    inset: -10%;
+    pointer-events: none;
+    opacity: 0.6;
+    background-image: linear-gradient(30deg, transparent 40%, rgba(255, 0, 110, 0.025) 40%, rgba(255, 0, 110, 0.025) 60%, transparent 60%),
+      linear-gradient(150deg, transparent 40%, rgba(131, 56, 236, 0.025) 40%, rgba(131, 56, 236, 0.025) 60%, transparent 60%),
+      linear-gradient(270deg, transparent 40%, rgba(58, 134, 255, 0.025) 40%, rgba(58, 134, 255, 0.025) 60%, transparent 60%);
+    animation: ambientGeometricShift 70s linear infinite;
+  }
+
+  .bg-ambient::after {
+    content: "";
+    position: absolute;
+    inset: -15%;
+    pointer-events: none;
+    opacity: 0.18;
+    mix-blend-mode: screen;
+    background: conic-gradient(from 0deg at 20% 30%, #ff006e, transparent, #8338ec, transparent, #3a86ff),
+      conic-gradient(from 90deg at 70% 70%, #06ffa5, transparent, #ff006e, transparent, #8338ec);
+    animation: ambientMeshRotate 90s linear infinite;
+  }
+
+  /* Text treatment for use inside .bg-ambient */
+  .text-cyberpunk-gradient {
+    background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06ffa5);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: ambientTextGradient 20s ease-in-out infinite;
+  }
+}
+
+@keyframes ambientMorph {
+  0%, 100% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes ambientGeometricShift {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  100% {
+    transform: translateX(-30px) rotate(360deg);
+  }
+}
+
+@keyframes ambientMeshRotate {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes ambientTextGradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes cyberpunkGeometricShift {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  100% {
+    transform: translateX(-50px) rotate(360deg);
+  }
+}
+
+@keyframes cyberpunkMeshRotate {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes cyberpunkTextGradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
 }
 
@@ -154,11 +282,19 @@ background-image: url("https://www.transparenttextures.com/patterns/brick-wall.p
   background-image: none !important;
 }
 
+.pdf-export .bg-ambient,
+.pdf-export .bg-ambient::before,
+.pdf-export .bg-ambient::after {
+  animation: none !important;
+  background: #fff !important;
+}
+
 /* Hide app chrome that shouldn't appear in the captured screenshot */
 .pdf-export .no-print,
 .pdf-export header,
 .pdf-export nav,
 .pdf-export .glass-header,
+.pdf-export .glass-header-dark,
 .pdf-export .btn,
 .pdf-export .btn-primary,
 .pdf-export .btn-dark,
@@ -215,6 +351,7 @@ background-image: url("https://www.transparenttextures.com/patterns/brick-wall.p
   header,
   nav,
   .glass-header,
+  .glass-header-dark,
   .btn,
   .btn-primary,
   .btn-dark,
@@ -223,6 +360,13 @@ background-image: url("https://www.transparenttextures.com/patterns/brick-wall.p
   .btn-ghost,
   .icon-btn {
     display: none !important;
+  }
+
+  .bg-ambient,
+  .bg-ambient::before,
+  .bg-ambient::after {
+    animation: none !important;
+    background: #fff !important;
   }
 
   .print-area {

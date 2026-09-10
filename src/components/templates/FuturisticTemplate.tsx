@@ -120,7 +120,7 @@ const PortraitFrame = ({ children }: { children: React.ReactNode }) => (
       <circle cx="1" cy="151" r="2" fill={glow.violet} />
       <circle cx="151" cy="151" r="2" fill={glow.cyan} />
     </svg>
-    <div className="relative w-full h-full rounded-[10px] overflow-hidden" style={{ backgroundColor: palette.panel, border: `1px solid ${palette.line}` }}>
+    <div className="relative w-full h-full rounded overflow-hidden" style={{ backgroundColor: palette.panel, border: `1px solid ${palette.line}` }}>
       {children}
     </div>
   </div>

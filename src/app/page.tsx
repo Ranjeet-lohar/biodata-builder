@@ -279,20 +279,20 @@ export default function Home() {
                 Choose a design ({templates.length} templates)
               </p>
               <div
-                className={`${showTemplates ? "block" : "hidden"} md:block w-full rounded-[10px] p-2 sm:p-[10px] bg-white/70 border border-white/70 shadow-sm`}
+                className={`${showTemplates ? "block" : "hidden"} md:block w-full rounded p-2 sm:p-[10px] bg-white/70 border border-white/70 shadow-sm`}
                 style={{ ["--fade-bg" as unknown as string]: "rgba(255,255,255,0.75)" }}
               >
                 <TemplateSelector value={templateId} onChange={setTemplateId} />
               </div>
             </div>
 
-          <div
-  className={`grid gap-4 items-start transition-[grid-template-columns] duration-200 grid-cols-1 ${
-    editorHidden
-      ? "md:grid-cols-[0px_1fr] lg:grid-cols-[0px_1fr]"
-      : "md:grid-cols-[1fr_auto] 2xl:grid-cols-[1fr_auto]"
-  }`}
->
+            <div
+              className={`grid gap-4 items-start transition-[grid-template-columns] duration-200 grid-cols-1 ${
+                editorHidden
+                  ? "md:grid-cols-[0px_1fr] lg:grid-cols-[0px_1fr]"
+                  : "md:grid-cols-[1fr_auto] 2xl:grid-cols-[1fr_auto]"
+              }`}
+            >
               <div
                 className={`${mobileTab === "preview" ? "hidden" : "block"} ${editorHidden ? "md:hidden" : "md:block"
                   } min-w-0 md:sticky md:top-[132px] md:pr-1`}
