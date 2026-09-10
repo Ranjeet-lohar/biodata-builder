@@ -56,7 +56,7 @@ export function CornerMotif({
 
 export function photoShapeClass(shape: Theme["photoShape"]) {
   if (shape === "circle") return "rounded-xl";
-  if (shape === "rounded") return "rounded-2xl";
+  if (shape === "rounded") return "rounded";
   return "rounded-none";
 }
 

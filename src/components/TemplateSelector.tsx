@@ -12,21 +12,111 @@ export function getTemplateById(id: string) {
   return templates.find((t) => t.id === id) ?? templates[0];
 }
 
+// ---------------------------------------------------------------------------
+// Color utilities
+// ---------------------------------------------------------------------------
+// These exist so templateToFlipbookTheme never has to fall back to reusing
+// the *same* color for primary/secondary/accent. Reusing the same color was
+// the root cause of "some templates look fine, others look like one flat
+// slab": any template whose `swatch` only supplied 1-2 colors ended up with
+// secondary === primary and/or accent === secondary, so the cover gradient
+// had no gradient and the accent borders/text became invisible against the
+// cover. Now missing colors are *derived* from the ones that exist.
+
+function hexToRgb(hex: string): [number, number, number] {
+  const clean = hex.replace("#", "");
+  const full =
+    clean.length === 3
+      ? clean
+          .split("")
+          .map((c) => c + c)
+          .join("")
+      : clean;
+  const num = parseInt(full, 16);
+  return [(num >> 16) & 255, (num >> 8) & 255, num & 255];
+}
+
+function rgbToHex(r: number, g: number, b: number): string {
+  const clamp = (v: number) => Math.max(0, Math.min(255, Math.round(v)));
+  return (
+    "#" +
+    [clamp(r), clamp(g), clamp(b)]
+      .map((v) => v.toString(16).padStart(2, "0"))
+      .join("")
+  );
+}
+
+/** Mixes `hex` toward black by `amount` (0-1). Used to derive a darker
+ *  "secondary" (spine) shade from a template's single cover color. */
+function darken(hex: string, amount: number): string {
+  const [r, g, b] = hexToRgb(hex);
+  return rgbToHex(r * (1 - amount), g * (1 - amount), b * (1 - amount));
+}
+
+/** Mixes `hex` toward white by `amount` (0-1). Used to derive a lighter
+ *  accent from a dark cover color. */
+function lighten(hex: string, amount: number): string {
+  const [r, g, b] = hexToRgb(hex);
+  return rgbToHex(
+    r + (255 - r) * amount,
+    g + (255 - g) * amount,
+    b + (255 - b) * amount
+  );
+}
+
+/** Standard relative luminance (0 = black, 1 = white), used to decide
+ *  whether a color reads as "light" or "dark" for contrast purposes. */
+function luminance(hex: string): number {
+  const [r, g, b] = hexToRgb(hex).map((v) => v / 255);
+  const lin = (c: number) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+  return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+}
+
+const isLight = (hex: string) => luminance(hex) > 0.55;
+
+/** Derives an accent that will actually be visible against `base` — lighter
+ *  for dark covers, darker for light/pastel covers (e.g. Minimal, Rustic
+ *  Ivory templates) — instead of assuming every template is a dark jewel
+ *  tone the way the maroon default was. */
+function deriveAccent(base: string): string {
+  return isLight(base) ? darken(base, 0.4) : lighten(base, 0.5);
+}
+
+/** Text/title color for content sitting on top of `base`. */
+function contrastText(base: string): string {
+  return isLight(base) ? "#3d2b1f" : "#fbf5e9";
+}
+
 /**
  * Maps a template's swatch (the 2-3 color dots shown on its card) to the
  * flipbook's theme shape, so selecting a template can restyle the book's
- * cover, controls, and header leaf. Swatch order is assumed
- * [primary, secondary, accent]; missing entries fall back to sensible
- * defaults so a 1-2 color swatch still produces a coherent theme.
+ * cover, controls, and header leaf.
+ *
+ * Swatch order is assumed [primary, secondary, accent], but templates are
+ * free to supply just one color. Any color not supplied is *derived* from
+ * the ones that are, so every template — not just the ones with a full
+ * 3-color swatch — ends up with a real gradient and a visible accent,
+ * instead of secondary/accent silently collapsing to the same value as
+ * primary.
  */
 export function templateToFlipbookTheme(templateId: string): FlipbookTheme {
   const template = getTemplateById(templateId);
-  const [primary, secondary, accent] = template.swatch;
+  const swatch = template.swatch.filter(Boolean);
+
+  const primary = swatch[0] ?? "#7a1f2b";
+  const secondary = swatch[1] ?? darken(primary, 0.22);
+  const accent = swatch[2] ?? deriveAccent(primary);
+
   return {
-    primary: primary ?? "#7a1f2b",
-    secondary: secondary ?? primary ?? "#5c1620",
-    accent: accent ?? secondary ?? "#b08d57",
+    primary,
+    secondary,
+    accent,
     pageWell: "#fbf5e9",
+    // Cover title/subtitle text needs to flip to dark ink on pale templates
+    // (Minimal, Rustic Ivory, etc.) or it becomes unreadable — this used to
+    // be hardcoded to the cream pageWell color, which only worked for dark
+    // covers.
+    coverText: contrastText(primary),
   };
 }
 

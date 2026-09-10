@@ -70,33 +70,63 @@ const HoloBand = () => {
   );
 };
 
+const CHIP_W = 128;
+const CHIP_H = 160;
+const FRAME_PAD = 6;
+const FRAME_W = CHIP_W + FRAME_PAD * 2; // 140
+const FRAME_H = CHIP_H + FRAME_PAD * 2; // 172
+
 const ChipPortrait = ({ children }: { children: React.ReactNode }) => (
-  <div className="relative w-[128px] h-[160px] shrink-0">
-    <svg className="absolute -inset-[6px] pointer-events-none" viewBox="0 0 140 172" fill="none">
-      <rect
-        x="1"
-        y="1"
-        width="138"
-        height="170"
-        rx="10"
-        stroke="url(#chipStroke)"
-        strokeWidth="1.5"
-      />
+  <div
+    style={{
+      position: "relative",
+      width: CHIP_W,
+      height: CHIP_H,
+      flexShrink: 0,
+      boxSizing: "border-box",
+    }}
+  >
+    {/* Frame: positioned in px from the SAME box the photo uses, no nested "relative" ancestors between them */}
+    <svg
+  width={FRAME_W}
+  height={FRAME_H}
+  style={{
+    position: "absolute",
+    top: -FRAME_PAD,
+    left: -FRAME_PAD,
+    pointerEvents: "none",
+    overflow: "visible",
+  }}
+  viewBox={`0 0 ${FRAME_W} ${FRAME_H}`}
+  fill="none"
+>
       <defs>
         <linearGradient id="chipStroke" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor={holo.cyan} />
           <stop offset="100%" stopColor={holo.pink} />
         </linearGradient>
       </defs>
-      {/* corner ticks like an ID-card capture frame */}
-      <path d="M1,20 L1,1 L20,1" fill="none" stroke={holo.gold} strokeWidth="2" />
-      <path d="M120,1 L139,1 L139,20" fill="none" stroke={holo.gold} strokeWidth="2" />
-      <path d="M139,152 L139,171 L120,171" fill="none" stroke={holo.gold} strokeWidth="2" />
-      <path d="M20,171 L1,171 L1,152" fill="none" stroke={holo.gold} strokeWidth="2" />
+      <rect x="1" y="1" width={FRAME_W - 2} height={FRAME_H - 2} rx="10" stroke="url(#chipStroke)" strokeWidth="1.5" />
+      <path d={`M1,20 L1,1 L20,1`} fill="none" stroke={holo.gold} strokeWidth="2" />
+      <path d={`M${FRAME_W - 20},1 L${FRAME_W - 1},1 L${FRAME_W - 1},20`} fill="none" stroke={holo.gold} strokeWidth="2" />
+      <path d={`M${FRAME_W - 1},${FRAME_H - 20} L${FRAME_W - 1},${FRAME_H - 1} L${FRAME_W - 20},${FRAME_H - 1}`} fill="none" stroke={holo.gold} strokeWidth="2" />
+      <path d={`M20,${FRAME_H - 1} L1,${FRAME_H - 1} L1,${FRAME_H - 20}`} fill="none" stroke={holo.gold} strokeWidth="2" />
     </svg>
+
+    {/* Photo: sibling of the frame, not nested inside another positioned wrapper */}
     <div
-      className="relative w-full h-full rounded-[8px] overflow-hidden"
-      style={{ backgroundColor: palette.panel, border: `1px solid ${palette.line}` }}
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: CHIP_W,
+        height: CHIP_H,
+        borderRadius: 8,
+        overflow: "hidden",
+        backgroundColor: palette.panel,
+        border: `1px solid ${palette.line}`,
+        boxSizing: "border-box",
+      }}
     >
       {children}
     </div>
@@ -172,22 +202,22 @@ HTMLDivElement,
       >
         <HoloBand />
 
-        <div className="relative h-full px-14 flex items-center gap-8 avoid-break">
-          <ChipPortrait>
-            {doc.photo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={doc.photo} alt="Profile" className="w-full h-full object-cover" />
-            ) : (
-              <div
-                className="w-full h-full flex items-center justify-center text-[10.5px]"
-                style={{ color: palette.sub }}
-              >
-                {L("Photo", "फोटो")}
-              </div>
-            )}
-          </ChipPortrait>
+        <div className="relative h-full px-14 flex items-center avoid-break">
+            <ChipPortrait>
+              {doc.photo ? (
+                <img
+                  src={doc.photo}
+                  alt="Profile"
+                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center", display: "block" }}
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-[10.5px]" style={{ color: palette.sub }}>
+                  {L("Photo", "फोटो")}
+                </div>
+              )}
+            </ChipPortrait>
 
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0" style={{ marginLeft: 32 }}>
             {doc.invocation.enabled && (
               <p
                 className="text-[10px] tracking-[0.3em] uppercase mb-2"

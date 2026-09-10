@@ -36,7 +36,7 @@ export default function HeaderCard({
   }
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-stone-200 bg-white">
+    <section className="overflow-hidden rounded border border-stone-200 bg-white">
       {/* ───────────────── Header ───────────────── */}
       <div className="flex items-center justify-between border-b border-stone-100 px-4 py-3 sm:px-5">
         <div className="flex items-center gap-2.5">

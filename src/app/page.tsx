@@ -188,9 +188,9 @@ export default function Home() {
     <div className="min-h-screen bg-ambient flex-col flex justify-between">
       <AppHeader/>
 
-      <main className="max-w-[1500px] mx-auto px-3 sm:px-6 py-4 sm:py-6 overflow-x-hidden relative">
+      <main className="max-w-[1720px] w-full mx-auto px-3 sm:px-6 py-4 sm:py-6 overflow-x-hidden relative">
         <div className="sticky top-0 z-20 mb-4 sm:mb-5">
-          <div className="flex flex-col gap-3 rounded-2xl border border-white/60 bg-white/60 p-3 shadow-lg shadow-stone-900/5 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+          <div className="flex flex-col gap-3 rounded border border-white/60 bg-white/60 p-3 shadow-lg shadow-stone-900/5 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:gap-4">
             <div className="flex items-center gap-2 flex-wrap min-w-0">
               <LanguageToggle value={doc.language} onChange={(v) => patchDoc({ language: v })} />
               <FontPackSelector value={doc.fontPackId} onChange={(v) => patchDoc({ fontPackId: v })} />
@@ -286,22 +286,23 @@ export default function Home() {
               </div>
             </div>
 
-            <div
-              className={`grid gap-4 items-start transition-[grid-template-columns] duration-200 grid-cols-1 ${editorHidden
-                  ? "md:grid-cols-[0px_minmax(0,1fr)] lg:grid-cols-[0px_minmax(0,1fr)]"
-                  : "md:grid-cols-[minmax(260px,32rem)_minmax(0,1fr)] lg:grid-cols-[minmax(280px,38rem)_minmax(0,1fr)]"
-                }`}
-            >
+          <div
+  className={`grid gap-4 items-start transition-[grid-template-columns] duration-200 grid-cols-1 ${
+    editorHidden
+      ? "md:grid-cols-[0px_1fr] lg:grid-cols-[0px_1fr]"
+      : "md:grid-cols-[1fr_auto] 2xl:grid-cols-[1fr_auto]"
+  }`}
+>
               <div
                 className={`${mobileTab === "preview" ? "hidden" : "block"} ${editorHidden ? "md:hidden" : "md:block"
                   } min-w-0 md:sticky md:top-[132px] md:pr-1`}
               >
-                <div className="glass-panel rounded-2xl p-3 sm:p-4 space-y-4">
+                <div className="glass-panel rounded p-3 sm:p-4 space-y-4">
                   <HeaderCard doc={doc} onChange={patchDoc} />
                   {hydrated ? (
                     <SectionsEditor sections={doc.sections} onChange={(sections) => patchDoc({ sections })} />
                   ) : (
-                    <div className="rounded-2xl border border-dashed border-stone-300 bg-stone-50 p-6 text-center text-sm text-stone-500">
+                    <div className="rounded border border-dashed border-stone-300 bg-stone-50 p-6 text-center text-sm text-stone-500">
                       Loading editor…
                     </div>
                   )}
@@ -318,7 +319,7 @@ export default function Home() {
                   </button>
                 )}
 
-                <div className="glass-well rounded-2xl overflow-x-auto">
+                <div className="glass-well rounded overflow-x-auto w-fit ml-auto">
                   <div
                     className="mx-auto sm:my-3 sm:m-4 shadow-2xl shadow-stone-900/20 sm:rounded-sm w-full origin-top"
                     style={{ maxWidth: 794 }}

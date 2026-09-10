@@ -127,7 +127,7 @@ const PortraitFrame = ({ children }: { children: React.ReactNode }) => (
 );
 
 const RowIcon = () => (
-  <svg width="6" height="6" viewBox="0 0 6 6" className="shrink-0 mt-[7px]">
+  <svg width="6" height="6" viewBox="0 0 6 6" className="shrink-0 mt-[3px]">
     <rect width="6" height="6" rx="1.5" fill={glow.cyan} opacity="0.8" />
   </svg>
 );
@@ -164,7 +164,7 @@ HTMLDivElement,
           which otherwise beats this element's inline style and washes
           the page to white during PDF export. */}
       <div className="absolute inset-0" style={{ backgroundColor: palette.bg }} />
-      <FuturisticFrame />
+      {/* <FuturisticFrame /> */}
 
       {/* Header */}
       <div className="relative px-16 pt-16 pb-8 flex items-center gap-6 avoid-break">

@@ -75,7 +75,7 @@ body {
     @apply hover:bg-sky-50 hover:text-[#1e98d7];
   }
 
- /* Form fields ----------------------------------------------------- */
+  /* Form fields ----------------------------------------------------- */
   .field-input {
     @apply w-full rounded border border-stone-300 bg-white/80 backdrop-blur-sm px-3 py-2 text-sm text-stone-900
       placeholder:text-stone-400 transition-all duration-150
@@ -85,6 +85,7 @@ body {
     border-color: theme('colors.stone.300');
   }
   .field-input:focus {
+    outline: none;
     border-color: #1e98d7;
     box-shadow: 0 0 0 4px rgba(30, 152, 215, 0.15);
   }
@@ -97,6 +98,7 @@ body {
       disabled:opacity-50 disabled:pointer-events-none;
   }
   .field-input-sm:focus {
+    outline: none;
     border-color: #1e98d7;
     box-shadow: 0 0 0 4px rgba(30, 152, 215, 0.15);
   }
@@ -110,6 +112,7 @@ body {
     @apply border-red-400;
   }
   .field-input-error:focus {
+    outline: none;
     border-color: #ef4444;
     box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
   }

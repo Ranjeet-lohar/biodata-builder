@@ -234,8 +234,8 @@ function SortableSectionCard({
 /* ─── Empty State ─── */
 function EmptyState({ onAddGrid, onAddText }: { onAddGrid: () => void; onAddText: () => void }) {
   return (
-    <div className="text-center py-14 px-4 rounded-2xl border-2 border-dashed border-stone-200 bg-stone-50/50">
-      <div className="w-14 h-14 rounded-2xl bg-stone-100 flex items-center justify-center mx-auto mb-4">
+    <div className="text-center py-14 px-4 rounded border-2 border-dashed border-stone-200 bg-stone-50/50">
+      <div className="w-14 h-14 rounded bg-stone-100 flex items-center justify-center mx-auto mb-4">
         <Layers className="w-7 h-7 text-stone-400" />
       </div>
       <h3 className="text-stone-700 font-semibold text-lg mb-1">No sections yet</h3>
@@ -365,7 +365,7 @@ export default function SectionsEditor({
       )}
 
       {sections.length > 0 && (
-        <p className="text-xs text-stone-400 flex items-center gap-1.5">
+        <p className="text-xs text-stone-500 flex items-center gap-1.5">
           <GripVertical className="w-3 h-3" /> Drag sections to reorder. Use the eye icon to hide without deleting.
         </p>
       )}

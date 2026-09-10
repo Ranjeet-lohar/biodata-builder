@@ -30,7 +30,7 @@ export default function AllTemplatesPage() {
                 return (
                   <div
                     key={template.id}
-                    className="group rounded-2xl overflow-hidden bg-white border border-white/60 shadow-lg hover:shadow-2xl transition-all duration-300 hover:border-white/80"
+                    className="group rounded overflow-hidden bg-white border border-white/60 shadow-lg hover:shadow-2xl transition-all duration-300 hover:border-white/80"
                   >
                     {/* Template Preview — swatch strip stands in for a live render */}
                     <div className="relative h-80 bg-white/50 overflow-hidden">

@@ -99,33 +99,77 @@ const DecoFrame = () => {
 
 // Circular portrait framed by two concentric rings and four short tick
 // marks — border-radius based mask only, no CSS clip-path.
+const MEDALLION_SIZE = 150;
+const RING_SIZE = 190; // matches your viewBox
+
 const MedallionPortrait = ({ photoSrc, placeholder }: { photoSrc?: string; placeholder: string }) => (
-  <div className="relative w-[140px] h-[140px] shrink-0">
-    <svg className="absolute -inset-4 pointer-events-none" viewBox="0 0 204 204" fill="none">
+  <div
+    style={{
+      position: "relative",
+      width: RING_SIZE,
+      height: RING_SIZE,
+      flexShrink: 0,
+    }}
+  >
+    {/* Decorative ring, pixel-centered, no rem-based inset */}
+    <svg
+      style={{ position: "absolute", top: 0, left: 0, width: RING_SIZE, height: RING_SIZE, pointerEvents: "none" }}
+      viewBox="0 0 204 204"
+      fill="none"
+    >
       <circle cx="102" cy="102" r="100" stroke={deco.gold} strokeWidth="1" />
       <circle cx="102" cy="102" r="92" stroke={deco.black} strokeWidth="1.5" />
       {[0, 90, 180, 270].map((deg) => (
         <line
           key={deg}
-          x1="102"
-          y1="2"
-          x2="102"
-          y2="14"
+          x1="102" y1="2" x2="102" y2="14"
           stroke={deco.gold}
           strokeWidth="1.5"
           transform={`rotate(${deg} 102 102)`}
         />
       ))}
     </svg>
+
+    {/* Photo circle, centered inside the ring by fixed pixel math */}
     <div
-      className="relative w-full h-full rounded-full overflow-hidden"
-      style={{ backgroundColor: palette.panel, border: `1px solid ${palette.line}` }}
+      style={{
+        position: "absolute",
+        top: (RING_SIZE - MEDALLION_SIZE) / 2,
+        left: (RING_SIZE - MEDALLION_SIZE) / 2,
+        width: MEDALLION_SIZE,
+        height: MEDALLION_SIZE,
+        borderRadius: "50%",
+        overflow: "hidden",
+        backgroundColor: palette.panel,
+        border: `1px solid ${palette.line}`,
+        boxSizing: "border-box",
+      }}
     >
       {photoSrc ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={photoSrc} alt="Profile" className="w-full h-full object-cover" />
+        <img
+          src={photoSrc}
+          alt="Profile"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center center",
+            borderRadius: "50%", // belt-and-suspenders clip for html2canvas
+            display: "block",
+          }}
+        />
       ) : (
-        <div className="w-full h-full flex items-center justify-center text-[10.5px]" style={{ color: palette.sub }}>
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 10.5,
+            color: palette.sub,
+          }}
+        >
           {placeholder}
         </div>
       )}

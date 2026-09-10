@@ -152,7 +152,7 @@ export default function FeaturesPage() {
         <section className="mt-6 grid gap-4 sm:grid-cols-3">
           {[
             {
-              value: "14+",
+              value:"20+",
               label: "Beautiful Templates",
               icon: LayoutTemplate,
             },

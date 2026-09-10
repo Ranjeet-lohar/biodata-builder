@@ -645,8 +645,8 @@ const contactItems = [
   {
     icon: Phone,
     label: "Call us",
-    value: "+91 92599 03000",
-    href: "tel:+919259903000",
+    value: "+91 9125990300",
+    href: "tel:+919125990300",
     description: "Available during business hours",
   },
   {

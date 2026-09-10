@@ -39,7 +39,7 @@ export default function PreviewScaler({
   const scaledWidth = PAGE_WIDTH * scale;
 
   return (
-    <div ref={outerRef} className="w-full overflow-x-auto">
+    <div ref={outerRef} className="w-full overflow-hidden">
       <div
         style={{
           height: contentHeight * scale,
