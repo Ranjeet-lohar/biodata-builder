@@ -229,7 +229,7 @@ export default function ModernMinimalLayout({
             heading={lang === "hi" ? firstGrid.titleHi || firstGrid.titleEn : firstGrid.titleEn}
             className="avoid-break"
           >
-            <div className="grid grid-cols-2 gap-x-10 gap-y-5">
+            <div className="grid grid-cols-2 gap-x-10 gap-y-3">
               {firstGrid.fields.map((f) => (
                 <div key={f.id} className="flex flex-col avoid-break">
                   <span
@@ -261,7 +261,7 @@ export default function ModernMinimalLayout({
               className="avoid-break"
             >
               {section.type === "grid" ? (
-                <div className="grid grid-cols-2 gap-x-10 gap-y-5">
+                <div className="grid grid-cols-2 gap-x-10 gap-y-3">
                   {section.fields.map((f) => (
                     <div key={f.id} className="flex flex-col avoid-break">
                       <span
