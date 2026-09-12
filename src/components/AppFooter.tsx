@@ -80,7 +80,7 @@ export default function AppFooter() {
         <path d="M12,1 L23,1 L23,12" stroke="#ff5fae" strokeWidth="1.5" opacity="0.6" />
       </svg>
 
-      <div className="relative mx-auto grid max-w-[1500px] gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.4fr_0.8fr_0.8fr] lg:px-8">
+      <div className="relative mx-auto grid max-w-[1720px] gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.4fr_0.8fr_0.8fr] lg:px-8">
         {/* First column: Logo, description, social icons */}
         <div>
           <Link href="/" className="inline-flex items-center gap-3">
@@ -166,8 +166,25 @@ export default function AppFooter() {
       </div>
 
       {/* Bottom bar */}
-      <div className="relative border-t border-white/5">
-        <div className="mx-auto flex max-w-[1500px] flex-col gap-3 px-4 py-4 text-xs text-stone-500 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+      <div className="relative overflow-hidden border-t border-white/5">
+        {/* Pattern layer */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.6) 1px, transparent 0)`,
+            backgroundSize: "18px 18px",
+          }}
+        />
+        {/* Optional soft color wash to tie in the accent colors */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-20"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(79,216,255,0.06), transparent 40%, transparent 60%, rgba(255,95,174,0.06))",
+          }}
+        />
+
+        <div className="relative mx-auto flex max-w-[1720px] flex-col gap-3 px-4 py-4 text-xs text-stone-500 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <p>© 2026 Biodata Builder. All rights reserved.</p>
           <p className="tracking-wide">
             Create beautifully <span className="text-[#4fd8ff]/60">•</span> Customize freely{" "}

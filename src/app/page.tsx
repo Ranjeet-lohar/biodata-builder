@@ -291,7 +291,7 @@ export default function Home() {
               className={`grid gap-4 items-start transition-[grid-template-columns] duration-200 grid-cols-1 ${
                 editorHidden
                   ? "md:grid-cols-[0px_1fr] lg:grid-cols-[0px_1fr]"
-                  : "md:grid-cols-[1fr_auto] 2xl:grid-cols-[1fr_auto]"
+                  : "lg:grid-cols-[1fr_auto] 2xl:grid-cols-[1fr_auto]"
               }`}
             >
               <div

@@ -70,7 +70,7 @@ export default function LoginPage() {
                   <img
                     src="/logo.png"
                     alt="Biodata Builder"
-                    className="h-16 w-auto object-contain object-left"
+                    className="h-16 lg:h-[210px] w-auto object-contain object-left"
                   />
 
                   <div className="mt-8 flex items-center gap-3 text-xs text-stone-500">
@@ -250,7 +250,6 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
-
       <AppFooter />
     </main>
   );

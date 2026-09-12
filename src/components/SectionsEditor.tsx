@@ -59,7 +59,7 @@ function SectionFieldRow({
   onMoveDown: () => void;
 }) {
   return (
-    <div className="group/field rounded border border-stone-200 bg-white p-3 shadow-sm transition-all hover:shadow-md hover:border-stone-300">
+    <div className="group/field rounded border border-stone-200 bg-white sm:p-3 p-2 shadow-sm transition-all hover:shadow-md hover:border-stone-300">
       <div className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.5fr)_auto] gap-2 items-start">
         <input
           name={`${field.id}-label-en`}
@@ -157,11 +157,11 @@ function SortableSectionCard({
     <div
       ref={setNodeRef}
       style={style}
-      className={`rounded border bg-white overflow-hidden transition-shadow ${
+      className={`rounded border bg-white/50 overflow-hidden transition-shadow ${
         isDragging ? "ring-2 ring-[#1e98d7] rotate-1" : "border-stone-200  hover:shadow"
       } ${!section.visible ? "opacity-50 grayscale-[0.3]" : ""}`}
     >
-      <div className="flex items-center gap-1.5 px-3 py-2.5 bg-gradient-to-r from-stone-50 to-white border-b border-stone-100">
+      <div className="flex items-center gap-1.5 p-1 sm:px-3 sm:py-2.5 bg-gradient-to-r from-stone-50 to-white border-b border-stone-100">
         <button type="button" {...attributes} {...listeners} className="icon-btn cursor-grab active:cursor-grabbing touch-none shrink-0 text-stone-400 hover:text-stone-600">
           <GripVertical className="w-4 h-4" />
         </button>
@@ -175,7 +175,7 @@ function SortableSectionCard({
             {section.titleEn || "Untitled section"}
           </span>
           {section.titleHi && <span className="text-xs text-stone-400 truncate hidden sm:inline">· {section.titleHi}</span>}
-          <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-stone-100 text-stone-500 font-medium shrink-0">{section.fields.length}</span>
+          <span className="sm:block hidden text-[10px] px-1.5 py-0.5 rounded-full bg-stone-100 text-stone-500 font-medium shrink-0">{section.fields.length}</span>
         </button>
 
         <div className="flex items-center gap-0.5">
@@ -194,7 +194,7 @@ function SortableSectionCard({
         </div>
       </div>
 
-      <div className={`transition-all duration-300 ease-in-out overflow-hidden ${open ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"}`}>
+      <div className={`transition-all duration-300 ease-in-out overflow-hidden ${open ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0 border border-r-orange-400"}`}>
         <div className="p-4 space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <TextField label="Section title (English)" value={section.titleEn} onChange={(v) => onChange({ titleEn: v })} placeholder="e.g. Career Details" />
