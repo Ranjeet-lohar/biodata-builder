@@ -46,7 +46,7 @@ function MeshBackground({ theme }: { theme: Theme }) {
     <div
       className="absolute top-0 left-0 w-full pointer-events-none overflow-hidden"
       style={{ height: `${PAGE_HEIGHT_MM}mm`, ...colorAdjust }}
-    >
+     >
       <div
         className="absolute top-0 left-0 w-full h-full"
         style={{ background: `linear-gradient(180deg, ${theme.primary} 0%, ${theme.secondary} 14%, transparent 45%)` }}
@@ -211,7 +211,7 @@ export default function BannerLayout({ doc, fonts, theme }: BannerLayoutProps) {
   }, [doc, fonts, theme, compact]);
 
   const sectionGap = compact ? "mt-6 space-y-5" : "mt-10 space-y-8";
-  const bodyPad = compact ? "px-20 pb-8" : "px-20 pb-16";
+  const bodyPad = compact ? "px-20 pb-8" : "px-0 pb-16";
   const headerPad = compact ? "pt-8 pb-4" : "pt-14 pb-6";
   const photoMargin = compact ? "-mt-1 mb-2" : "-mt-2 mb-4";
 
@@ -309,7 +309,7 @@ export default function BannerLayout({ doc, fonts, theme }: BannerLayoutProps) {
                     theme={theme}
                     heading={heading}
                   />
-                  <div className="grid grid-cols-2 gap-x-10 gap-y-2 text-[15px] mt-4 pl-1">
+                  <div className="grid grid-cols-2 gap-x-20 gap-y-2 text-[15px] mt-4 pl-1">
                     {section.fields.map((f) => (
                       <div key={f.id} className="flex gap-2" style={noBreak}>
                         <span className="w-[46%] shrink-0 font-medium" style={{ color: theme.secondary }}>

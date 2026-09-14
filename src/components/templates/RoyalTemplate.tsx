@@ -477,7 +477,7 @@ const LineTemplate = forwardRef<
               borderLeft: `2px solid ${palette.rose}`,
               paddingLeft: "7mm",
             }}
-          >
+           >
             <p
               className="mb-2 text-[9px] font-semibold uppercase tracking-[0.2em]"
               style={{ color: palette.muted }}
@@ -518,7 +518,7 @@ const LineTemplate = forwardRef<
                   title={title}
                 />
 
-                <div className="grid grid-cols-2 gap-x-12 gap-y-4 pl-[8mm]">
+                <div className="grid grid-cols-2 gap-x-12 gap-y-3 pl-[8mm]">
                   {section.fields.map((f) => (
                     <div
                       key={f.id}
@@ -559,7 +559,7 @@ const LineTemplate = forwardRef<
               <section
                 key={section.id}
                 className="avoid-break"
-              >
+               >
                 <SectionHeading
                   number={idx + 1}
                   title={title}

@@ -104,7 +104,7 @@ body {
   }
 
   .field-label {
-    @apply text-stone-600 font-medium text-sm;
+    @apply text-stone-600 font-medium text-sm mb-[3px];
   }
 
   /* Error / invalid state (optional, pairs with the above) ---------- */

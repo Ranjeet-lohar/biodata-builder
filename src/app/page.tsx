@@ -192,27 +192,40 @@ export default function Home() {
        
         <div className="flex gap-3 sm:gap-4">
           {/* phone-only floating tab switcher — hidden once the md split kicks in */}
-          <div
-            className="flex md:hidden fixed left-1/2 -translate-x-1/2 z-30 gap-1 rounded-full border border-white/60 bg-white/85 backdrop-blur-xl p-1 shadow-lg shadow-stone-900/10"
-            style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 1rem)" }}
-          >
-            <button
-              type="button"
-              onClick={() => { setMobileTab("edit"); setEditorHidden(false); }}
-              className={`min-w-[84px] px-4 py-2.5 rounded-full text-sm font-medium transition ${mobileTab === "edit" && !editorHidden ? "bg-stone-900 text-white" : "text-stone-600"
-                }`}
-            >
-              Edit
-            </button>
-            <button
-              type="button"
-              onClick={() => { setMobileTab("preview"); setEditorHidden(true); }}
-              className={`min-w-[84px] px-4 py-2.5 rounded-full text-sm font-medium transition ${mobileTab === "preview" || editorHidden ? "bg-stone-900 text-white" : "text-stone-600"
-                }`}
-            >
-              Preview
-            </button>
-          </div>
+         <div className="fixed left-1/2 -translate-x-1/2 z-30 md:hidden" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 1rem)" }}>
+  {/* animated gradient border wrapper */}
+  <div className="relative rounded-full p-[1.5px] overflow-hidden shadow-lg shadow-stone-900/10">
+    <div
+      className="absolute inset-[-100%] animate-spin-slow"
+      style={{
+        background:
+          "conic-gradient(from 0deg, #fbbf24, #f472b6, #a78bfa, #60a5fa, #34d399, #fbbf24)",
+      }}
+    />
+    <div className="relative flex gap-1 rounded-full bg-white/85 backdrop-blur-xl p-1">
+      <button
+        type="button"
+        onClick={() => { setMobileTab("edit"); setEditorHidden(false); }}
+        className={`min-w-[84px] px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${mobileTab === "edit" && !editorHidden
+            ? "bg-gradient-to-r from-stone-900 via-stone-800 to-stone-700 text-white shadow-sm"
+            : "text-stone-600"
+          }`}
+      >
+        Edit
+      </button>
+      <button
+        type="button"
+        onClick={() => { setMobileTab("preview"); setEditorHidden(true); }}
+        className={`min-w-[84px] px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${mobileTab === "preview" || editorHidden
+            ? "bg-gradient-to-r from-stone-900 via-stone-800 to-stone-700 text-white shadow-sm"
+            : "text-stone-600"
+          }`}
+      >
+        Preview
+      </button>
+    </div>
+  </div>
+</div>
 
           {/* pb-24 only matters on phones where the floating bar overlaps content */}
           <div className="w-full min-w-0 pb-24 md:pb-0 overflow-hidden">

@@ -80,7 +80,7 @@ export default function AppFooter() {
         <path d="M12,1 L23,1 L23,12" stroke="#ff5fae" strokeWidth="1.5" opacity="0.6" />
       </svg>
 
-      <div className="relative mx-auto grid max-w-[1720px] gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.4fr_0.8fr_0.8fr] lg:px-8">
+      <div className="relative mx-auto grid max-w-[1720px] gap-10 px-4 lg:py-12 py-8 sm:px-6 lg:grid-cols-[1.4fr_0.8fr_0.8fr] lg:px-8">
         {/* First column: Logo, description, social icons */}
         <div>
           <Link href="/" className="inline-flex items-center gap-3">
