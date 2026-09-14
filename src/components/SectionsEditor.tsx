@@ -202,7 +202,7 @@ function SortableSectionCard({
           </div>
 
           {section.type === "grid" ? (
-            <div className="space-y-2">
+            <div className="space-y-2 max-h-[500px] overflow-y-auto pr-1">
               {section.fields.map((f, idx) => (
                 <SectionFieldRow
                   key={f.id}
