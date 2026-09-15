@@ -218,7 +218,7 @@ export default function TemplateSelector({
   return (
     <div className="flex flex-col gap-2">
       {/* Search / filter */}
-      <div className="relative w-full max-w-xs lg:ml-12">
+      <div className="relative w-full max-w-xs lg:ml-12 sm:block hidden">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" />
         <input
           name="template-search"
@@ -236,7 +236,7 @@ export default function TemplateSelector({
           onClick={() => scrollByAmount("left")}
           disabled={atStart}
           aria-label="Scroll templates left"
-          className="inline-flex h-9 w-9 flex-none items-center justify-center rounded-full border border-white/70 bg-white/85 text-stone-700 shadow-sm transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white/85 sm:h-10 sm:w-10"
+          className="inline-flex h-7 w-7 flex-none items-center justify-center rounded-full border border-white/70 bg-white/85 text-stone-700 shadow-sm transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white/85 sm:h-10 sm:w-10"
         >
           <ChevronLeft className="h-4 w-4" />
         </button>
@@ -303,7 +303,7 @@ export default function TemplateSelector({
                   ))}
                 </div>
                 <p className="text-sm font-semibold text-stone-800">{t.name}</p>
-                <p className="mt-1 text-xs leading-snug text-stone-500">{t.description}</p>
+                <p className="mt-1 text-xs leading-snug text-stone-500 hidden sm:block">{t.description}</p>
               </button>
             ))}
           </div>
@@ -314,7 +314,7 @@ export default function TemplateSelector({
           onClick={() => scrollByAmount("right")}
           disabled={atEnd}
           aria-label="Scroll templates right"
-          className="inline-flex h-9 w-9 flex-none items-center justify-center rounded-full border border-white/70 bg-white/85 text-stone-700 shadow-sm transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white/85 sm:h-10 sm:w-10"
+          className="inline-flex h-7 w-7 flex-none items-center justify-center rounded-full border border-white/70 bg-white/85 text-stone-700 shadow-sm transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white/85 sm:h-10 sm:w-10"
         >
           <ChevronRight className="h-4 w-4" />
         </button>

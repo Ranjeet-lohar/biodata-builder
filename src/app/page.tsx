@@ -231,7 +231,7 @@ export default function Home() {
               <button
                 onClick={() => setShowTemplates((s) => !s)}
                 aria-expanded={showTemplates}
-                className="md:hidden w-full flex items-center justify-between rounded-xl border border-white/60 bg-white/60 px-3 py-2.5 mb-2 shadow-sm backdrop-blur-md transition active:scale-[0.99]"
+                className="md:hidden w-full flex items-center justify-between rounded border border-white/60 bg-white/60 px-3 py-2.5 mb-2 shadow-sm backdrop-blur-md transition active:scale-[0.99]"
               >
                 <span className="flex items-center gap-2 text-sm font-semibold text-stone-800">
                   <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#1e98d7]/10 text-[#1e98d7]">

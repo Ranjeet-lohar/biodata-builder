@@ -366,7 +366,7 @@ export default function SectionsEditor({
 
       {sections.length > 0 && (
         <p className="text-xs text-stone-500 flex items-center gap-1.5">
-          <GripVertical className="w-3 h-3" /> Drag sections to reorder. Use the eye icon to hide without deleting.
+          <GripVertical className="w-5 h-5 self-start" /> Drag sections to reorder. Use the eye icon to hide without deleting.
         </p>
       )}
     </div>
