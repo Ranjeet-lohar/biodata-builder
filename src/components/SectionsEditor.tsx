@@ -195,7 +195,7 @@ function SortableSectionCard({
       </div>
 
       <div className={`transition-all duration-300 ease-in-out overflow-hidden ${open ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0 border border-r-orange-400"}`}>
-        <div className="p-4 space-y-4">
+        <div className="sm:p-4 pl-4 py-4 pr-3 space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-3">
             <TextField label="Section title (English)" value={section.titleEn} onChange={(v) => onChange({ titleEn: v })} placeholder="e.g. Career Details" />
             <TextField label="Section title (Hindi) — optional" value={section.titleHi} onChange={(v) => onChange({ titleHi: v })} placeholder="जैसे करियर विवरण" />
