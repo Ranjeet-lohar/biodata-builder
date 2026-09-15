@@ -82,7 +82,7 @@ function SectionFieldRow({
           placeholder="Value"
           onChange={(e) => onChange({ value: e.target.value })}
         />
-        <div className="flex items-center gap-0.5 justify-self-end sm:justify-self-center opacity-0 group-hover/field:opacity-100 transition-opacity">
+        <div className="flex items-center gap-0.5 justify-self-end sm:justify-self-center sm:opacity-0 group-hover/field:opacity-100 transition-opacity">
           <button type="button" onClick={onMoveUp} disabled={index === 0} className="icon-btn w-7 h-7 disabled:opacity-20">
             <ArrowUp className="w-3.5 h-3.5" />
           </button>
@@ -179,7 +179,7 @@ function SortableSectionCard({
         </button>
 
         <div className="flex items-center gap-0.5">
-          <button type="button" onClick={onDuplicate} className="sm:block hidden icon-btn text-stone-400 hover:text-stone-600 hover:bg-stone-100 shrink-0" title="Duplicate">
+          <button type="button" onClick={onDuplicate} className="sm:flex hidden icon-btn text-stone-400 hover:text-stone-600 hover:bg-stone-100 shrink-0" title="Duplicate">
             <Copy className="w-3.5 h-3.5" />
           </button>
           <button type="button" onClick={() => onChange({ visible: !section.visible })} className={`icon-btn shrink-0 ${section.visible ? "text-stone-500 hover:text-[#1e98d7]" : "text-stone-300 hover:text-stone-500"}`} title={section.visible ? "Visible" : "Hidden"}>
@@ -215,7 +215,7 @@ function SortableSectionCard({
                   onMoveDown={() => moveField(f.id, 1)}
                 />
               ))}
-              <button type="button" onClick={addField} className="w-full btn text-stone-600 border border-dashed border-stone-300 px-3 py-2.5 hover:bg-stone-50 hover:border-stone-400 hover:text-stone-800 transition-all rounded flex items-center justify-center gap-2">
+              <button type="button" onClick={addField} className="w-full btn text-stone-600 border border-dashed border-stone-300 px-3 py-2.5 bg-stone-50 hover:border-stone-400 hover:text-stone-800 transition-all rounded flex items-center justify-center gap-2">
                 <Plus className="w-4 h-4" /> Add field
               </button>
             </div>

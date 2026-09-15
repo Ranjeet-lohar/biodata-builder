@@ -235,7 +235,7 @@ const ClassicTemplate = forwardRef<HTMLDivElement, { doc: BiodataDocument; fonts
                   <IdentityRing /> {doc.invocation.text}
                 </p>
               )}
-              <h1 className="text-[32px] leading-tight font-semibold truncate" style={{ fontFamily: heading, color: palette.ink }}>
+              <h1 className="text-[32px] leading-normal font-semibold truncate" style={{ fontFamily: heading, color: palette.ink }}>
                 {(lang === "hi" && doc.fullNameHi) || doc.fullName || L("Full Name", "पूरा नाम")}
               </h1>
               <p

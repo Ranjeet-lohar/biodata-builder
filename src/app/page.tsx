@@ -186,126 +186,136 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-ambient flex-col flex justify-between">
-      <AppHeader/>
-
+      <AppHeader />
       <main className="max-w-[1720px] w-full mx-auto px-3 sm:px-6 py-4 sm:py-6 overflow-x-hidden relative">
-       
         <div className="flex gap-3 sm:gap-4">
           {/* phone-only floating tab switcher — hidden once the md split kicks in */}
-         <div className="fixed left-1/2 -translate-x-1/2 z-30 md:hidden" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 1rem)" }}>
-  {/* animated gradient border wrapper */}
-  <div className="relative rounded-full p-[1.5px] overflow-hidden shadow-lg shadow-stone-900/10">
-    <div
-      className="absolute inset-[-100%] animate-spin-slow"
-      style={{
-        background:
-          "conic-gradient(from 0deg, #fbbf24, #f472b6, #a78bfa, #60a5fa, #34d399, #fbbf24)",
-      }}
-    />
-    <div className="relative flex gap-1 rounded-full bg-white/85 backdrop-blur-xl p-1">
-      <button
-        type="button"
-        onClick={() => { setMobileTab("edit"); setEditorHidden(false); }}
-        className={`min-w-[84px] px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${mobileTab === "edit" && !editorHidden
-            ? "bg-gradient-to-r from-stone-900 via-stone-800 to-stone-700 text-white shadow-sm"
-            : "text-stone-600"
-          }`}
-      >
-        Edit
-      </button>
-      <button
-        type="button"
-        onClick={() => { setMobileTab("preview"); setEditorHidden(true); }}
-        className={`min-w-[84px] px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${mobileTab === "preview" || editorHidden
-            ? "bg-gradient-to-r from-stone-900 via-stone-800 to-stone-700 text-white shadow-sm"
-            : "text-stone-600"
-          }`}
-      >
-        Preview
-      </button>
-    </div>
-  </div>
-</div>
+          <div className="fixed left-1/2 -translate-x-1/2 z-30 md:hidden" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 1rem)" }}>
+            {/* animated gradient border wrapper */}
+            <div className="relative rounded-full p-[1.5px] overflow-hidden shadow-lg shadow-stone-900/10">
+              <div
+                className="absolute inset-[-100%] animate-spin-slow"
+                style={{
+                  background:
+                    "conic-gradient(from 0deg, #fbbf24, #f472b6, #a78bfa, #60a5fa, #34d399, #fbbf24)",
+                }}
+              />
+              <div className="relative flex gap-1 rounded-full bg-white/85 backdrop-blur-xl p-1">
+                <button
+                  type="button"
+                  onClick={() => { setMobileTab("edit"); setEditorHidden(false); }}
+                  className={`min-w-[84px] px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${mobileTab === "edit" && !editorHidden
+                    ? "bg-gradient-to-r from-stone-900 via-stone-800 to-stone-700 text-white shadow-sm"
+                    : "text-stone-600"
+                    }`}
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setMobileTab("preview"); setEditorHidden(true); }}
+                  className={`min-w-[84px] px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${mobileTab === "preview" || editorHidden
+                    ? "bg-gradient-to-r from-stone-900 via-stone-800 to-stone-700 text-white shadow-sm"
+                    : "text-stone-600"
+                    }`}
+                >
+                  Preview
+                </button>
+              </div>
+            </div>
+          </div>
 
           {/* pb-24 only matters on phones where the floating bar overlaps content */}
-          <div className="w-full min-w-0 pb-24 md:pb-0 overflow-hidden">
+          <div className="w-full min-w-0 lg:pb-24 md:pb-0 overflow-hidden">
             <div className="mb-4 sm:mb-6 ">
               <button
-                  onClick={() => setShowTemplates((s) => !s)}
-                  aria-expanded={showTemplates}
-                  className="md:hidden w-full flex items-center justify-between rounded-xl border border-white/60 bg-white/60 px-3 py-2.5 mb-2 shadow-sm backdrop-blur-md transition active:scale-[0.99]"
-                >
-                  <span className="flex items-center gap-2 text-sm font-semibold text-stone-800">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#1e98d7]/10 text-[#1e98d7]">
-                      <LayoutTemplate className="h-3.5 w-3.5" />
-                    </span>
-                    Choose a design
-                    <span className="text-xs font-normal text-stone-400">({templates.length})</span>
+                onClick={() => setShowTemplates((s) => !s)}
+                aria-expanded={showTemplates}
+                className="md:hidden w-full flex items-center justify-between rounded-xl border border-white/60 bg-white/60 px-3 py-2.5 mb-2 shadow-sm backdrop-blur-md transition active:scale-[0.99]"
+              >
+                <span className="flex items-center gap-2 text-sm font-semibold text-stone-800">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#1e98d7]/10 text-[#1e98d7]">
+                    <LayoutTemplate className="h-3.5 w-3.5" />
                   </span>
+                  Choose a design
+                  <span className="text-xs font-normal text-stone-400">({templates.length})</span>
+                </span>
 
-                  <ChevronDown
-                    className={`h-4 w-4 text-stone-400 transition-transform duration-200 ${
-                      showTemplates ? "rotate-180" : ""
+                <ChevronDown
+                  className={`h-4 w-4 text-stone-400 transition-transform duration-200 ${showTemplates ? "rotate-180" : ""
                     }`}
-                  />
-                </button>
+                />
+              </button>
               <p className="hidden md:block text-sm font-semibold text-stone-300 mb-2">
                 Choose a design ({templates.length} templates)
               </p>
               <div
-                className={`${showTemplates ? "block" : "hidden"} md:block w-full rounded p-2 sm:p-[10px] bg-white/70 border border-white/70 shadow-sm`}
-                style={{ ["--fade-bg" as unknown as string]: "rgba(255,255,255,0.75)" }}
+                className={`${showTemplates ? "block" : "hidden"} md:block relative rounded p-[1.5px] overflow-hidden shadow-sm`}
               >
-                <TemplateSelector value={templateId} onChange={setTemplateId} />
+                <div
+                  className="absolute inset-[-100%] animate-spin-slow"
+                  style={{
+                    background:
+                      "conic-gradient(from 0deg, #fbbf24, #f472b6, #a78bfa, #60a5fa, #34d399, #fbbf24)",
+                  }}
+                />
+                <div
+                  className="relative w-full rounded p-2 sm:p-[10px] bg-white/70"
+                  style={{ ["--fade-bg" as unknown as string]: "rgba(255,255,255,0.75)" }}
+                >
+                  <TemplateSelector value={templateId} onChange={setTemplateId} />
+                </div>
               </div>
             </div>
-{/* editor panel */}
- <div className="sticky top-0 z-20 mb-4 sm:mb-5">
-          <div className="flex flex-col gap-2 rounded border border-white/60 bg-white/60 p-3 shadow-lg shadow-stone-900/5 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between ">
-            <div className="flex items-center gap-2 flex-wrap min-w-0">
-              <LanguageToggle value={doc.language} onChange={(v) => patchDoc({ language: v })} />
-              <FontPackSelector value={doc.fontPackId} onChange={(v) => patchDoc({ fontPackId: v })} />
-              <button
-                onClick={() => setEditorHidden((h) => !h)}
-                className="icon-btn border border-white/60 bg-white/50 backdrop-blur hidden md:inline-flex shadow-sm"
-                title={editorHidden ? "Show editor panel" : "Hide editor panel"}
-                aria-label={editorHidden ? "Show editor panel" : "Hide editor panel"}
-              >
-                {editorHidden ? <PanelLeftOpen className="w-4 h-4" /> : <PanelLeftClose className="w-4 h-4" />}
-              </button>
-              <button
-                onClick={handlePreviewFlipbook}
-                disabled={flipbookLoading}
-                className="p-1.5 rounded border border-white/60 bg-white/50 backdrop-blur inline-flex items-center gap-1.5 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
-                title="Preview as flipbook"
-                aria-label="Preview as flipbook"
-              >
-                <BookOpen className="w-4 h-4" />
-                <span className="hidden sm:inline text-sm">
-                  {flipbookLoading ? "Preparing…" : "Flipbook"}
-                </span>
-              </button>
-              <ExportBar targetRef={exportRef} filename={name.replace(/\s+/g, "_") || "biodata"} />
-            </div>
+            {/* editor panel */}
+            <div className="sticky top-0 z-20 mb-4 sm:mb-5">
+              <div className="relative rounded p-[1.5px] shadow-lg shadow-stone-900/5">
+                
+                <div className="relative flex flex-col gap-2 rounded bg-white/60 p-3 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-center gap-2 flex-wrap min-w-0">
+                    <LanguageToggle value={doc.language} onChange={(v) => patchDoc({ language: v })} />
+                    <FontPackSelector value={doc.fontPackId} onChange={(v) => patchDoc({ fontPackId: v })} />
+                    <button
+                      onClick={() => setEditorHidden((h) => !h)}
+                      className="icon-btn border border-white/60 bg-white/50 backdrop-blur hidden md:inline-flex shadow-sm"
+                      title={editorHidden ? "Show editor panel" : "Hide editor panel"}
+                      aria-label={editorHidden ? "Show editor panel" : "Hide editor panel"}
+                    >
+                      {editorHidden ? <PanelLeftOpen className="w-4 h-4" /> : <PanelLeftClose className="w-4 h-4" />}
+                    </button>
+                    <button
+                      onClick={handlePreviewFlipbook}
+                      disabled={flipbookLoading}
+                      className="p-1.5 rounded border border-white/60 bg-white/50 backdrop-blur inline-flex items-center gap-1.5 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                      title="Preview as flipbook"
+                      aria-label="Preview as flipbook"
+                    >
+                      <BookOpen className="w-4 h-4" />
+                      <span className="hidden sm:inline text-sm">
+                        {flipbookLoading ? "Preparing…" : "Flipbook"}
+                      </span>
+                    </button>
+                    <ExportBar targetRef={exportRef} filename={name.replace(/\s+/g, "_") || "biodata"} />
+                  </div>
 
-            <div className="w-full min-w-0 sm:w-auto">
-              <ProfilesBar
-                currentId={id}
-                currentName={name}
-                onLoad={handleLoadProfile}
-                onNew={handleNew}
-                getSnapshot={() => ({ templateId, doc })}
-              />
+                  <div className="w-full min-w-0 sm:w-auto">
+                    <ProfilesBar
+                      currentId={id}
+                      currentName={name}
+                      onLoad={handleLoadProfile}
+                      onNew={handleNew}
+                      getSnapshot={() => ({ templateId, doc })}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
             <div
-              className={`grid gap-4 items-start transition-[grid-template-columns] duration-200 grid-cols-1 ${
-                editorHidden
+              className={`grid gap-4 items-start transition-[grid-template-columns] duration-200 grid-cols-1 ${editorHidden
                   ? "md:grid-cols-[0px_1fr] lg:grid-cols-[0px_1fr]"
                   : "lg:grid-cols-[1fr_auto] 2xl:grid-cols-[1fr_auto]"
-              }`}
+                }`}
             >
               <div
                 className={`${mobileTab === "preview" ? "hidden" : "block"} ${editorHidden ? "md:hidden" : "md:block"

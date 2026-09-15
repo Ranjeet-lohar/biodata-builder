@@ -73,7 +73,7 @@ export default function ProfilesBar({
           <span className="hidden sm:inline">My Biodatas</span> ({profiles.length})
         </button>
         {open && (
-          <div className="absolute z-20 top-full mt-1 left-0 w-64 max-h-80 overflow-y-auto bg-white border border-stone-200 rounded-lg shadow-lg py-1">
+          <div className="absolute z-50 top-full mt-1 left-0 w-64 max-h-80 overflow-y-auto bg-white border border-stone-200 rounded-lg shadow-lg py-1">
             {profiles.length === 0 && (
               <p className="text-xs text-stone-400 px-3 py-2">No saved biodatas yet.</p>
             )}

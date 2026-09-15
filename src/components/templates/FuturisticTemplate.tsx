@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { BiodataDocument } from "@/lib/types";
 import { FontPack } from "@/lib/fontPacks";
 
@@ -24,6 +24,12 @@ const glow = {
 // collapse columns to 0 width and drop content from the exported PDF.
 const PAGE_WIDTH_MM = 210;
 const PAGE_HEIGHT_MM = 297;
+
+// Single-page guarantee: the page is a hard-clipped A4 box and everything
+// inside lives in a wrapper that is scaled down until it fits. Scaling
+// rather than truncating keeps every section in the export no matter how
+// many fields the user adds.
+const MIN_FIT_SCALE = 0.55;
 
 const FuturisticFrame = () => {
   const W = 794;
@@ -112,7 +118,7 @@ const FuturisticFrame = () => {
 };
 
 const PortraitFrame = ({ children }: { children: React.ReactNode }) => (
-  <div className="relative w-[132px] h-[132px] shrink-0">
+  <div className="relative w-[112px] h-[112px] shrink-0">
     <svg className="absolute -inset-2 pointer-events-none" viewBox="0 0 152 152" fill="none">
       <rect x="1" y="1" width="150" height="150" rx="14" stroke={glow.cyan} strokeOpacity="0.35" strokeWidth="1" />
       <circle cx="1" cy="1" r="2" fill={glow.cyan} />
@@ -120,7 +126,10 @@ const PortraitFrame = ({ children }: { children: React.ReactNode }) => (
       <circle cx="1" cy="151" r="2" fill={glow.violet} />
       <circle cx="151" cy="151" r="2" fill={glow.cyan} />
     </svg>
-    <div className="relative w-full h-full rounded overflow-hidden" style={{ backgroundColor: palette.panel, border: `1px solid ${palette.line}` }}>
+    <div
+      className="relative w-full h-full rounded overflow-hidden"
+      style={{ backgroundColor: palette.panel, border: `1px solid ${palette.line}` }}
+    >
       {children}
     </div>
   </div>
@@ -132,8 +141,28 @@ const RowIcon = () => (
   </svg>
 );
 
+const SectionHead = ({
+  index,
+  label,
+  font,
+}: {
+  index: number;
+  label: string;
+  font: string;
+}) => (
+  <div className="flex items-center gap-3 mb-[10px]">
+    <span className="text-[19px] font-light leading-none" style={{ color: glow.violet, fontFamily: font }}>
+      {String(index + 1).padStart(2, "0")}
+    </span>
+    <h2 className="text-[14px] font-semibold tracking-wide" style={{ fontFamily: font, color: palette.ink }}>
+      {label}
+    </h2>
+    <span className="flex-1 h-px ml-2" style={{ backgroundColor: palette.line }} />
+  </div>
+);
+
 const FuturisticTemplate = forwardRef<
-HTMLDivElement,
+  HTMLDivElement,
   { doc: BiodataDocument; fonts: FontPack }
 >(({ doc, fonts }, ref) => {
   const lang = doc.language;
@@ -144,17 +173,64 @@ HTMLDivElement,
   const aboutSection = visibleSections.find((s) => s.type === "paragraph" && /about/i.test(s.titleEn));
   const otherSections = visibleSections.filter((s) => s !== aboutSection);
 
+  const frameRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  // Measure the natural (unscaled) content height against the printable
+  // area and shrink to fit. Re-measuring at scale 1 on every pass keeps the
+  // result stable instead of compounding previous scales.
+  const fit = useCallback(() => {
+    const frame = frameRef.current;
+    const content = contentRef.current;
+    if (!frame || !content) return;
+
+    content.style.transform = "scale(1)";
+    const natural = content.scrollHeight;
+    const available = frame.clientHeight;
+    if (!natural || !available) return;
+
+    const next = natural <= available ? 1 : Math.max(MIN_FIT_SCALE, available / natural);
+    content.style.transform = `scale(${next})`;
+    setScale(next);
+  }, []);
+
+  useLayoutEffect(() => {
+    fit();
+  });
+
+  useEffect(() => {
+    // Re-fit once webfonts finish loading — font swap changes text metrics
+    // and is the usual reason a page that "fit" in preview spills onto a
+    // second page in the exported PDF.
+    if (typeof document !== "undefined" && "fonts" in document) {
+      (document as Document & { fonts: FontFaceSet }).fonts.ready.then(fit).catch(() => {});
+    }
+    const ro = new ResizeObserver(fit);
+    if (contentRef.current) ro.observe(contentRef.current);
+    window.addEventListener("resize", fit);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", fit);
+    };
+  }, [fit]);
+
   return (
     <div
       ref={ref}
       className="relative a4-page overflow-hidden"
       style={{
         width: `${PAGE_WIDTH_MM}mm`,
-        minHeight: `${PAGE_HEIGHT_MM}mm`,
+        // Hard height (not minHeight) so the capture pipeline can never
+        // grow the canvas past one page.
+        height: `${PAGE_HEIGHT_MM}mm`,
+        maxHeight: `${PAGE_HEIGHT_MM}mm`,
         backgroundColor: palette.bg,
         color: palette.ink,
         fontFamily: body,
         boxSizing: "border-box",
+        pageBreakAfter: "avoid",
+        breakAfter: "avoid",
       }}
     >
       {/* Solid background layer — kept as its own child rather than
@@ -166,123 +242,111 @@ HTMLDivElement,
       <div className="absolute inset-0" style={{ backgroundColor: palette.bg }} />
       {/* <FuturisticFrame /> */}
 
-      {/* Header */}
-      <div className="relative px-16 pt-16 pb-8 flex items-center gap-6 avoid-break">
-        <PortraitFrame>
-          {doc.photo ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={doc.photo} alt="Profile" className="w-full h-full object-cover" />
-          ) : (
-            <div
-              className="w-full h-full flex items-center justify-center text-[11px]"
-              style={{ color: palette.sub }}
-            >
-              {L("Photo", "फोटो")}
-            </div>
-          )}
-        </PortraitFrame>
-
-        <div className="flex-1 min-w-0">
-          {doc.invocation.enabled && (
-            <p
-              className="text-[10.5px] tracking-[0.25em] uppercase mb-2"
-              style={{ color: glow.cyan }}
-            >
-              {doc.invocation.text}
-            </p>
-          )}
-          <h1
-            className="text-[30px] leading-normal font-semibold truncate"
-            style={{ fontFamily: heading, color: palette.ink }}
-          >
-            {(lang === "hi" && doc.fullNameHi) || doc.fullName || L("Full Name", "पूरा नाम")}
-          </h1>
-          <div className="mt-2 flex items-center gap-2">
-            <span
-              className="h-px flex-1"
-              style={{ background: `linear-gradient(90deg, ${glow.cyan}, ${glow.violet})`, opacity: 0.5 }}
-            />
-            <p
-              className="text-[10.5px] tracking-[0.3em] uppercase shrink-0"
-              style={{ color: palette.sub }}
-            >
-              {L("Biodata", "बायोडाटा")}
-            </p>
-          </div>
-          {aboutSection && (
-            <p className="mt-3 text-[13px] leading-relaxed" style={{ color: palette.sub }}>
-              {(lang === "hi" && aboutSection.fields[0]?.valueHi) || aboutSection.fields[0]?.value || ""}
-            </p>
-          )}
-        </div>
-      </div>
-
-      {/* Main content */}
-      <div className="relative px-16 pb-16">
-        <div className="space-y-8">
-          {otherSections.map((section, idx) =>
-            section.type === "grid" ? (
-              <div key={section.id} className="avoid-break">
-                <div className="flex items-center gap-3 mb-4">
-                  <span
-                    className="text-[24px] font-light leading-none"
-                    style={{ color: glow.violet, fontFamily: heading }}
-                  >
-                    {String(idx + 1).padStart(2, "0")}
-                  </span>
-                  <h2
-                    className="text-[17px] font-semibold tracking-wide"
-                    style={{ fontFamily: heading, color: palette.ink }}
-                  >
-                    {lang === "hi" ? section.titleHi || section.titleEn : section.titleEn}
-                  </h2>
-                  <span className="flex-1 h-px ml-2" style={{ backgroundColor: palette.line }} />
-                </div>
+      <div ref={frameRef} className="relative w-full h-full overflow-hidden">
+        <div
+          ref={contentRef}
+          style={{
+            transform: `scale(${scale})`,
+            transformOrigin: "top left",
+            // Widen the wrapper as it shrinks so the layout still fills the
+            // page edge to edge instead of leaving a right-hand gutter.
+            width: `${100 / scale}%`,
+          }}
+        >
+          {/* Header */}
+          <div className="relative px-12 pt-10 pb-6 flex items-center gap-5">
+            <PortraitFrame>
+              {doc.photo ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={doc.photo} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
                 <div
-                  className="grid grid-cols-2 gap-x-8 gap-y-3 pl-9 py-4"
-                  style={{ backgroundColor: palette.panel, border: `1px solid ${palette.line}`, borderRadius: "8px" }}
+                  className="w-full h-full flex items-center justify-center text-[10px]"
+                  style={{ color: palette.sub }}
                 >
-                  {section.fields.map((f) => (
-                    <div key={f.id} className="flex gap-2 items-start avoid-break">
-                      <RowIcon />
-                      <div className="flex flex-col">
-                        <span
-                          className="text-[10px] tracking-[0.08em] uppercase"
-                          style={{ color: palette.label }}
-                        >
-                          {lang === "hi" ? f.labelHi || f.labelEn : f.labelEn}
-                        </span>
-                        <span className="text-[14.5px]" style={{ color: palette.ink }}>
-                          {f.value?.trim() ? f.value : "—"}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+                  {L("Photo", "फोटो")}
                 </div>
-              </div>
-            ) : (
-              <div key={section.id} className="avoid-break">
-                <div className="flex items-baseline gap-3 mb-3">
-                  <span
-                    className="text-[24px] font-light leading-none"
-                    style={{ color: glow.violet, fontFamily: heading }}
-                  >
-                    {String(idx + 1).padStart(2, "0")}
-                  </span>
-                  <h2
-                    className="text-[17px] font-semibold tracking-wide"
-                    style={{ fontFamily: heading, color: palette.ink }}
-                  >
-                    {lang === "hi" ? section.titleHi || section.titleEn : section.titleEn}
-                  </h2>
-                  <span className="flex-1 h-px ml-2" style={{ backgroundColor: palette.line }} />
-                </div>
-                <p className="pl-9 text-[14.5px] leading-relaxed" style={{ color: palette.sub }}>
-                  {(lang === "hi" && section.fields[0]?.valueHi) || section.fields[0]?.value || "—"}
+              )}
+            </PortraitFrame>
+
+            <div className="flex-1 min-w-0">
+              {doc.invocation.enabled && (
+                <p className="text-[9.5px] tracking-[0.25em] uppercase mb-[6px]" style={{ color: glow.cyan }}>
+                  {doc.invocation.text}
+                </p>
+              )}
+              <h1
+                className="text-[26px] leading-normal font-semibold truncate"
+                style={{ fontFamily: heading, color: palette.ink }}
+              >
+                {(lang === "hi" && doc.fullNameHi) || doc.fullName || L("Full Name", "पूरा नाम")}
+              </h1>
+              <div className="mt-[6px] flex items-center gap-2">
+                <span
+                  className="h-px flex-1"
+                  style={{ background: `linear-gradient(90deg, ${glow.cyan}, ${glow.violet})`, opacity: 0.5 }}
+                />
+                <p className="text-[9.5px] tracking-[0.3em] uppercase shrink-0" style={{ color: palette.sub }}>
+                  {L("Biodata", "बायोडाटा")}
                 </p>
               </div>
-            )
-          )}
+              {aboutSection && (
+                <p className="mt-2 text-[11.5px] leading-snug" style={{ color: palette.sub }}>
+                  {(lang === "hi" && aboutSection.fields[0]?.valueHi) || aboutSection.fields[0]?.value || ""}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Main content */}
+          <div className="relative px-12 pb-10">
+            <div className="space-y-5">
+              {otherSections.map((section, idx) =>
+                section.type === "grid" ? (
+                  <div key={section.id}>
+                    <SectionHead
+                      index={idx}
+                      font={heading}
+                      label={lang === "hi" ? section.titleHi || section.titleEn : section.titleEn}
+                    />
+                    <div
+                      className="grid grid-cols-2 gap-x-6 gap-y-[6px] pl-7 py-3 pr-4"
+                      style={{
+                        backgroundColor: palette.panel,
+                        border: `1px solid ${palette.line}`,
+                        borderRadius: "8px",
+                      }}
+                    >
+                      {section.fields.map((f) => (
+                        <div key={f.id} className="flex gap-2 items-start">
+                          <RowIcon />
+                          <div className="flex flex-col min-w-0">
+                            <span className="text-[8.5px] tracking-[0.08em] uppercase" style={{ color: palette.label }}>
+                              {lang === "hi" ? f.labelHi || f.labelEn : f.labelEn}
+                            </span>
+                            <span className="text-[12.5px] leading-snug break-words" style={{ color: palette.ink }}>
+                              {f.value?.trim() ? f.value : "—"}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div key={section.id}>
+                    <SectionHead
+                      index={idx}
+                      font={heading}
+                      label={lang === "hi" ? section.titleHi || section.titleEn : section.titleEn}
+                    />
+                    <p className="pl-7 text-[12.5px] leading-snug" style={{ color: palette.sub }}>
+                      {(lang === "hi" && section.fields[0]?.valueHi) || section.fields[0]?.value || "—"}
+                    </p>
+                  </div>
+                )
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
