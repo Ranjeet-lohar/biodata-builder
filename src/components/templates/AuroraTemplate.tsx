@@ -85,8 +85,11 @@ const AuroraBackdrop = () => {
 };
 
 const GlowPortrait = ({ children }: { children: React.ReactNode }) => (
-  <div className="relative w-[150px] h-[150px] shrink-0">
-    <svg className="absolute -inset-3 pointer-events-none" viewBox="0 0 180 180" fill="none">
+  // Reduced from 150px → 108px so the header takes noticeably less
+  // vertical space, which is the biggest single contributor to
+  // content overflowing onto a second exported page.
+  <div className="relative w-[108px] h-[108px] shrink-0">
+    <svg className="absolute -inset-2 pointer-events-none" viewBox="0 0 132 132" fill="none">
       <defs>
         <linearGradient id="glowRing" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor={aurora.teal} />
@@ -94,8 +97,8 @@ const GlowPortrait = ({ children }: { children: React.ReactNode }) => (
           <stop offset="100%" stopColor={aurora.violet} />
         </linearGradient>
       </defs>
-      <circle cx="90" cy="90" r="87" fill="none" stroke="url(#glowRing)" strokeWidth="1.5" strokeOpacity="0.8" />
-      <circle cx="90" cy="90" r="87" fill="none" stroke="url(#glowRing)" strokeWidth="6" strokeOpacity="0.08" />
+      <circle cx="66" cy="66" r="63" fill="none" stroke="url(#glowRing)" strokeWidth="1.5" strokeOpacity="0.8" />
+      <circle cx="66" cy="66" r="63" fill="none" stroke="url(#glowRing)" strokeWidth="6" strokeOpacity="0.08" />
     </svg>
     <div
       className="relative w-full h-full rounded-full overflow-hidden"
@@ -107,17 +110,17 @@ const GlowPortrait = ({ children }: { children: React.ReactNode }) => (
 );
 
 const SectionHeading = ({ index, label }: { index: number; label: string }) => (
-  <div className="flex items-center gap-3 mb-4">
+  <div className="flex items-center gap-2.5 mb-2.5">
     {/* Plain solid color instead of a gradient-clipped-text effect —
         background-clip: text is unreliable in html2canvas/jsPDF-style
         export pipelines: the clip mask often doesn't apply, so the
         gradient paints as a solid block instead of showing through
         the numeral (that's the empty colored square in the exported
         PDF). A flat color renders correctly in every export path. */}
-    <span className="text-[22px] font-light leading-none" style={{ color: aurora.teal }}>
+    <span className="text-[17px] font-light leading-none" style={{ color: aurora.teal }}>
       {String(index + 1).padStart(2, "0")}
     </span>
-    <h2 className="text-[16.5px] font-semibold tracking-wide" style={{ color: palette.ink }}>
+    <h2 className="text-[13.5px] font-semibold tracking-wide" style={{ color: palette.ink }}>
       {label}
     </h2>
     <span className="flex-1 h-px ml-1" style={{ backgroundColor: palette.line }} />
@@ -126,7 +129,7 @@ const SectionHeading = ({ index, label }: { index: number; label: string }) => (
 
 const RowMark = () => (
   <span
-    className="shrink-0 mt-[7px] block w-[6px] h-[6px] rounded-full"
+    className="shrink-0 mt-[6px] block w-[5px] h-[5px] rounded-full"
     style={{ background: `linear-gradient(135deg, ${aurora.teal}, ${aurora.violet})` }}
   />
 );
@@ -149,7 +152,12 @@ HTMLDivElement,
       className="relative a4-page overflow-hidden"
       style={{
         width: `${PAGE_WIDTH_MM}mm`,
-        minHeight: `${PAGE_HEIGHT_MM}mm`,
+        // Was minHeight: page can grow past one A4 sheet and get cut
+        // into a second exported page. Fixing height + hiding overflow
+        // forces everything onto a single page; combined with the
+        // tighter spacing below, normal-length biodata content should
+        // no longer need the extra room in the first place.
+        height: `${PAGE_HEIGHT_MM}mm`,
         backgroundColor: palette.bg,
         color: palette.ink,
         fontFamily: body,
@@ -166,15 +174,18 @@ HTMLDivElement,
       <div className="absolute inset-0" style={{ backgroundColor: palette.bg }} />
       <AuroraBackdrop />
 
-      {/* Header */}
-      <div className="relative px-14 pt-16 pb-8 flex flex-col items-center text-center avoid-break">
+      {/* Header — padding roughly halved (pt-16 pb-8 → pt-8 pb-4,
+          gaps between name/subtitle/about tightened) to reclaim the
+          vertical space that was pushing later sections past the
+          page boundary. */}
+      <div className="relative px-12 pt-8 pb-4 flex flex-col items-center text-center avoid-break">
         <GlowPortrait>
           {doc.photo ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={doc.photo} alt="Profile" className="w-full h-full object-cover" />
           ) : (
             <div
-              className="w-full h-full flex items-center justify-center text-[10.5px]"
+              className="w-full h-full flex items-center justify-center text-[9.5px]"
               style={{ color: palette.sub }}
             >
               {L("Photo", "फोटो")}
@@ -184,7 +195,7 @@ HTMLDivElement,
 
         {doc.invocation.enabled && (
           <p
-            className="mt-6 text-[10px] tracking-[0.3em] uppercase"
+            className="mt-3 text-[9px] tracking-[0.3em] uppercase"
             style={{ color: aurora.teal }}
           >
             {doc.invocation.text}
@@ -192,16 +203,16 @@ HTMLDivElement,
         )}
 
         <h1
-          className="mt-3 text-[32px] leading-tight font-semibold"
+          className="mt-2 text-[25px] leading-tight font-semibold"
           style={{ fontFamily: heading, color: palette.ink }}
         >
           {(lang === "hi" && doc.fullNameHi) || doc.fullName || L("Full Name", "पूरा नाम")}
         </h1>
 
-        <div className="mt-3 flex items-center gap-3">
+        <div className="mt-1.5 flex items-center gap-3">
           <span className="h-px w-8" style={{ background: `linear-gradient(90deg, transparent, ${aurora.blue})` }} />
           <p
-            className="text-[10.5px] tracking-[0.35em] uppercase"
+            className="text-[9px] tracking-[0.35em] uppercase"
             style={{ color: palette.sub }}
           >
             {L("Biodata", "बायोडाटा")}
@@ -210,14 +221,16 @@ HTMLDivElement,
         </div>
 
         {aboutSection && (
-          <p className="mt-5 max-w-[480px] text-[13px] leading-relaxed" style={{ color: palette.sub }}>
+          <p className="mt-2.5 max-w-[480px] text-[11px] leading-snug" style={{ color: palette.sub }}>
             {(lang === "hi" && aboutSection.fields[0]?.valueHi) || aboutSection.fields[0]?.value || ""}
           </p>
         )}
       </div>
 
-      {/* Sections */}
-      <div className="relative px-10 pb-10 space-y-7">
+      {/* Sections — space-y-7 → space-y-3.5, grid box padding and
+          row gaps tightened, and body/label text sized down a step
+          so more fields fit per page without feeling cramped. */}
+      <div className="relative px-9 pb-6 space-y-3.5">
         {otherSections.map((section, idx) =>
           section.type === "grid" ? (
             <div key={section.id} className="avoid-break">
@@ -226,7 +239,7 @@ HTMLDivElement,
                 label={lang === "hi" ? section.titleHi || section.titleEn : section.titleEn}
               />
               <div
-                className="grid grid-cols-2 gap-x-8 gap-y-3 pl-9 py-3 pr-5 rounded"
+                className="grid grid-cols-2 gap-x-7 gap-y-2 pl-8 pt-[8px] pb-[10px] pr-4 rounded"
                 style={{ backgroundColor: palette.panel, border: `1px solid ${palette.line}` }}
               >
                 {section.fields.map((f) => (
@@ -234,12 +247,12 @@ HTMLDivElement,
                     <RowMark />
                     <div className="flex flex-col">
                       <span
-                        className="text-[9.5px] tracking-[0.08em] uppercase"
+                        className="text-[8.5px] tracking-[0.08em] uppercase"
                         style={{ color: palette.label }}
                       >
                         {lang === "hi" ? f.labelHi || f.labelEn : f.labelEn}
                       </span>
-                      <span className="text-[14px]" style={{ color: palette.ink }}>
+                      <span className="text-[12px] leading-snug" style={{ color: palette.ink }}>
                         {f.value?.trim() ? f.value : "—"}
                       </span>
                     </div>
@@ -253,7 +266,7 @@ HTMLDivElement,
                 index={idx}
                 label={lang === "hi" ? section.titleHi || section.titleEn : section.titleEn}
               />
-              <p className="pl-9 text-[14px] leading-relaxed" style={{ color: palette.sub }}>
+              <p className="pl-8 text-[12px] leading-snug" style={{ color: palette.sub }}>
                 {(lang === "hi" && section.fields[0]?.valueHi) || section.fields[0]?.value || "—"}
               </p>
             </div>

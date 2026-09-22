@@ -1,44 +1,5 @@
 "use client";
 
-/**
- * PdfFlipbookViewer
- * ------------------
- * Renders a PDF (e.g. a generated biodata) as a page-turning flipbook —
- * styled like a wedding album rather than a generic document viewer.
- *
- * Install (not included in this project by default):
- *   npm install react-pdf react-pageflip pdfjs-dist
- *
- * react-pdf renders each PDF page to a canvas; react-pageflip wraps those
- * canvases in a 3D page-turn interaction. Both are client-only, so this
- * component must stay a client component ("use client" above) and should
- * be dynamically imported with { ssr: false } wherever it's used:
- *
- *   const PdfFlipbookViewer = dynamic(
- *     () => import("@/components/PdfFlipbookViewer"),
- *     { ssr: false }
- *   );
- *
- * THEMING
- * -------
- * The book's colors are driven by the `theme` prop instead of being
- * hardcoded, so a selected TemplateSelector template can restyle the
- * whole book (cover gradient, ribbon/controls, header leaf) live.
- * See `templateToFlipbookTheme()` in TemplateSelector's module for the
- * mapping from a template's swatch to this shape.
- *
- * v2 changes (fixing the "flat two-slide" look):
- *  - Page well background is back on, so empty PDF margins read as cream
- *    paper instead of stark white next to the cover leather.
- *  - Added a center "gutter" overlay — the dark seam down the middle that
- *    actually makes two pages read as one open book instead of two cards
- *    sitting side by side.
- *  - Each page now has an inset shadow along its spine edge, so the paper
- *    looks like it curves into the binding instead of lying perfectly flat.
- *  - usePortrait is on, so narrow/mobile viewports show a single page
- *    instead of a squeezed, illegible two-up spread.
- */
-
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import HTMLFlipBook from "react-pageflip";
@@ -161,19 +122,51 @@ export default function PdfFlipbookViewer({
         </p>
       )}
 
+      {/* Staging area: warm radial glow + soft vignette behind the book,
+          so it reads as sitting in ambient light rather than on flat
+          white/transparent background. */}
       <div
         ref={containerRef}
-        className="relative w-full max-w-[920px] flex justify-center"
+        className="relative w-full max-w-[920px] flex justify-center py-4"
       >
-        {/* Book shadow / stand, so the pages don't float on nothing */}
+        <div
+          className="pointer-events-none absolute inset-0 -z-10"
+          style={{
+            background: `radial-gradient(ellipse 70% 60% at 50% 45%, ${theme.accent}22 0%, rgba(0,0,0,0) 70%)`,
+          }}
+        />
+
+        {/* Book shadow / stand */}
         <div className="absolute bottom-[-14px] left-1/2 -translate-x-1/2 w-[85%] h-6 rounded-full bg-[#3d2b1f]/25 blur-lg" />
 
+        {/* Ribbon bookmark — purely ornamental, hangs from the spine */}
         <div
-          className="relative rounded-[8px] p-3 sm:p-6 shadow-[0_18px_40px_-12px_rgba(61,43,31,0.55)]"
+          className="absolute top-[-6px] left-1/2 -translate-x-1/2 w-3 h-10 z-30"
+          style={{
+            background: `linear-gradient(to bottom, ${theme.accent}, ${theme.accent}cc)`,
+            clipPath: "polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%)",
+            boxShadow: "0 2px 4px rgba(0,0,0,0.25)",
+          }}
+        />
+
+        <div
+          className="relative rounded-[8px] p-3 sm:p-6 shadow-[0_18px_40px_-12px_rgba(61,43,31,0.55)] overflow-hidden"
           style={{
             backgroundImage: `linear-gradient(to bottom, ${theme.primary}, ${theme.secondary})`,
           }}
         >
+          {/* Leather-grain texture overlay — a fine repeating diagonal
+              pattern so the cover reads as tooled leather rather than a
+              flat gradient fill. Kept very low-opacity so it textures
+              without muddying the theme colors. */}
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.07] mix-blend-overlay"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(45deg, #000 0px, #000 1px, transparent 1px, transparent 4px)",
+            }}
+          />
+
           {/* Inner "page well" — cream backing so the leather cover reads as
               a frame around bound paper, not a border around blank white. */}
           <div
@@ -211,9 +204,6 @@ export default function PdfFlipbookViewer({
             >
               {isReady && numPages && pageWidth > 0 && (
                 <div className="relative">
-                  {/* Center gutter — the seam that makes two flat pages
-                      read as one open book. Skipped in portrait mode since
-                      there's only one page visible at a time. */}
                   {!isPortraitMode && (
                     <div
                       className="pointer-events-none absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-6 z-10"
@@ -244,14 +234,42 @@ export default function PdfFlipbookViewer({
                   >
                     {headerPage && (
                       <div
-                        className="flex flex-col items-center justify-center text-center px-8 shadow-[inset_-10px_0_18px_-14px_rgba(0,0,0,0.5)]"
+                        className="relative flex flex-col items-center justify-center text-center px-8 shadow-[inset_-10px_0_18px_-14px_rgba(0,0,0,0.5)] overflow-hidden"
                         style={{
                           background: headerPage.accentColor ?? theme.primary,
                         }}
                       >
+                        {/* Ornamental corner flourishes, echoing the ornate
+                            biodata border templates this viewer displays. */}
+                        {(["top-2 left-2", "top-2 right-2 -scale-x-100", "bottom-2 left-2 -scale-y-100", "bottom-2 right-2 -scale-x-100 -scale-y-100"] as const).map(
+                          (pos, idx) => (
+                            <svg
+                              key={idx}
+                              viewBox="0 0 40 40"
+                              className={`absolute w-8 h-8 ${pos}`}
+                              style={{ color: theme.accent, opacity: 0.85 }}
+                            >
+                              <path
+                                d="M2 2 C 14 2, 18 6, 18 18 M2 2 C 2 14, 6 18, 18 18"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.4"
+                              />
+                              <circle cx="18" cy="18" r="1.6" fill="currentColor" />
+                            </svg>
+                          )
+                        )}
+
                         <h2
                           className="font-serif text-2xl sm:text-3xl mb-3"
-                          style={{ color: theme.coverText ?? theme.pageWell }}
+                          style={{
+                            color: theme.coverText ?? theme.pageWell,
+                            // Embossed/foil-stamped look: light highlight
+                            // above, soft dark below, instead of a flat
+                            // printed title.
+                            textShadow:
+                              "0 1px 0 rgba(255,255,255,0.25), 0 -1px 1px rgba(0,0,0,0.35)",
+                          }}
                         >
                           {headerPage.title}
                         </h2>
@@ -276,18 +294,25 @@ export default function PdfFlipbookViewer({
                     {Array.from({ length: numPages }, (_, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-center overflow-hidden"
+                        className="relative flex items-center justify-center overflow-hidden"
                         style={{
                           backgroundColor: theme.pageWell,
-                          // Curve the paper into the spine: right edge shadow
-                          // on left-hand (even) pages, left edge on right-hand
-                          // (odd) pages, matching book-open reading order.
                           boxShadow:
                             i % 2 === 0
                               ? "inset -12px 0 20px -16px rgba(0,0,0,0.35)"
                               : "inset 12px 0 20px -16px rgba(0,0,0,0.35)",
                         }}
                       >
+                        {/* Gilded page edge — a thin gold-gradient stripe
+                            along the outer edge, mimicking gilt-edged
+                            paper on a keepsake album. */}
+                        <div
+                          className="absolute top-0 bottom-0 w-[3px] z-20"
+                          style={{
+                            [i % 2 === 0 ? "right" : "left"]: 0,
+                            background: `linear-gradient(to bottom, ${theme.accent}, #f5e3b8, ${theme.accent})`,
+                          } as React.CSSProperties}
+                        />
                         <Page
                           pageNumber={i + 1}
                           width={pageWidth}
@@ -318,10 +343,10 @@ export default function PdfFlipbookViewer({
           </button>
 
           <span
-            className="font-serif text-sm tabular-nums"
+            className="font-serif text-sm tabular-nums tracking-widest"
             style={{ color: theme.secondary }}
           >
-            Page {currentPage + 1} of {totalLeaves}
+            {currentPage + 1} / {totalLeaves}
           </span>
 
           <button
