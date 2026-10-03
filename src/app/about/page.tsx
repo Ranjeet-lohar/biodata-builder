@@ -67,6 +67,48 @@ const steps = [
 export default function AboutPage() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#faf9f7]">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {/* SVG Pattern */}
+        {/* SVG Pattern: Jaali lattice */}
+<svg
+  aria-hidden="true"
+  className="absolute inset-0 h-full w-full text-rose-900/[0.08] [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_85%)]"
+>
+  <defs>
+    <pattern
+      id="biodata-jaali"
+      width="64"
+      height="64"
+      patternUnits="userSpaceOnUse"
+    >
+      {/* overlapping circles on tile edges form the quatrefoil */}
+      <g fill="none" stroke="currentColor" strokeWidth="1">
+        <circle cx="32" cy="0" r="16" />
+        <circle cx="64" cy="32" r="16" />
+        <circle cx="32" cy="64" r="16" />
+        <circle cx="0" cy="32" r="16" />
+        {/* inner diamond */}
+        <path d="M32 20 L44 32 L32 44 L20 32 Z" />
+      </g>
+      {/* center dot */}
+      <circle cx="32" cy="32" r="2" fill="currentColor" />
+      {/* petal accents where circles meet */}
+      <g fill="currentColor">
+        <circle cx="16" cy="16" r="1.5" />
+        <circle cx="48" cy="16" r="1.5" />
+        <circle cx="16" cy="48" r="1.5" />
+        <circle cx="48" cy="48" r="1.5" />
+      </g>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#biodata-jaali)" />
+</svg>
+      
+        {/* Glow blobs (unchanged) */}
+        <div className="absolute left-1/2 top-[-220px] h-[500px] w-[800px] -translate-x-1/2 bg-pink-200/30 blur-[120px]" />
+        <div className="absolute right-[-180px] top-[35%] h-[400px] w-[400px] bg-amber-100/40 blur-[120px]" />
+        <div className="absolute bottom-[-200px] left-[-150px] h-[450px] w-[450px] bg-purple-100/30 blur-[120px]" />
+      </div>  
       <AppHeader />
       <div className="px-4 py-8 sm:px-6 lg:px-8">
       {/* Ambient Background */}

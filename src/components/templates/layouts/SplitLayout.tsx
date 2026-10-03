@@ -38,7 +38,7 @@ function GeoBackground({ theme }: { theme: Theme }) {
 function HexFrame({ theme, children }: { theme: Theme; children: React.ReactNode }) {
  return (
   <div className="relative w-[160px] h-[176px]">
-    <svg className="absolute inset-0" viewBox="0 0 160 176" fill="none">
+    <svg className="absolute inset-0 bg-current" viewBox="0 0 160 176" fill="none">
       <polygon
         points="80,2 156,44 156,132 80,174 4,132 4,44"
         fill="none"
@@ -54,9 +54,7 @@ function HexFrame({ theme, children }: { theme: Theme; children: React.ReactNode
       />
     </svg>
     <div
-      className="absolute inset-[14px] overflow-hidden bg-white"
-      style={{ clipPath: "polygon(50% 0%, 97.5% 25%, 97.5% 75%, 50% 100%, 2.5% 75%, 2.5% 25%)" }}
-    >
+      className="absolute inset-[14px] overflow-hidden bg-white">
       {children}
     </div>
   </div>

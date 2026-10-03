@@ -95,6 +95,49 @@ const workflow = [
 export default function FeaturesPage() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#faf9f7]">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+  {/* SVG Pattern */}
+  <svg
+    aria-hidden="true"
+    className="absolute inset-0 h-full w-full text-pink-900/[0.07] [mask-image:linear-gradient(to_bottom,black_0%,black_60%,transparent_100%)]"
+  >
+    <defs>
+      <pattern
+        id="biodata-motif"
+        width="80"
+        height="80"
+        patternUnits="userSpaceOnUse"
+      >
+        {/* diamond lattice */}
+        <path
+          d="M40 0 L80 40 L40 80 L0 40 Z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+        />
+        {/* center flower */}
+        <g fill="currentColor" transform="translate(40 40)">
+          <circle r="2.5" />
+          <ellipse rx="2.5" ry="7" cy="-9" />
+          <ellipse rx="2.5" ry="7" cy="9" />
+          <ellipse rx="7" ry="2.5" cx="-9" />
+          <ellipse rx="7" ry="2.5" cx="9" />
+        </g>
+        {/* corner dots */}
+        <circle cx="0" cy="0" r="1.5" fill="currentColor" />
+        <circle cx="80" cy="0" r="1.5" fill="currentColor" />
+        <circle cx="0" cy="80" r="1.5" fill="currentColor" />
+        <circle cx="80" cy="80" r="1.5" fill="currentColor" />
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#biodata-motif)" />
+  </svg>
+
+  {/* Glow blobs (unchanged) */}
+  <div className="absolute left-1/2 top-[-220px] h-[500px] w-[800px] -translate-x-1/2 bg-pink-200/30 blur-[120px]" />
+  <div className="absolute right-[-180px] top-[35%] h-[400px] w-[400px] bg-amber-100/40 blur-[120px]" />
+  <div className="absolute bottom-[-200px] left-[-150px] h-[450px] w-[450px] bg-purple-100/30 blur-[120px]" />
+</div>  
       <AppHeader />
       <div className="px-4 py-8 sm:px-6 lg:px-8">
       {/* Ambient Background */}

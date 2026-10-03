@@ -42,7 +42,7 @@ const MinimalTemplate = forwardRef<
             <p className="text-[11px] text-[#b9c2ab] mb-1">{doc.invocation.text}</p>
           )}
           <p className="uppercase text-[11px] tracking-[0.25em] text-[#b9c2ab]">{L("Marriage Biodata", "विवाह हेतु बायोडाटा")}</p>
-          <h1 className="mt-1 text-3xl font-semibold leading-tight" style={{ fontFamily: heading }}>
+          <h1 className="mt-1 text-2xl font-semibold leading-tight" style={{ fontFamily: heading }}>
             {(lang === "hi" && doc.fullNameHi) || doc.fullName || L("Full Name", "पूरा नाम")}
           </h1>
 

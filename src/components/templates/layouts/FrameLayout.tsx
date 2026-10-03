@@ -3,6 +3,89 @@ import { FontPack } from "@/lib/fontPacks";
 import { Theme } from "./theme";
 import { photoShapeClass } from "./Motifs";
 
+type PatternVariant = "lattice" | "dots" | "diamonds";
+
+function PatternBackground({
+  theme,
+  variant = "lattice",
+  opacity = 0.07,
+}: {
+  theme: Theme;
+  variant?: PatternVariant;
+  opacity?: number;
+}) {
+  const W = 210;
+  const H = 297;
+  const MARGIN = 8; // keep inside the PageFrame border
+  const id = `pat-${variant}`;
+
+  return (
+    <svg
+      width={`${W}mm`}
+      height={`${H}mm`}
+      viewBox={`0 0 ${W} ${H}`}
+      style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}
+    >
+      <defs>
+        {variant === "lattice" && (
+          <pattern id={id} width="12" height="12" patternUnits="userSpaceOnUse">
+            <path
+              d="M0,6 L6,0 L12,6 L6,12 Z"
+              fill="none"
+              stroke={theme.primary}
+              strokeWidth={0.25}
+            />
+            <circle cx="6" cy="6" r="0.6" fill={theme.primary} />
+          </pattern>
+        )}
+        {variant === "dots" && (
+          <pattern id={id} width="6" height="6" patternUnits="userSpaceOnUse">
+            <circle cx="3" cy="3" r="0.5" fill={theme.primary} />
+          </pattern>
+        )}
+        {variant === "diamonds" && (
+          <pattern id={id} width="16" height="16" patternUnits="userSpaceOnUse">
+            <path
+              d="M8,1 L15,8 L8,15 L1,8 Z"
+              fill="none"
+              stroke={theme.primary}
+              strokeWidth={0.3}
+            />
+            <path
+              d="M8,5 L11,8 L8,11 L5,8 Z"
+              fill={theme.primary}
+              opacity={0.6}
+            />
+          </pattern>
+        )}
+
+        {/* Fades the pattern out toward the center so text stays readable */}
+        <radialGradient id="pat-fade" cx="50%" cy="50%" r="65%">
+          <stop offset="0%" stopColor={theme.bg} stopOpacity="0.95" />
+          <stop offset="55%" stopColor={theme.bg} stopOpacity="0.6" />
+          <stop offset="100%" stopColor={theme.bg} stopOpacity="0" />
+        </radialGradient>
+      </defs>
+
+      <rect
+        x={MARGIN}
+        y={MARGIN}
+        width={W - MARGIN * 2}
+        height={H - MARGIN * 2}
+        fill={`url(#${id})`}
+        opacity={opacity}
+      />
+      <rect
+        x={MARGIN}
+        y={MARGIN}
+        width={W - MARGIN * 2}
+        height={H - MARGIN * 2}
+        fill="url(#pat-fade)"
+      />
+    </svg>
+  );
+}
+
 function PageFrame({ theme }: { theme: Theme }) {
   // A4 in mm, viewBox in mm so all coordinates map 1:1 — avoids px/rem
   // rounding drift under html2canvas capture (see other templates' notes).
@@ -60,7 +143,6 @@ function StatUnit({
   last?: boolean;
 }) {
   return (
-    
     <div
       className="flex flex-col px-6 first:pl-0"
       style={{
@@ -146,10 +228,12 @@ export default function ModernMinimalLayout({
       className="relative a4-page w-[210mm] min-h-[297mm]"
       style={{ backgroundColor: theme.bg, color: theme.text, fontFamily: body }}
     >
+      {/* Pattern first so it sits underneath the frame and content */}
+      <PatternBackground theme={theme} variant="lattice" />
       <PageFrame theme={theme} />
 
       {/* Letterhead */}
-      <div className="px-16 pt-14 pb-8 flex items-start justify-between gap-10">
+      <div className="relative px-16 pt-14 pb-8 flex items-start justify-between gap-10">
         <div className="flex-1 min-w-0">
           {doc.invocation.enabled && (
             <p
@@ -195,7 +279,8 @@ export default function ModernMinimalLayout({
         </div>
       </div>
 
-      <div className="px-16">
+      {/* Header stats */}
+      <div className="relative px-16">
         <div className="h-[2px] w-full mb-6" style={{ backgroundColor: theme.primary }} />
         {headerStats.length > 0 && (
           <div className="flex flex-wrap pb-8" style={{ borderBottom: `1px solid ${theme.border}` }}>
@@ -212,7 +297,8 @@ export default function ModernMinimalLayout({
         )}
       </div>
 
-      <div className="px-16 pt-2 pb-14">
+      {/* Body */}
+      <div className="relative px-16 pt-2 pb-14">
         {aboutSection && !isRichTextEmpty(aboutValue) && (
           <div className="mt-1 pl-5 " style={{ borderLeft: `2px solid ${theme.border}` }}>
             <div
