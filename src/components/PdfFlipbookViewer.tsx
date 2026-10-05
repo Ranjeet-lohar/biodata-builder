@@ -109,29 +109,38 @@ export default function PdfFlipbookViewer({
   const goPrev = () => flipBookRef.current?.pageFlip()?.flipPrev();
   const goNext = () => flipBookRef.current?.pageFlip()?.flipNext();
 
-  // Fit the page to both the available width and height. The flipbook shows
-  // two pages on wide screens and one page in portrait mode.
-  const maxSpreadWidth = 1240;
-  const spreadWidth = Math.min(containerWidth, maxSpreadWidth);
-  const maxPageHeight = Math.max(280, containerHeight - 64);
+  // Leave room for the leather frame and page well when fitting the book.
+  // On narrow screens, switch to a single page and allow smaller leaves.
+  const availablePageWidth = isPortraitMode
+    ? containerWidth - 56
+    : (containerWidth - 56) / 2;
+  const maxPageHeight = Math.max(170, containerHeight - 48);
   const widthByHeight = maxPageHeight * pageAspectRatio;
+  const minPageWidth = 120;
+  const minPageHeight = Math.floor(minPageWidth / pageAspectRatio);
   const pageWidth = Math.max(
-    200,
-    Math.min(
-      isPortraitMode ? spreadWidth - 24 : spreadWidth / 2 - 8,
-      widthByHeight,
-      600
-    )
+    minPageWidth,
+    Math.min(availablePageWidth, widthByHeight, 600)
   );
   const pageHeight = pageWidth / pageAspectRatio;
+  const isShortViewport = containerHeight > 0 && containerHeight < 360;
 
   const totalLeaves = (numPages ?? 0) + (headerPage ? 1 : 0);
 
   return (
-    <div className="flex h-full min-h-0 w-full flex-col items-center">
+    <div
+      className="flex h-full min-h-0 w-full flex-col items-center"
+      style={{
+        boxSizing: "border-box",
+        paddingTop: "max(3.5rem, env(safe-area-inset-top))",
+        paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))",
+      }}
+    >
       {title && (
         <p
-          className="mb-1 shrink-0 text-sm tracking-wide font-serif italic sm:mb-2"
+          className={`mb-1 shrink-0 text-sm tracking-wide font-serif italic sm:mb-2 ${
+            isShortViewport ? "hidden" : ""
+          }`}
           style={{ color: theme.accent }}
         >
           {title}
@@ -236,9 +245,9 @@ export default function PdfFlipbookViewer({
                     width={pageWidth}
                     height={pageHeight}
                     size="fixed"
-                    minWidth={200}
+                    minWidth={minPageWidth}
                     maxWidth={600}
-                    minHeight={280}
+                    minHeight={minPageHeight}
                     maxHeight={900}
                     showCover={!!headerPage}
                     usePortrait={isPortraitMode}

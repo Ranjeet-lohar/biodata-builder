@@ -98,7 +98,9 @@ export default function ResumeBuilder() {
   const [templateId, setTemplateId] =
     useState<ResumeTemplateId>(DEFAULT_TEMPLATE);
   const [flipbookUrl, setFlipbookUrl] = useState<string | null>(null);
+  const [showFlipbook, setShowFlipbook] = useState(false);
   const [flipbookLoading, setFlipbookLoading] = useState(false);
+  const [flipbookProgress, setFlipbookProgress] = useState(0);
   const [flipbookError, setFlipbookError] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
@@ -106,6 +108,7 @@ export default function ResumeBuilder() {
   const templateRefs = useRef<
     Partial<Record<ResumeTemplateId, HTMLDivElement | null>>
   >({});
+  const flipbookRequestId = useRef(0);
   const templateTrackRef = useRef<HTMLDivElement>(null);
   const templateCardRefs = useRef<
     Partial<Record<ResumeTemplateId, HTMLButtonElement | null>>
@@ -207,9 +210,15 @@ export default function ResumeBuilder() {
 
   async function handlePreviewFlipbook() {
     if (flipbookLoading) return;
+    const requestId = ++flipbookRequestId.current;
     setFlipbookLoading(true);
+    setShowFlipbook(true);
+    setFlipbookProgress(0);
     setFlipbookError(null);
     try {
+      await new Promise<void>((resolve) => {
+        requestAnimationFrame(() => resolve());
+      });
       const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
         import("html2canvas"),
         import("jspdf"),
@@ -217,6 +226,7 @@ export default function ResumeBuilder() {
 
       let pdf: InstanceType<typeof jsPDF> | null = null;
       for (const [index, template] of resumeTemplates.entries()) {
+        if (requestId !== flipbookRequestId.current) return;
         const node = templateRefs.current[template.id];
         if (!node) {
           throw new Error(`Resume template "${template.name}" is not ready.`);
@@ -227,6 +237,7 @@ export default function ResumeBuilder() {
           useCORS: true,
           backgroundColor: "#ffffff",
         });
+        if (requestId !== flipbookRequestId.current) return;
         if (canvas.width === 0 || canvas.height === 0) {
           throw new Error(`Resume template "${template.name}" produced an empty page.`);
         }
@@ -254,27 +265,35 @@ export default function ResumeBuilder() {
           canvas.width,
           canvas.height
         );
+        setFlipbookProgress(index + 1);
       }
 
       if (!pdf) throw new Error("No resume templates are available.");
+      if (requestId !== flipbookRequestId.current) return;
       const nextUrl = URL.createObjectURL(pdf.output("blob"));
       setFlipbookUrl((previousUrl) => {
         if (previousUrl) URL.revokeObjectURL(previousUrl);
         return nextUrl;
       });
     } catch (error) {
+      if (requestId !== flipbookRequestId.current) return;
       console.error("Failed to prepare resume flipbook:", error);
       setFlipbookError("Could not prepare the resume flipbook. Please try again.");
     } finally {
-      setFlipbookLoading(false);
+      if (requestId === flipbookRequestId.current) {
+        setFlipbookLoading(false);
+      }
     }
   }
 
   function closeFlipbook() {
+    flipbookRequestId.current += 1;
+    setFlipbookLoading(false);
     setFlipbookUrl((previousUrl) => {
       if (previousUrl) URL.revokeObjectURL(previousUrl);
       return null;
     });
+    setShowFlipbook(false);
   }
 
   useEffect(() => {
@@ -647,26 +666,71 @@ export default function ResumeBuilder() {
         </div>
       </main>
       <AppFooter />
-      {flipbookUrl && (
+      {showFlipbook && (
         <div className="fixed inset-0 z-50 flex h-[100dvh] w-screen flex-col items-center justify-center overflow-hidden bg-[#17231f]/90 px-0 py-0 backdrop-blur-sm">
           <button
             type="button"
             onClick={closeFlipbook}
             aria-label="Close resume flipbook"
-            className="absolute right-3 top-3 z-[60] flex h-10 w-10 items-center justify-center rounded-full bg-white text-stone-800 shadow-lg transition hover:bg-stone-100 sm:right-5 sm:top-5"
+            className="absolute z-[60] flex h-10 w-10 items-center justify-center rounded-full bg-white text-stone-800 shadow-lg transition hover:bg-stone-100"
+            style={{
+              top: "max(0.75rem, env(safe-area-inset-top))",
+              right: "max(0.75rem, env(safe-area-inset-right))",
+            }}
           >
             <X className="h-4 w-4" />
           </button>
-          <PdfFlipbookViewer
-            fileUrl={flipbookUrl}
-            title={resume.fullName || "Resume"}
-            headerPage={{
-              title: "Resume Template Gallery",
-              subtitle: `${resumeTemplates.length} designs`,
-              description: `Explore every resume design${resume.fullName ? ` for ${resume.fullName}` : ""}.`,
-              accentColor: "#176b55",
-            }}
-          />
+          {flipbookLoading ? (
+            <div
+              role="status"
+              aria-live="polite"
+              className="flex flex-col items-center px-6 text-center text-white"
+            >
+              <LoaderCircle className="mb-5 h-12 w-12 animate-spin text-emerald-300" />
+              <h2 className="text-lg font-semibold">Preparing your resume flipbook</h2>
+              <p className="mt-2 text-sm text-white/70">
+                Capturing template {flipbookProgress + 1} of {resumeTemplates.length}
+              </p>
+              <div
+                className="mt-5 h-1.5 w-56 overflow-hidden rounded-full bg-white/20"
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={resumeTemplates.length}
+                aria-valuenow={flipbookProgress}
+                aria-label="Resume templates captured"
+              >
+                <div
+                  className="h-full rounded-full bg-emerald-300 transition-[width] duration-200"
+                  style={{
+                    width: `${(flipbookProgress / resumeTemplates.length) * 100}%`,
+                  }}
+                />
+              </div>
+            </div>
+          ) : flipbookError ? (
+            <div role="alert" className="mx-6 max-w-md text-center text-white">
+              <p className="text-lg font-semibold">Could not prepare the resume flipbook</p>
+              <p className="mt-2 text-sm text-white/70">{flipbookError}</p>
+              <button
+                type="button"
+                onClick={handlePreviewFlipbook}
+                className="mt-5 rounded bg-white px-4 py-2 text-sm font-semibold text-stone-900"
+              >
+                Try again
+              </button>
+            </div>
+          ) : flipbookUrl ? (
+            <PdfFlipbookViewer
+              fileUrl={flipbookUrl}
+              title={resume.fullName || "Resume"}
+              headerPage={{
+                title: "Resume Template Gallery",
+                subtitle: `${resumeTemplates.length} designs`,
+                description: `Explore every resume design${resume.fullName ? ` for ${resume.fullName}` : ""}.`,
+                accentColor: "#176b55",
+              }}
+            />
+          ) : null}
         </div>
       )}
     </div>

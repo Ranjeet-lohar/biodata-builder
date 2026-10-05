@@ -22,6 +22,7 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   BookOpen,
+  LoaderCircle,
   X,
   ChevronDown,
 } from "lucide-react";
@@ -77,11 +78,14 @@ export default function Home() {
   // asks for a preview, so PdfFlipbookViewer never mounts against an
   // empty/invalid source.
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [showFlipbook, setShowFlipbook] = useState(false);
   const [flipbookLoading, setFlipbookLoading] = useState(false);
+  const [flipbookProgress, setFlipbookProgress] = useState(0);
   const [flipbookError, setFlipbookError] = useState<string | null>(null);
 
   const exportRef = useRef<HTMLDivElement>(null);
   const templateRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const flipbookRequestId = useRef(0);
 
   useEffect(() => {
     if (localStorage.getItem("demo-auth") !== "true") {
@@ -149,9 +153,15 @@ export default function Home() {
 
   async function handlePreviewFlipbook() {
     if (flipbookLoading) return;
+    const requestId = ++flipbookRequestId.current;
     setFlipbookLoading(true);
+    setShowFlipbook(true);
+    setFlipbookProgress(0);
     setFlipbookError(null);
     try {
+      await new Promise<void>((resolve) => {
+        requestAnimationFrame(() => resolve());
+      });
       const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
         import("html2canvas"),
         import("jspdf"),
@@ -159,6 +169,7 @@ export default function Home() {
 
       let pdf: InstanceType<typeof jsPDF> | null = null;
       for (const [index, template] of templates.entries()) {
+        if (requestId !== flipbookRequestId.current) return;
         const node = templateRefs.current[template.id];
         if (!node) {
           throw new Error(`Template "${template.name}" is not ready for capture.`);
@@ -169,6 +180,7 @@ export default function Home() {
           useCORS: true,
           backgroundColor: "#ffffff",
         });
+        if (requestId !== flipbookRequestId.current) return;
         if (canvas.width === 0 || canvas.height === 0) {
           throw new Error(`Template "${template.name}" produced an empty page.`);
         }
@@ -195,6 +207,7 @@ export default function Home() {
           canvas.width,
           canvas.height
         );
+        setFlipbookProgress(index + 1);
       }
 
       if (!pdf) {
@@ -202,19 +215,26 @@ export default function Home() {
       }
 
       const blob = pdf.output("blob");
+      if (requestId !== flipbookRequestId.current) return;
       if (pdfUrl) URL.revokeObjectURL(pdfUrl);
       setPdfUrl(URL.createObjectURL(blob));
     } catch (err) {
+      if (requestId !== flipbookRequestId.current) return;
       console.error("Failed to build flipbook preview:", err);
       setFlipbookError("Could not prepare the template flipbook. Please try again.");
     } finally {
-      setFlipbookLoading(false);
+      if (requestId === flipbookRequestId.current) {
+        setFlipbookLoading(false);
+      }
     }
   }
 
   function closeFlipbook() {
+    flipbookRequestId.current += 1;
+    setFlipbookLoading(false);
     if (pdfUrl) URL.revokeObjectURL(pdfUrl);
     setPdfUrl(null);
+    setShowFlipbook(false);
   }
 
   if (!authChecked) {
@@ -420,25 +440,70 @@ export default function Home() {
       </div>
 
       {/* Flipbook preview overlay — only mounted once a real PDF blob exists */}
-      {pdfUrl && (
+      {showFlipbook && (
         <div className="fixed inset-0 z-50 flex h-[100dvh] w-screen flex-col items-center justify-center overflow-hidden bg-[#2b2420]/90 px-0 py-0 backdrop-blur-sm">
           <button
             onClick={closeFlipbook}
             aria-label="Close flipbook preview"
-            className="absolute right-3 top-3 z-[60] flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#5c1620] shadow-lg transition-colors hover:bg-white sm:right-5 sm:top-5"
+            className="absolute z-[60] flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#5c1620] shadow-lg transition-colors hover:bg-white"
+            style={{
+              top: "max(0.75rem, env(safe-area-inset-top))",
+              right: "max(0.75rem, env(safe-area-inset-right))",
+            }}
           >
             <X className="w-4 h-4" />
           </button>
-          <PdfFlipbookViewer
-            fileUrl={pdfUrl}
-            title={name}
-            headerPage={{
-              title: "Template Gallery",
-              subtitle: `${templates.length} designs`,
-              description: `Explore every template using ${name}'s biodata.`,
-              accentColor: "#8a6a1f",
-            }}
-          />
+          {flipbookLoading ? (
+            <div
+              role="status"
+              aria-live="polite"
+              className="flex flex-col items-center px-6 text-center text-white"
+            >
+              <LoaderCircle className="mb-5 h-12 w-12 animate-spin text-[#f0c96a]" />
+              <h2 className="text-lg font-semibold">Preparing your flipbook</h2>
+              <p className="mt-2 text-sm text-white/70">
+                Capturing template {flipbookProgress + 1} of {templates.length}
+              </p>
+              <div
+                className="mt-5 h-1.5 w-56 overflow-hidden rounded-full bg-white/20"
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={templates.length}
+                aria-valuenow={flipbookProgress}
+                aria-label="Templates captured"
+              >
+                <div
+                  className="h-full rounded-full bg-[#f0c96a] transition-[width] duration-200"
+                  style={{
+                    width: `${(flipbookProgress / templates.length) * 100}%`,
+                  }}
+                />
+              </div>
+            </div>
+          ) : flipbookError ? (
+            <div role="alert" className="mx-6 max-w-md text-center text-white">
+              <p className="text-lg font-semibold">Could not prepare the flipbook</p>
+              <p className="mt-2 text-sm text-white/70">{flipbookError}</p>
+              <button
+                type="button"
+                onClick={handlePreviewFlipbook}
+                className="mt-5 rounded bg-white px-4 py-2 text-sm font-semibold text-stone-900"
+              >
+                Try again
+              </button>
+            </div>
+          ) : pdfUrl ? (
+            <PdfFlipbookViewer
+              fileUrl={pdfUrl}
+              title={name}
+              headerPage={{
+                title: "Template Gallery",
+                subtitle: `${templates.length} designs`,
+                description: `Explore every template using ${name}'s biodata.`,
+                accentColor: "#8a6a1f",
+              }}
+            />
+          ) : null}
         </div>
       )}
 
