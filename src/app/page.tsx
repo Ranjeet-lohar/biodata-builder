@@ -421,11 +421,11 @@ export default function Home() {
 
       {/* Flipbook preview overlay — only mounted once a real PDF blob exists */}
       {pdfUrl && (
-        <div className="fixed inset-0 z-50 bg-[#2b2420]/70 backdrop-blur-sm flex flex-col items-center justify-center px-4 py-8 overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex h-[100dvh] w-screen flex-col items-center justify-center overflow-hidden bg-[#2b2420]/90 px-0 py-0 backdrop-blur-sm">
           <button
             onClick={closeFlipbook}
             aria-label="Close flipbook preview"
-            className="absolute top-4 right-4 sm:top-6 sm:right-6 w-9 h-9 rounded-full bg-white/90 text-[#5c1620] flex items-center justify-center hover:bg-white transition-colors"
+            className="absolute right-3 top-3 z-[60] flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#5c1620] shadow-lg transition-colors hover:bg-white sm:right-5 sm:top-5"
           >
             <X className="w-4 h-4" />
           </button>

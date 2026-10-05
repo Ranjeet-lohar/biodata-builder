@@ -70,25 +70,32 @@ export default function PdfFlipbookViewer({
   const [numPages, setNumPages] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
+  const [containerHeight, setContainerHeight] = useState(0);
   const [isReady, setIsReady] = useState(false);
   const [isPortraitMode, setIsPortraitMode] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const flipBookRef = useRef<any>(null);
 
-  // Measure available width so the book scales to its container / viewport,
-  // and drop to single-page portrait mode below ~640px so a spread never
-  // gets squeezed into two illegible slivers.
+  // Measure the fullscreen staging area so the book uses all available space
+  // without exceeding either the viewport height or page-flip limits.
   useEffect(() => {
     const measure = () => {
       if (containerRef.current) {
         const w = containerRef.current.offsetWidth;
+        const h = containerRef.current.offsetHeight;
         setContainerWidth(w);
+        setContainerHeight(h);
         setIsPortraitMode(w < 640);
       }
     };
     measure();
+    const observer = new ResizeObserver(measure);
+    if (containerRef.current) observer.observe(containerRef.current);
     window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+    };
   }, []);
 
   const onDocumentLoadSuccess = useCallback(
@@ -102,20 +109,29 @@ export default function PdfFlipbookViewer({
   const goPrev = () => flipBookRef.current?.pageFlip()?.flipPrev();
   const goNext = () => flipBookRef.current?.pageFlip()?.flipNext();
 
-  // Single-page width; HTMLFlipBook lays two side by side on wide screens,
-  // one at a time in portrait mode.
-  const maxSpreadWidth = 920;
+  // Fit the page to both the available width and height. The flipbook shows
+  // two pages on wide screens and one page in portrait mode.
+  const maxSpreadWidth = 1240;
   const spreadWidth = Math.min(containerWidth, maxSpreadWidth);
-  const pageWidth = isPortraitMode ? spreadWidth - 24 : spreadWidth / 2 - 8;
+  const maxPageHeight = Math.max(280, containerHeight - 64);
+  const widthByHeight = maxPageHeight * pageAspectRatio;
+  const pageWidth = Math.max(
+    200,
+    Math.min(
+      isPortraitMode ? spreadWidth - 24 : spreadWidth / 2 - 8,
+      widthByHeight,
+      600
+    )
+  );
   const pageHeight = pageWidth / pageAspectRatio;
 
   const totalLeaves = (numPages ?? 0) + (headerPage ? 1 : 0);
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="flex h-full min-h-0 w-full flex-col items-center">
       {title && (
         <p
-          className="mb-3 text-sm tracking-wide font-serif italic"
+          className="mb-1 shrink-0 text-sm tracking-wide font-serif italic sm:mb-2"
           style={{ color: theme.accent }}
         >
           {title}
@@ -127,7 +143,7 @@ export default function PdfFlipbookViewer({
           white/transparent background. */}
       <div
         ref={containerRef}
-        className="relative w-full max-w-[980px] flex justify-center py-4"
+        className="relative flex min-h-0 w-full max-w-none flex-1 items-center justify-center overflow-hidden py-2"
       >
         <div
           className="pointer-events-none absolute inset-0 -z-10"
@@ -137,11 +153,11 @@ export default function PdfFlipbookViewer({
         />
 
         {/* Book shadow / stand */}
-        <div className="absolute bottom-[-14px] left-1/2 -translate-x-1/2 w-[85%] h-6 rounded-full bg-[#3d2b1f]/25 blur-lg" />
+        <div className="absolute bottom-1 left-1/2 h-6 w-[85%] -translate-x-1/2 rounded-full bg-[#3d2b1f]/25 blur-lg" />
 
         {/* Ribbon bookmark — purely ornamental, hangs from the spine */}
         <div
-          className="absolute top-[-6px] left-1/2 -translate-x-1/2 w-3 h-10 z-30"
+          className="absolute top-0 left-1/2 z-30 h-10 w-3 -translate-x-1/2"
           style={{
             background: `linear-gradient(to bottom, ${theme.accent}, ${theme.accent}cc)`,
             clipPath: "polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%)",
@@ -150,7 +166,7 @@ export default function PdfFlipbookViewer({
         />
 
         <div
-          className="relative rounded-[8px] p-3 sm:p-6 shadow-[0_18px_40px_-12px_rgba(61,43,31,0.55)] overflow-hidden"
+          className="relative max-h-full max-w-full overflow-hidden rounded-[8px] p-2 shadow-[0_18px_40px_-12px_rgba(61,43,31,0.55)] sm:p-3"
           style={{
             backgroundImage: `linear-gradient(to bottom, ${theme.primary}, ${theme.secondary})`,
           }}
@@ -170,7 +186,7 @@ export default function PdfFlipbookViewer({
           {/* Inner "page well" — cream backing so the leather cover reads as
               a frame around bound paper, not a border around blank white. */}
           <div
-            className="relative rounded-[4px] p-2 sm:p-3"
+            className="relative rounded-[4px] p-1.5 sm:p-2"
             style={{ backgroundColor: theme.pageWell }}
           >
             <Document
@@ -223,7 +239,7 @@ export default function PdfFlipbookViewer({
                     minWidth={200}
                     maxWidth={600}
                     minHeight={280}
-                    maxHeight={820}
+                    maxHeight={900}
                     showCover={!!headerPage}
                     usePortrait={isPortraitMode}
                     drawShadow
@@ -380,7 +396,7 @@ export default function PdfFlipbookViewer({
 
       {/* Controls: bookmark-ribbon style page indicator + turn buttons */}
       {numPages && (
-        <div className="mt-6 flex items-center gap-5">
+        <div className="mt-2 flex shrink-0 items-center gap-5 pb-1 sm:mt-3">
           <button
             onClick={goPrev}
             disabled={currentPage === 0}

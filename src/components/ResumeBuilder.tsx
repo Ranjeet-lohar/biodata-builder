@@ -648,12 +648,12 @@ export default function ResumeBuilder() {
       </main>
       <AppFooter />
       {flipbookUrl && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-y-auto bg-[#17231f]/80 px-4 py-8 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex h-[100dvh] w-screen flex-col items-center justify-center overflow-hidden bg-[#17231f]/90 px-0 py-0 backdrop-blur-sm">
           <button
             type="button"
             onClick={closeFlipbook}
             aria-label="Close resume flipbook"
-            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-stone-800 shadow-lg transition hover:bg-stone-100 sm:right-6 sm:top-6"
+            className="absolute right-3 top-3 z-[60] flex h-10 w-10 items-center justify-center rounded-full bg-white text-stone-800 shadow-lg transition hover:bg-stone-100 sm:right-5 sm:top-5"
           >
             <X className="h-4 w-4" />
           </button>
