@@ -1,8 +1,51 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { LoaderCircle } from "lucide-react";
 
 export default function AppHeader() {
+  const pathname = usePathname();
+  const isResume = pathname.startsWith("/resume");
+  const [loadingTarget, setLoadingTarget] = useState<string | null>(null);
+  const loadingTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isSwitchingBuilder =
+    loadingTarget !== null && loadingTarget !== pathname;
+
+  useEffect(() => {
+    return () => {
+      if (loadingTimeout.current) clearTimeout(loadingTimeout.current);
+    };
+  }, []);
+
+  function showBuilderLoader(
+    href: string,
+    event: MouseEvent<HTMLAnchorElement>
+  ) {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      href === pathname
+    ) {
+      return;
+    }
+
+    if (loadingTimeout.current) clearTimeout(loadingTimeout.current);
+    setLoadingTarget(href);
+    loadingTimeout.current = setTimeout(() => {
+      setLoadingTarget(null);
+      loadingTimeout.current = null;
+    }, 12000);
+  }
+
   return (
-    <header className="sticky top-0 z-30 relative bg-[#0a0912]">
+    <>
+      <header className="sticky top-0 z-30 relative bg-[#0a0912]">
       {/* Scanline texture */}
       <div
         className="absolute inset-0 opacity-[0.08] pointer-events-none"
@@ -46,9 +89,8 @@ export default function AppHeader() {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-0.5 text-sm font-medium text-stone-400 md:flex">
+          <nav className="hidden items-center gap-0.5 text-sm font-medium text-stone-400 lg:flex">
             {[
-              { href: "/", label: "Home" },
               { href: "/features", label: "Features" },
               { href: "/about", label: "About" },
               { href: "/pricing", label: "Pricing" },
@@ -68,9 +110,38 @@ export default function AppHeader() {
           </nav>
 
           <div className="flex items-center gap-2 shrink-0">
+            <div
+              aria-label="Choose a builder"
+              className="flex items-center rounded border border-white/15 bg-white/[0.04] p-1"
+            >
+              <Link
+                href="/"
+                onClick={(event) => showBuilderLoader("/", event)}
+                aria-current={!isResume ? "page" : undefined}
+                className={`rounded px-2.5 py-2 text-xs font-semibold transition sm:px-3 ${
+                  !isResume
+                    ? "bg-[#4fd8ff] text-[#0a0912]"
+                    : "text-stone-300 hover:text-white"
+                }`}
+              >
+                Biodata
+              </Link>
+              <Link
+                href="/resume"
+                onClick={(event) => showBuilderLoader("/resume", event)}
+                aria-current={isResume ? "page" : undefined}
+                className={`rounded px-2.5 py-2 text-xs font-semibold transition sm:px-3 ${
+                  isResume
+                    ? "bg-[#ff5fae] text-[#0a0912]"
+                    : "text-stone-300 hover:text-white"
+                }`}
+              >
+                Resume
+              </Link>
+            </div>
             <Link
               href="/login"
-              className="hidden items-center rounded border border-white/15 px-3 py-2 text-sm font-medium text-stone-300 transition hover:border-[#4fd8ff]/50 hover:text-white sm:inline-flex"
+              className="hidden items-center rounded border border-white/15 px-3 py-2 text-sm font-medium text-stone-300 transition hover:border-[#4fd8ff]/50 hover:text-white lg:inline-flex"
             >
               Login
             </Link>
@@ -88,6 +159,31 @@ export default function AppHeader() {
           </div>
         </div>
       </div>
-    </header>
+      </header>
+      {isSwitchingBuilder && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0a0912]/75 px-4 backdrop-blur-sm"
+        >
+          <div className="flex min-w-56 flex-col items-center rounded-xl border border-white/10 bg-[#11111c] px-8 py-7 text-center shadow-2xl">
+            <LoaderCircle
+              aria-hidden="true"
+              className={`mb-4 h-9 w-9 animate-spin ${
+                loadingTarget === "/resume"
+                  ? "text-[#ff5fae]"
+                  : "text-[#4fd8ff]"
+              }`}
+            />
+            <p className="text-sm font-semibold text-white">
+              Opening {loadingTarget === "/resume" ? "Resume" : "Biodata"} Builder…
+            </p>
+            <p className="mt-1 text-xs text-stone-400">
+              Preparing your workspace
+            </p>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

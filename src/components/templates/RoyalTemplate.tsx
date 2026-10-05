@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useId } from "react";
 import { BiodataDocument } from "@/lib/types";
 import { FontPack } from "@/lib/fontPacks";
 
@@ -15,7 +15,7 @@ const palette = {
 };
 
 const BotanicalCorner = ({
-  className = "",
+  className = "bg-[#fbf8f2]",
   flip = false,
   animated = false,
   colors,
@@ -203,6 +203,176 @@ const BotanicalCorner = ({
   );
 };
 
+/* ───────────────────────────────────────────────────────────────
+   MandalaCorner — quarter lotus-mandala centred on the svg's
+   bottom-left corner. Use `rotate={180}` to anchor it to a
+   top-right page corner.
+   ─────────────────────────────────────────────────────────────── */
+
+const M_CX = 0;
+const M_CY = 340;
+
+const polar = (r: number, deg: number) => ({
+  x: M_CX + r * Math.cos((deg * Math.PI) / 180),
+  y: M_CY - r * Math.sin((deg * Math.PI) / 180),
+});
+
+// Pointed lotus petal drawn along +x, starting r0 from the origin.
+const lotusPetal = (r0: number, len: number, w: number) =>
+  `M ${r0} 0 C ${r0 + len * 0.25} ${-w}, ${r0 + len * 0.75} ${-w * 0.7}, ${r0 + len} 0 ` +
+  `C ${r0 + len * 0.75} ${w * 0.7}, ${r0 + len * 0.25} ${w}, ${r0} 0 Z`;
+
+const range = (start: number, step: number, count: number) =>
+  Array.from({ length: count }, (_, i) => start + i * step);
+
+const INNER_PETALS = range(7.5, 15, 6); // 7.5 … 82.5
+const OUTER_PETALS = range(15, 15, 5); // 15 … 75
+const BEADS = range(5, 7.5, 12); // 5 … 87.5
+const SCALLOPS = range(10, 10, 8); // 10 … 80
+const PENDANTS = range(12, 11, 7); // 12 … 78
+
+const MandalaCorner = ({
+  className = "",
+  flip = false,
+  rotate = 0,
+  animated = false,
+  colors,
+}: {
+  className?: string;
+  flip?: boolean;
+  rotate?: number;
+  animated?: boolean;
+  colors?: Partial<typeof palette>;
+}) => {
+  const p = { ...palette, ...colors };
+  const uid = useId().replace(/:/g, "");
+  const fadeId = `mandala-fade-${uid}`;
+
+  return (
+    <svg
+      viewBox="0 0 300 340"
+      className={className}
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+      style={{
+        transform:
+          [flip ? "scaleX(-1)" : "", rotate ? `rotate(${rotate}deg)` : ""]
+            .filter(Boolean)
+            .join(" ") || undefined,
+        transformOrigin: "center",
+      }}
+    >
+      <defs>
+        {/* Outer rings thin out as they leave the corner */}
+        <radialGradient id={fadeId} cx={M_CX} cy={M_CY} r="262" gradientUnits="userSpaceOnUse">
+          <stop offset="0.45" stopColor={p.gold} stopOpacity="0.9" />
+          <stop offset="1" stopColor={p.gold} stopOpacity="0.25" />
+        </radialGradient>
+      </defs>
+
+      <g
+        className={animated ? "mandala-turn" : undefined}
+        style={{ transformOrigin: `${M_CX}px ${M_CY}px` }}
+      >
+        {/* Guide arcs */}
+        {[196, 204].map((r, i) => (
+          <path
+            key={`guide-${r}`}
+            d={`M ${r} ${M_CY} A ${r} ${r} 0 0 0 0 ${M_CY - r}`}
+            stroke={`url(#${fadeId})`}
+            strokeWidth={i === 0 ? 1.1 : 0.6}
+          />
+        ))}
+
+        {/* Outer pendants: stalk, leaf-drop, tip bead */}
+        {PENDANTS.map((a, i) => (
+          <g
+            key={`pend-${a}`}
+            transform={`translate(${M_CX},${M_CY}) rotate(${-a})`}
+            opacity={0.95 - i * 0.04}
+          >
+            <path d="M 204 0 L 222 0" stroke={p.olive} strokeWidth="0.8" strokeLinecap="round" />
+            <path
+              d="M 222 0 C 228 -5.5 238 -4.5 244 0 C 238 4.5 228 5.5 222 0 Z"
+              fill={p.rose}
+              fillOpacity="0.16"
+              stroke={p.rose}
+              strokeWidth="0.8"
+              strokeLinejoin="round"
+            />
+            <circle cx="250" cy="0" r="1.8" fill={p.gold} />
+          </g>
+        ))}
+
+        {/* Scalloped ring */}
+        {SCALLOPS.map((a) => {
+          const { x, y } = polar(172, a);
+          return (
+            <circle key={`sc-${a}`} cx={x} cy={y} r="6" stroke={p.olive} strokeWidth="0.8" opacity="0.7" />
+          );
+        })}
+
+        {/* Bead ring, alternating large and small */}
+        {BEADS.map((a, i) => {
+          const { x, y } = polar(142, a);
+          return (
+            <circle key={`bd-${a}`} cx={x} cy={y} r={i % 2 === 0 ? 1.8 : 1} fill={p.gold} opacity="0.8" />
+          );
+        })}
+
+        {/* Outer lotus petals */}
+        {OUTER_PETALS.map((a) => (
+          <g key={`op-${a}`} transform={`translate(${M_CX},${M_CY}) rotate(${-a})`}>
+            <path
+              d={lotusPetal(66, 62, 13)}
+              fill={p.rose}
+              fillOpacity="0.1"
+              stroke={p.rose}
+              strokeWidth="0.9"
+              strokeLinejoin="round"
+            />
+            <path d="M 78 0 L 118 0" stroke={p.rose} strokeWidth="0.5" opacity="0.55" strokeLinecap="round" />
+          </g>
+        ))}
+
+        {/* Inner lotus petals, staggered against the outer ring */}
+        {INNER_PETALS.map((a) => (
+          <g key={`ip-${a}`} transform={`translate(${M_CX},${M_CY}) rotate(${-a})`}>
+            <path
+              d={lotusPetal(20, 56, 12)}
+              fill={p.gold}
+              fillOpacity="0.16"
+              stroke={p.gold}
+              strokeWidth="0.9"
+              strokeLinejoin="round"
+            />
+            <circle cx="62" cy="0" r="1.3" fill={p.gold} />
+          </g>
+        ))}
+
+        {/* Centre seed */}
+        <circle cx={M_CX} cy={M_CY} r="17" fill={p.olive} fillOpacity="0.12" stroke={p.olive} strokeWidth="0.9" />
+        <circle cx={M_CX} cy={M_CY} r="9" stroke={p.gold} strokeWidth="0.8" />
+        <circle cx={M_CX} cy={M_CY} r="3" fill={p.gold} />
+      </g>
+
+      {animated && (
+        <style>{`
+          @keyframes mandala-turn {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(2deg); }
+          }
+          .mandala-turn { animation: mandala-turn 12s ease-in-out infinite; }
+          @media (prefers-reduced-motion: reduce) {
+            .mandala-turn { animation: none; }
+          }
+        `}</style>
+      )}
+    </svg>
+  );
+};
+
 const SmallFloral = () => (
   <svg width="52" height="18" viewBox="0 0 52 18" fill="none">
     <path
@@ -309,10 +479,12 @@ const SectionHeading = ({
   </div>
 );
 
+type CornerStyle = "botanical" | "mandala";
+
 const LineTemplate = forwardRef<
   HTMLDivElement,
-  { doc: BiodataDocument; fonts: FontPack }
->(({ doc, fonts }, ref) => {
+  { doc: BiodataDocument; fonts: FontPack; corner?: CornerStyle }
+>(({ doc, fonts, corner = "mandala" }, ref) => {
   const lang = doc.language;
 
   const L = (en: string, hi: string) =>
@@ -358,13 +530,27 @@ const LineTemplate = forwardRef<
         }}
       />
 
-      {/* Floral corners */}
-      <BotanicalCorner className="absolute -right-8 -top-8 h-[270px] w-[240px]" />
+      {/* Corner ornaments */}
+      {corner === "mandala" ? (
+        <>
+          {/* Svg is centred on its bottom-left, so the top-right corner is rotated 180° */}
+          <MandalaCorner
+            rotate={180}
+            className="absolute -right-5 -top-5 h-[230px] w-[203px] bg-[#fbf8f2]"
+          />
 
-      <BotanicalCorner
-        flip
-        className="absolute -bottom-10 -left-8 h-[260px] w-[230px] opacity-65"
-      />
+          <MandalaCorner className="absolute -bottom-5 -left-5 h-[230px] w-[203px]  bg-[#fbf8f2]" />
+        </>
+      ) : (
+        <>
+          <BotanicalCorner className="absolute -right-8 -top-8 h-[270px] w-[240px]" />
+
+          <BotanicalCorner
+            flip
+            className="absolute -bottom-10 -left-8 h-[260px] w-[230px] opacity-65"
+          />
+        </>
+      )}
 
       {/* Small decorative dots */}
       <div
@@ -431,7 +617,7 @@ const LineTemplate = forwardRef<
             >
               {doc.photo ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                 <img
+                <img
                   src={doc.photo}
                   alt="Profile"
                   className="h-full w-full object-cover"
@@ -477,7 +663,7 @@ const LineTemplate = forwardRef<
               borderLeft: `2px solid ${palette.rose}`,
               paddingLeft: "7mm",
             }}
-           >
+          >
             <p
               className="mb-2 text-[9px] font-semibold uppercase tracking-[0.2em]"
               style={{ color: palette.muted }}
@@ -559,7 +745,7 @@ const LineTemplate = forwardRef<
               <section
                 key={section.id}
                 className="avoid-break"
-               >
+              >
                 <SectionHeading
                   number={idx + 1}
                   title={title}

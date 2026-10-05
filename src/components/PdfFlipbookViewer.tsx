@@ -127,7 +127,7 @@ export default function PdfFlipbookViewer({
           white/transparent background. */}
       <div
         ref={containerRef}
-        className="relative w-full max-w-[920px] flex justify-center py-4"
+        className="relative w-full max-w-[980px] flex justify-center py-4"
       >
         <div
           className="pointer-events-none absolute inset-0 -z-10"
@@ -234,61 +234,110 @@ export default function PdfFlipbookViewer({
                   >
                     {headerPage && (
                       <div
-                        className="relative flex flex-col items-center justify-center text-center px-8 shadow-[inset_-10px_0_18px_-14px_rgba(0,0,0,0.5)] overflow-hidden"
+                        className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden px-6 py-8 text-center shadow-[inset_-10px_0_18px_-14px_rgba(0,0,0,0.5)] sm:px-8"
                         style={{
-                          background: headerPage.accentColor ?? theme.primary,
+                          background: `linear-gradient(145deg, ${headerPage.accentColor ?? theme.primary} 0%, ${theme.primary} 52%, ${theme.secondary} 100%)`,
                         }}
                       >
-                        {/* Ornamental corner flourishes, echoing the ornate
-                            biodata border templates this viewer displays. */}
-                        {(["top-2 left-2", "top-2 right-2 -scale-x-100", "bottom-2 left-2 -scale-y-100", "bottom-2 right-2 -scale-x-100 -scale-y-100"] as const).map(
-                          (pos, idx) => (
-                            <svg
-                              key={idx}
-                              viewBox="0 0 40 40"
-                              className={`absolute w-8 h-8 ${pos}`}
-                              style={{ color: theme.accent, opacity: 0.85 }}
-                            >
-                              <path
-                                d="M2 2 C 14 2, 18 6, 18 18 M2 2 C 2 14, 6 18, 18 18"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="1.4"
-                              />
-                              <circle cx="18" cy="18" r="1.6" fill="currentColor" />
-                            </svg>
-                          )
-                        )}
-
-                        <h2
-                          className="font-serif text-2xl sm:text-3xl mb-3"
-                          style={{
-                            color: theme.coverText ?? theme.pageWell,
-                            // Embossed/foil-stamped look: light highlight
-                            // above, soft dark below, instead of a flat
-                            // printed title.
-                            textShadow:
-                              "0 1px 0 rgba(255,255,255,0.25), 0 -1px 1px rgba(0,0,0,0.35)",
-                          }}
+                        <svg
+                          aria-hidden="true"
+                          viewBox="0 0 300 420"
+                          preserveAspectRatio="none"
+                          className="pointer-events-none absolute inset-0 h-full w-full"
                         >
-                          {headerPage.title}
-                        </h2>
-                        {headerPage.subtitle && (
-                          <p
-                            className="text-sm tracking-wide uppercase mb-4"
-                            style={{ color: theme.accent }}
+                          <rect
+                            x="12"
+                            y="12"
+                            width="276"
+                            height="396"
+                            rx="3"
+                            fill="none"
+                            stroke={theme.accent}
+                            strokeOpacity="0.65"
+                            strokeWidth="1"
+                          />
+                          <rect
+                            x="18"
+                            y="18"
+                            width="264"
+                            height="384"
+                            rx="2"
+                            fill="none"
+                            stroke={theme.accent}
+                            strokeOpacity="0.28"
+                            strokeWidth="0.7"
+                          />
+                          <path
+                            d="M24 92 C56 92 69 73 69 42 M24 92 C24 60 43 47 69 42 M276 92 C244 92 231 73 231 42 M276 92 C276 60 257 47 231 42 M24 328 C56 328 69 347 69 378 M24 328 C24 360 43 373 69 378 M276 328 C244 328 231 347 231 378 M276 328 C276 360 257 373 231 378"
+                            fill="none"
+                            stroke={theme.accent}
+                            strokeOpacity="0.8"
+                            strokeWidth="1.3"
+                          />
+                          <path
+                            d="M150 80 C132 96 132 110 150 124 C168 110 168 96 150 80 Z M150 340 C132 324 132 310 150 296 C168 310 168 324 150 340 Z M139 102 H161 M139 318 H161"
+                            fill="none"
+                            stroke={theme.accent}
+                            strokeOpacity="0.75"
+                            strokeWidth="1"
+                          />
+                          <circle cx="150" cy="102" r="3" fill={theme.accent} />
+                          <circle cx="150" cy="318" r="3" fill={theme.accent} />
+                        </svg>
+
+                        <div className="relative z-10 flex w-full max-w-full flex-col items-center">
+                          <div
+                            aria-hidden="true"
+                            className="mb-5 flex h-12 w-12 items-center justify-center rounded-full border"
+                            style={{
+                              borderColor: `${theme.accent}cc`,
+                              color: theme.accent,
+                              backgroundColor: "rgba(0,0,0,0.12)",
+                            }}
                           >
-                            {headerPage.subtitle}
-                          </p>
-                        )}
-                        {headerPage.description && (
-                          <p
-                            className="text-xs max-w-xs"
-                            style={{ color: `${theme.coverText ?? theme.pageWell}cc` }}
+                            <svg viewBox="0 0 32 32" className="h-7 w-7" fill="none">
+                              <path
+                                d="M16 3.5 18.7 12l8.8.1-7.1 5.2 2.7 8.5-7.1-5.3-7.1 5.3 2.7-8.5-7.1-5.2 8.8-.1L16 3.5Z"
+                                stroke="currentColor"
+                                strokeWidth="1.2"
+                                strokeLinejoin="round"
+                              />
+                              <circle cx="16" cy="16" r="2.5" fill="currentColor" />
+                            </svg>
+                          </div>
+                          <h2
+                            className="mb-3 max-w-full break-words font-serif text-xl font-semibold leading-tight sm:text-3xl"
+                            style={{
+                              color: theme.coverText ?? theme.pageWell,
+                              textShadow: "0 2px 8px rgba(0,0,0,0.45)",
+                            }}
                           >
-                            {headerPage.description}
-                          </p>
-                        )}
+                            {headerPage.title}
+                          </h2>
+                          {headerPage.subtitle && (
+                            <p
+                              className="mb-4 rounded-full border px-4 py-1 text-xs font-semibold uppercase tracking-[0.18em] sm:text-sm"
+                              style={{
+                                color: theme.coverText ?? theme.pageWell,
+                                borderColor: `${theme.accent}cc`,
+                                backgroundColor: "rgba(0,0,0,0.18)",
+                              }}
+                            >
+                              {headerPage.subtitle}
+                            </p>
+                          )}
+                          {headerPage.description && (
+                            <p
+                              className="max-w-[18rem] break-words text-xs leading-relaxed sm:text-sm"
+                              style={{
+                                color: theme.coverText ?? theme.pageWell,
+                                textShadow: "0 1px 5px rgba(0,0,0,0.4)",
+                              }}
+                            >
+                              {headerPage.description}
+                            </p>
+                          )}
+                        </div>
                       </div>
                     )}
                     {Array.from({ length: numPages }, (_, i) => (

@@ -199,7 +199,7 @@ const ClassicTemplate = forwardRef<HTMLDivElement, { doc: BiodataDocument; fonts
 
         <div
           ref={contentRef}
-          className="relative px-10 pt-8 pb-8"
+          className="relative px-10 pt-3 pb-8"
           style={{ transform: `scale(${scale})`, transformOrigin: "top center" }}
         >
           {/* Identity card */}

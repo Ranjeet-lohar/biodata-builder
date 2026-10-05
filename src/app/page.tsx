@@ -78,8 +78,10 @@ export default function Home() {
   // empty/invalid source.
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [flipbookLoading, setFlipbookLoading] = useState(false);
+  const [flipbookError, setFlipbookError] = useState<string | null>(null);
 
   const exportRef = useRef<HTMLDivElement>(null);
+  const templateRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   useEffect(() => {
     if (localStorage.getItem("demo-auth") !== "true") {
@@ -124,6 +126,10 @@ export default function Home() {
   const Template = meta.Component;
   const fonts = getFontPack(doc.fontPackId);
 
+  useEffect(() => {
+    exportRef.current = templateRefs.current[templateId] ?? null;
+  }, [templateId, doc, fonts]);
+
   function patchDoc(patch: Partial<BiodataDocument>) {
     setDoc((d) => ({ ...d, ...patch }));
   }
@@ -142,34 +148,65 @@ export default function Home() {
   }
 
   async function handlePreviewFlipbook() {
-    if (!exportRef.current || flipbookLoading) return;
+    if (flipbookLoading) return;
     setFlipbookLoading(true);
+    setFlipbookError(null);
     try {
       const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
         import("html2canvas"),
         import("jspdf"),
       ]);
 
-      const node = exportRef.current;
-      const canvas = await html2canvas(node, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: "#ffffff",
-      });
-      const imgData = canvas.toDataURL("image/png");
+      let pdf: InstanceType<typeof jsPDF> | null = null;
+      for (const [index, template] of templates.entries()) {
+        const node = templateRefs.current[template.id];
+        if (!node) {
+          throw new Error(`Template "${template.name}" is not ready for capture.`);
+        }
 
-      const pdf = new jsPDF({
-        orientation: canvas.width >= canvas.height ? "landscape" : "portrait",
-        unit: "px",
-        format: [canvas.width, canvas.height],
-      });
-      pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+        const canvas = await html2canvas(node, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: "#ffffff",
+        });
+        if (canvas.width === 0 || canvas.height === 0) {
+          throw new Error(`Template "${template.name}" produced an empty page.`);
+        }
+        const orientation =
+          canvas.width >= canvas.height ? "landscape" : "portrait";
+        const pageFormat: [number, number] = [canvas.width, canvas.height];
+
+        if (index === 0) {
+          pdf = new jsPDF({
+            orientation,
+            unit: "px",
+            format: pageFormat,
+          });
+        } else if (pdf) {
+          pdf.addPage(pageFormat, orientation);
+        } else {
+          throw new Error("The flipbook PDF could not be initialized.");
+        }
+        pdf.addImage(
+          canvas.toDataURL("image/png"),
+          "PNG",
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+      }
+
+      if (!pdf) {
+        throw new Error("No templates are available for the flipbook.");
+      }
 
       const blob = pdf.output("blob");
       if (pdfUrl) URL.revokeObjectURL(pdfUrl);
       setPdfUrl(URL.createObjectURL(blob));
     } catch (err) {
       console.error("Failed to build flipbook preview:", err);
+      setFlipbookError("Could not prepare the template flipbook. Please try again.");
     } finally {
       setFlipbookLoading(false);
     }
@@ -295,6 +332,11 @@ export default function Home() {
                         {flipbookLoading ? "Preparing…" : "Flipbook"}
                       </span>
                     </button>
+                    {flipbookError && (
+                      <span role="alert" className="text-xs text-red-700">
+                        {flipbookError}
+                      </span>
+                    )}
                     <ExportBar targetRef={exportRef} filename={name.replace(/\s+/g, "_") || "biodata"} />
                   </div>
 
@@ -359,8 +401,18 @@ export default function Home() {
         </div>
       </main>
 
-      <div className="fixed top-0 left-[-99999px] pointer-events-none pdf html print-area" aria-hidden="true">
-        <Template doc={doc} fonts={fonts} ref={exportRef} />
+      <div className="fixed top-0 left-[-99999px] pointer-events-none" aria-hidden="true">
+        {templates.map(({ id: idTemplate, Component: TemplateComponent }) => (
+          <div className="pdf html print-area" key={idTemplate}>
+            <TemplateComponent
+              doc={doc}
+              fonts={fonts}
+              ref={(node) => {
+                templateRefs.current[idTemplate] = node;
+              }}
+            />
+          </div>
+        ))}
       </div>
 
       {/* Flipbook preview overlay — only mounted once a real PDF blob exists */}
@@ -377,10 +429,9 @@ export default function Home() {
             fileUrl={pdfUrl}
             title={name}
             headerPage={{
-              title: "Wedding Invitation",
-              subtitle: "Aarav & Sneha",
-              description:
-                "Together with their families, we invite you to celebrate this joyful occasion.",
+              title: "Template Gallery",
+              subtitle: `${templates.length} designs`,
+              description: `Explore every template using ${name}'s biodata.`,
               accentColor: "#8a6a1f",
             }}
           />
