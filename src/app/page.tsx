@@ -403,13 +403,17 @@ export default function Home() {
 
       <div className="fixed top-0 left-[-99999px] pointer-events-none" aria-hidden="true">
         {templates.map(({ id: idTemplate, Component: TemplateComponent }) => (
-          <div className="pdf html print-area" key={idTemplate}>
+          <div
+            className="pdf html print-area"
+            key={idTemplate}
+            ref={(node) => {
+              templateRefs.current[idTemplate] = node;
+              if (idTemplate === templateId) exportRef.current = node;
+            }}
+          >
             <TemplateComponent
               doc={doc}
               fonts={fonts}
-              ref={(node) => {
-                templateRefs.current[idTemplate] = node;
-              }}
             />
           </div>
         ))}

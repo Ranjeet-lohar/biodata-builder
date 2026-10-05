@@ -2,7 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight, Plus, Trash2 } from "lucide-react";
+import dynamic from "next/dynamic";
+import {
+  BookOpen,
+  ChevronLeft,
+  ChevronRight,
+  LoaderCircle,
+  Plus,
+  Trash2,
+  X,
+} from "lucide-react";
 import AppFooter from "@/components/AppFooter";
 import AppHeader from "@/components/AppHeader";
 import ExportBar from "@/components/ExportBar";
@@ -20,6 +29,18 @@ import {
 
 const STORAGE_KEY = "resume-builder:draft";
 const DEFAULT_TEMPLATE: ResumeTemplateId = "professional";
+
+const PdfFlipbookViewer = dynamic(
+  () => import("@/components/PdfFlipbookViewer"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex w-full items-center justify-center py-16 text-sm text-white">
+        Opening resume flipbook…
+      </div>
+    ),
+  }
+);
 
 function createEntryId() {
   return `resume_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
@@ -76,9 +97,15 @@ export default function ResumeBuilder() {
   const [resume, setResume] = useState<ResumeDocument>(emptyResume);
   const [templateId, setTemplateId] =
     useState<ResumeTemplateId>(DEFAULT_TEMPLATE);
+  const [flipbookUrl, setFlipbookUrl] = useState<string | null>(null);
+  const [flipbookLoading, setFlipbookLoading] = useState(false);
+  const [flipbookError, setFlipbookError] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
   const exportRef = useRef<HTMLDivElement>(null);
+  const templateRefs = useRef<
+    Partial<Record<ResumeTemplateId, HTMLDivElement | null>>
+  >({});
   const templateTrackRef = useRef<HTMLDivElement>(null);
   const templateCardRefs = useRef<
     Partial<Record<ResumeTemplateId, HTMLButtonElement | null>>
@@ -136,6 +163,16 @@ export default function ResumeBuilder() {
     }
   }, [hydrated, resume, templateId]);
 
+  useEffect(() => {
+    return () => {
+      if (flipbookUrl) URL.revokeObjectURL(flipbookUrl);
+    };
+  }, [flipbookUrl]);
+
+  useEffect(() => {
+    exportRef.current = templateRefs.current[templateId] ?? null;
+  }, [resume, templateId]);
+
   function update(patch: Partial<ResumeDocument>) {
     setResume((current) => ({ ...current, ...patch }));
   }
@@ -166,6 +203,78 @@ export default function ResumeBuilder() {
     );
     const nextTemplate = resumeTemplates[nextIndex];
     if (nextTemplate) setTemplateId(nextTemplate.id);
+  }
+
+  async function handlePreviewFlipbook() {
+    if (flipbookLoading) return;
+    setFlipbookLoading(true);
+    setFlipbookError(null);
+    try {
+      const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
+        import("html2canvas"),
+        import("jspdf"),
+      ]);
+
+      let pdf: InstanceType<typeof jsPDF> | null = null;
+      for (const [index, template] of resumeTemplates.entries()) {
+        const node = templateRefs.current[template.id];
+        if (!node) {
+          throw new Error(`Resume template "${template.name}" is not ready.`);
+        }
+
+        const canvas = await html2canvas(node, {
+          scale: 1.5,
+          useCORS: true,
+          backgroundColor: "#ffffff",
+        });
+        if (canvas.width === 0 || canvas.height === 0) {
+          throw new Error(`Resume template "${template.name}" produced an empty page.`);
+        }
+
+        const orientation =
+          canvas.width >= canvas.height ? "landscape" : "portrait";
+        const pageFormat: [number, number] = [canvas.width, canvas.height];
+        if (index === 0) {
+          pdf = new jsPDF({
+            orientation,
+            unit: "px",
+            format: pageFormat,
+            compress: true,
+          });
+        } else if (pdf) {
+          pdf.addPage(pageFormat, orientation);
+        } else {
+          throw new Error("The resume flipbook could not be initialized.");
+        }
+        pdf.addImage(
+          canvas.toDataURL("image/jpeg", 0.9),
+          "JPEG",
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+      }
+
+      if (!pdf) throw new Error("No resume templates are available.");
+      const nextUrl = URL.createObjectURL(pdf.output("blob"));
+      setFlipbookUrl((previousUrl) => {
+        if (previousUrl) URL.revokeObjectURL(previousUrl);
+        return nextUrl;
+      });
+    } catch (error) {
+      console.error("Failed to prepare resume flipbook:", error);
+      setFlipbookError("Could not prepare the resume flipbook. Please try again.");
+    } finally {
+      setFlipbookLoading(false);
+    }
+  }
+
+  function closeFlipbook() {
+    setFlipbookUrl((previousUrl) => {
+      if (previousUrl) URL.revokeObjectURL(previousUrl);
+      return null;
+    });
   }
 
   useEffect(() => {
@@ -484,11 +593,31 @@ export default function ResumeBuilder() {
             </div>
             <div className="mb-3 flex flex-wrap items-center justify-between gap-3 rounded border border-white/60 bg-white/70 p-3 shadow-sm">
               <h2 className="font-semibold text-stone-800">Live preview</h2>
-              <ExportBar
-                targetRef={exportRef}
-                filename={resume.fullName.trim().replace(/\s+/g, "_") || "resume"}
-              />
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handlePreviewFlipbook}
+                  disabled={flipbookLoading}
+                  className="inline-flex items-center gap-1.5 rounded border border-stone-300 bg-white px-3 py-2 text-xs font-medium text-stone-700 shadow-sm transition hover:border-[#247b83] hover:text-[#176b55] disabled:cursor-wait disabled:opacity-60"
+                >
+                  {flipbookLoading ? (
+                    <LoaderCircle className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <BookOpen className="h-3.5 w-3.5" />
+                  )}
+                  {flipbookLoading ? "Preparing…" : "Flipbook"}
+                </button>
+                <ExportBar
+                  targetRef={exportRef}
+                  filename={resume.fullName.trim().replace(/\s+/g, "_") || "resume"}
+                />
+              </div>
             </div>
+            {flipbookError && (
+              <p role="alert" className="mb-3 rounded border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                {flipbookError}
+              </p>
+            )}
             <div className="glass-well overflow-hidden rounded p-2 sm:p-4">
               <PreviewScaler>
                 <ResumeTemplate resume={resume} templateId={templateId} />
@@ -501,12 +630,45 @@ export default function ResumeBuilder() {
           className="pointer-events-none fixed left-[-10000px] top-0"
           aria-hidden="true"
         >
-          <div className="pdf" ref={exportRef}>
-            <ResumeTemplate resume={resume} templateId={templateId} />
-          </div>
+          {resumeTemplates.map((template) => (
+            <div
+              className="pdf"
+              key={template.id}
+              ref={(node) => {
+                templateRefs.current[template.id] = node;
+              }}
+            >
+              <ResumeTemplate
+                resume={resume}
+                templateId={template.id}
+              />
+            </div>
+          ))}
         </div>
       </main>
       <AppFooter />
+      {flipbookUrl && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-y-auto bg-[#17231f]/80 px-4 py-8 backdrop-blur-sm">
+          <button
+            type="button"
+            onClick={closeFlipbook}
+            aria-label="Close resume flipbook"
+            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-stone-800 shadow-lg transition hover:bg-stone-100 sm:right-6 sm:top-6"
+          >
+            <X className="h-4 w-4" />
+          </button>
+          <PdfFlipbookViewer
+            fileUrl={flipbookUrl}
+            title={resume.fullName || "Resume"}
+            headerPage={{
+              title: "Resume Template Gallery",
+              subtitle: `${resumeTemplates.length} designs`,
+              description: `Explore every resume design${resume.fullName ? ` for ${resume.fullName}` : ""}.`,
+              accentColor: "#176b55",
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }
