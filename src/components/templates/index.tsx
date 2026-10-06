@@ -1,4 +1,4 @@
-import { ComponentType, RefAttributes, forwardRef } from "react";
+import { ComponentType, RefAttributes } from "react";
 import { BiodataDocument } from "@/lib/types";
 import { FontPack } from "@/lib/fontPacks";
 import RoyalTemplate from "./RoyalTemplate";
@@ -12,12 +12,22 @@ import FuturisticTemplate from "./FuturisticTemplate";
 import HoloCardTemplate from "./HoloCardTemplate";
 import NeoGlassTemplate from "./NeoGlassTemplate";
 import QuantumGridTemplate from "./QuantumGridTemplate";
-import FrameLayout from "./layouts/FrameLayout";
-import BandLayout from "./layouts/BandLayout";
-import CenteredLayout from "./layouts/CenteredLayout";
-import SidebarLayout from "./layouts/SidebarLayout";
-import SplitLayout from "./layouts/SplitLayout";
-import { extraThemes, ThemeTemplate } from "./layouts/themes";
+import { extraThemes } from "./layouts/themes";
+import EmeraldGardenTemplate from "./themed/EmeraldGardenTemplate";
+import MidnightGoldTemplate from "./themed/MidnightGoldTemplate";
+import SunsetPeachTemplate from "./themed/SunsetPeachTemplate";
+import IvoryLaceTemplate from "./themed/IvoryLaceTemplate";
+import TealBloomTemplate from "./themed/TealBloomTemplate";
+import CrimsonRegalTemplate from "./themed/CrimsonRegalTemplate";
+import SageSimplicityTemplate from "./themed/SageSimplicityTemplate";
+import LavenderDreamTemplate from "./themed/LavenderDreamTemplate";
+import CharcoalProfessionalTemplate from "./themed/CharcoalProfessionalTemplate";
+import MarigoldFestiveTemplate from "./themed/MarigoldFestiveTemplate";
+import RosewoodHeritageTemplate from "./themed/RosewoodHeritageTemplate";
+import OceanPearlTemplate from "./themed/OceanPearlTemplate";
+import TerracottaMosaicTemplate from "./themed/TerracottaMosaicTemplate";
+import PineInkTemplate from "./themed/PineInkTemplate";
+import SapphireSaffronTemplate from "./themed/SapphireSaffronTemplate";
 
 export interface TemplateMeta {
   id: string;
@@ -29,34 +39,41 @@ export interface TemplateMeta {
   >;
 }
 
-const layoutEngines = {
-  frame: FrameLayout,
-  band: BandLayout,
-  centered: CenteredLayout,
-  sidebar: SidebarLayout,
-  split: SplitLayout,
-} as const;
+const themedTemplateComponents: Record<
+  string,
+  TemplateMeta["Component"]
+> = {
+  "emerald-garden": EmeraldGardenTemplate,
+  "midnight-gold": MidnightGoldTemplate,
+  "sunset-peach": SunsetPeachTemplate,
+  "ivory-lace": IvoryLaceTemplate,
+  "teal-bloom": TealBloomTemplate,
+  "crimson-regal": CrimsonRegalTemplate,
+  "sage-simplicity": SageSimplicityTemplate,
+  "lavender-dream": LavenderDreamTemplate,
+  "charcoal-professional": CharcoalProfessionalTemplate,
+  "marigold-festive": MarigoldFestiveTemplate,
+  "rosewood-heritage": RosewoodHeritageTemplate,
+  "ocean-pearl": OceanPearlTemplate,
+  "terracotta-mosaic": TerracottaMosaicTemplate,
+  "pine-ink": PineInkTemplate,
+  "sapphire-saffron": SapphireSaffronTemplate,
+};
 
-function makeThemedTemplate(theme: ThemeTemplate) {
-  const Engine = layoutEngines[theme.layout];
-  const Comp = forwardRef<HTMLDivElement, { doc: BiodataDocument; fonts: FontPack }>(
-    ({ doc, fonts }, ref) => (
-      <div ref={ref}>
-        <Engine doc={doc} fonts={fonts} theme={theme} />
-      </div>
-    )
-  );
-  Comp.displayName = `Themed_${theme.id}`;
-  return Comp;
-}
+const themedTemplates: TemplateMeta[] = extraThemes.map((theme) => {
+  const Component = themedTemplateComponents[theme.id];
+  if (!Component) {
+    throw new Error(`No component is registered for biodata template "${theme.id}".`);
+  }
 
-const themedTemplates: TemplateMeta[] = extraThemes.map((theme) => ({
-  id: theme.id,
-  name: theme.name,
-  description: theme.description,
-  swatch: theme.swatch,
-  Component: makeThemedTemplate(theme),
-}));
+  return {
+    id: theme.id,
+    name: theme.name,
+    description: theme.description,
+    swatch: theme.swatch,
+    Component,
+  };
+});
 
 export const templates: TemplateMeta[] = [
   {

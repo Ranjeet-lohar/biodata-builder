@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { templates } from "@/components/templates";
+import Accordion from "@/components/Accordion";
 import AppHeader from "@/components/AppHeader";
 import AppFooter from "@/components/AppFooter";
 import { ArrowRight } from "lucide-react";
@@ -24,22 +25,19 @@ export default function AllTemplatesPage() {
               </p>
             </div>
 
-            {/* Templates Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* One accordion per template */}
+            <div className="mx-auto max-w-4xl space-y-4">
               {templates.map((template) => {
                 return (
-                  <div
-                    key={template.id}
-                    className="group rounded overflow-hidden bg-white border border-white/60 shadow-lg hover:shadow-2xl transition-all duration-300 hover:border-white/80"
-                  >
-                    {/* Template Preview — swatch strip stands in for a live render */}
-                    <div className="relative h-80 bg-white/50 overflow-hidden">
-                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-stone-50 to-stone-100">
+                  <Accordion key={template.id} title={template.name}>
+                    <div className="grid grid-cols-1 items-center gap-5 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+                      {/* Template Preview — swatch strip stands in for a live render */}
+                      <div className="relative flex h-48 items-center justify-center overflow-hidden rounded bg-gradient-to-br from-stone-50 to-stone-100">
                         <div className="text-center p-4">
                           <div className="flex items-center justify-center gap-2 mb-3">
-                            {template.swatch.map((color, i) => (
+                            {template.swatch.map((color) => (
                               <span
-                                key={i}
+                                key={color}
                                 className="w-8 h-8 rounded-full border border-white shadow-sm"
                                 style={{ backgroundColor: color }}
                               />
@@ -48,27 +46,22 @@ export default function AllTemplatesPage() {
                           <p className="text-sm text-stone-600">Preview</p>
                         </div>
                       </div>
-                    </div>
 
-                    {/* Template Info */}
-                    <div className="p-5 sm:p-6">
-                      <h3 className="text-xl font-semibold text-stone-900 mb-2">
-                        {template.name}
-                      </h3>
-                      <p className="text-sm text-stone-600 mb-6 min-h-10">
-                        {template.description}
-                      </p>
+                      <div>
+                        <p className="text-sm text-stone-600 mb-6">
+                          {template.description}
+                        </p>
 
-                      {/* Use This Template Button */}
-                      <Link
-                        href={`/?template=${template.id}`}
-                        className="inline-flex items-center justify-center w-full gap-2 px-4 py-2.5 bg-[#1e98d7] hover:bg-[#1787c3] text-white font-medium rounded-lg transition-all group/btn"
-                      >
-                        Use This Template
-                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform" />
-                      </Link>
+                        <Link
+                          href={`/?template=${template.id}`}
+                          className="inline-flex items-center justify-center w-full gap-2 px-4 py-2.5 bg-[#1e98d7] hover:bg-[#1787c3] text-white font-medium rounded-lg transition-all group/btn"
+                        >
+                          Use This Template
+                          <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform" />
+                        </Link>
+                      </div>
                     </div>
-                  </div>
+                  </Accordion>
                 );
               })}
             </div>

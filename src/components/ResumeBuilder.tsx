@@ -508,13 +508,19 @@ export default function ResumeBuilder() {
                         className="relative mb-2 flex h-16 overflow-hidden rounded border border-black/5"
                         style={{ backgroundColor: template.background, color: template.accent }}
                       >
-                        {template.id === "professional" || template.id === "executive" ? (
+                        {template.id === "professional" ||
+                        template.id === "executive" ||
+                        template.id === "botanical" ? (
                           <>
                             <span
                               className="w-1/3 p-1.5"
                               style={{
                                 backgroundColor:
-                                  template.id === "executive" ? "#232a32" : `${template.accent}22`,
+                                  template.id === "executive"
+                                    ? "#232a32"
+                                    : template.id === "botanical"
+                                      ? "#294b38"
+                                      : `${template.accent}22`,
                               }}
                             >
                               <span className="mb-2 block h-1 w-4 rounded" style={{ backgroundColor: template.accent }} />
@@ -528,7 +534,10 @@ export default function ResumeBuilder() {
                               <span className="block h-1 w-3/4 rounded bg-slate-400/50" />
                             </span>
                           </>
-                        ) : template.id === "classic" || template.id === "elegant" ? (
+                        ) : template.id === "classic" ||
+                          template.id === "elegant" ||
+                          template.id === "heritage-biodata" ||
+                          template.id === "marigold" ? (
                           <span className="w-full p-2">
                             <span className="mx-auto mb-1 block h-2 w-2/3 rounded" style={{ backgroundColor: `${template.accent}bb` }} />
                             <span className="mx-auto mb-2 block h-1 w-1/2 rounded bg-slate-400/60" />
@@ -549,11 +558,17 @@ export default function ResumeBuilder() {
                               <span className="w-1/4 rounded" style={{ backgroundColor: `${template.accent}22` }} />
                             </span>
                           </span>
-                        ) : template.id === "compact" || template.id === "tech" ? (
+                        ) : template.id === "compact" ||
+                          template.id === "tech" ||
+                          template.id === "geometric" ? (
                           <span className="w-full p-2">
                             <span
                               className={`mb-2 block h-2 w-full ${template.id === "tech" ? "bg-[#132638]" : ""}`}
-                              style={template.id === "compact" ? { backgroundColor: `${template.accent}55` } : undefined}
+                              style={
+                                template.id === "compact" || template.id === "geometric"
+                                  ? { backgroundColor: `${template.accent}55` }
+                                  : undefined
+                              }
                             />
                             <span className="flex gap-2">
                               <span className="flex-[1.4]">

@@ -42,7 +42,12 @@ export type ResumeTemplateId =
   | "compact"
   | "elegant"
   | "tech"
-  | "bold";
+  | "bold"
+  | "heritage-biodata"
+  | "botanical"
+  | "geometric"
+  | "marigold"
+  | "editorial";
 
 export const resumeTemplates: {
   id: ResumeTemplateId;
@@ -120,6 +125,41 @@ export const resumeTemplates: {
     description: "Strong terracotta accents and dynamic page structure",
     accent: "#ce603d",
     background: "#f8eee8",
+  },
+  {
+    id: "heritage-biodata",
+    name: "Heritage Biodata",
+    description: "A traditional ivory profile framed with Indian-inspired ornament",
+    accent: "#8b2635",
+    background: "#fbf5e9",
+  },
+  {
+    id: "botanical",
+    name: "Botanical",
+    description: "A leafy forest-green sidebar with a calm editorial layout",
+    accent: "#496b50",
+    background: "#eef3e9",
+  },
+  {
+    id: "geometric",
+    name: "Geometric",
+    description: "A crisp indigo header with angular SVG detailing",
+    accent: "#315b83",
+    background: "#edf2f8",
+  },
+  {
+    id: "marigold",
+    name: "Marigold",
+    description: "A festive saffron-and-cream design with ornamental arches",
+    accent: "#b96b16",
+    background: "#fbf1dc",
+  },
+  {
+    id: "editorial",
+    name: "Editorial",
+    description: "A contemporary rust-and-sand profile with asymmetric structure",
+    accent: "#a34f3d",
+    background: "#f6eee7",
   },
 ];
 
