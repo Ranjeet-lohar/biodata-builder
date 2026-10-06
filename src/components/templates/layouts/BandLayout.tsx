@@ -72,6 +72,7 @@ function FloralCorner({
   );
 }
 
+
 /** Repeating diamond + dot pattern strip */
 function PatternBand({
   theme,

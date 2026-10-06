@@ -208,7 +208,7 @@ export default function ResumeTemplate({
           <aside className="border-l border-[#e8dfef] pl-6">
             <h2 className="mb-3 text-xs font-bold uppercase tracking-[0.12em] text-[#8052a0]">Skills</h2>
             <div className="mb-8 flex flex-wrap gap-2">
-              {skills.map((skill) => <span key={skill} className="rounded-full bg-[#f0e8f6] px-2.5 py-1 text-[10px] text-[#56366f]">{skill}</span>)}
+              {skills.map((skill) => <span key={skill} className="rounded bg-[#f0e8f6] px-2.5 py-1 text-[10px] text-[#56366f]">{skill}</span>)}
             </div>
             {certifications.length > 0 && (
               <>

@@ -151,8 +151,6 @@ body {
 
 /* Hide app chrome that shouldn't appear in the captured screenshot */
 .pdf-export .no-print,
-.pdf-export header,
-.pdf-export nav,
 .pdf-export .glass-header,
 .pdf-export .btn,
 .pdf-export .btn-primary,

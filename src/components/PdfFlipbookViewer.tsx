@@ -138,9 +138,8 @@ export default function PdfFlipbookViewer({
     >
       {title && (
         <p
-          className={`mb-1 shrink-0 text-sm tracking-wide font-serif italic sm:mb-2 ${
-            isShortViewport ? "hidden" : ""
-          }`}
+          className={`mb-1 shrink-0 text-sm tracking-wide font-serif italic sm:mb-2 ${isShortViewport ? "hidden" : ""
+            }`}
           style={{ color: theme.accent }}
         >
           {title}
@@ -253,7 +252,7 @@ export default function PdfFlipbookViewer({
                     usePortrait={isPortraitMode}
                     drawShadow
                     maxShadowOpacity={0.55}
-                    mobileScrollSupport
+                    mobileScrollSupport={false}
                     onFlip={(e: { data: number }) => setCurrentPage(e.data)}
                     className="drop-shadow-md"
                   >
@@ -270,44 +269,61 @@ export default function PdfFlipbookViewer({
                           preserveAspectRatio="none"
                           className="pointer-events-none absolute inset-0 h-full w-full"
                         >
+                          {/* Outer + inner borders */}
                           <rect
-                            x="12"
-                            y="12"
-                            width="276"
-                            height="396"
-                            rx="3"
-                            fill="none"
-                            stroke={theme.accent}
-                            strokeOpacity="0.65"
-                            strokeWidth="1"
+                            x="10" y="10" width="280" height="400" rx="2"
+                            fill="none" stroke={theme.accent} strokeOpacity="0.7" strokeWidth="1.2"
+                            vectorEffect="non-scaling-stroke"
                           />
                           <rect
-                            x="18"
-                            y="18"
-                            width="264"
-                            height="384"
-                            rx="2"
-                            fill="none"
-                            stroke={theme.accent}
-                            strokeOpacity="0.28"
-                            strokeWidth="0.7"
+                            x="16" y="16" width="268" height="388" rx="1"
+                            fill="none" stroke={theme.accent} strokeOpacity="0.35" strokeWidth="0.7"
+                            vectorEffect="non-scaling-stroke"
                           />
+                          {/* Dotted inner guide line */}
+                          <rect
+                            x="24" y="24" width="252" height="372"
+                            fill="none" stroke={theme.accent} strokeOpacity="0.4" strokeWidth="0.8"
+                            strokeDasharray="1.5 4" strokeLinecap="round"
+                            vectorEffect="non-scaling-stroke"
+                          />
+
+                          {/* Corner arcs (double, concentric) */}
                           <path
-                            d="M24 92 C56 92 69 73 69 42 M24 92 C24 60 43 47 69 42 M276 92 C244 92 231 73 231 42 M276 92 C276 60 257 47 231 42 M24 328 C56 328 69 347 69 378 M24 328 C24 360 43 373 69 378 M276 328 C244 328 231 347 231 378 M276 328 C276 360 257 373 231 378"
-                            fill="none"
-                            stroke={theme.accent}
-                            strokeOpacity="0.8"
-                            strokeWidth="1.3"
+                            d="M16 52 A36 36 0 0 0 52 16 M16 40 A24 24 0 0 0 40 16
+       M248 16 A36 36 0 0 0 284 52 M260 16 A24 24 0 0 0 284 40
+       M16 368 A36 36 0 0 1 52 404 M16 380 A24 24 0 0 1 40 404
+       M248 404 A36 36 0 0 1 284 368 M260 404 A24 24 0 0 1 284 380"
+                            fill="none" stroke={theme.accent} strokeOpacity="0.85" strokeWidth="1.1"
+                            strokeLinecap="round"
+                            vectorEffect="non-scaling-stroke"
                           />
-                          <path
-                            d="M150 80 C132 96 132 110 150 124 C168 110 168 96 150 80 Z M150 340 C132 324 132 310 150 296 C168 310 168 324 150 340 Z M139 102 H161 M139 318 H161"
-                            fill="none"
-                            stroke={theme.accent}
-                            strokeOpacity="0.75"
-                            strokeWidth="1"
-                          />
-                          <circle cx="150" cy="102" r="3" fill={theme.accent} />
-                          <circle cx="150" cy="318" r="3" fill={theme.accent} />
+                          {/* Corner dots */}
+                          <g fill={theme.accent} fillOpacity="0.8">
+                            <circle cx="30" cy="30" r="1.8" />
+                            <circle cx="270" cy="30" r="1.8" />
+                            <circle cx="30" cy="390" r="1.8" />
+                            <circle cx="270" cy="390" r="1.8" />
+                          </g>
+
+                          {/* Top & bottom center ornaments */}
+                          <g fill="none" stroke={theme.accent} strokeOpacity="0.85" strokeWidth="1" vectorEffect="non-scaling-stroke">
+                            <path d="M150 6 L160 16 L150 26 L140 16 Z" fill={theme.accent} fillOpacity="0.9" />
+                            <path d="M150 414 L160 404 L150 394 L140 404 Z" fill={theme.accent} fillOpacity="0.9" />
+                            <path d="M118 16 H132 M168 16 H182 M118 404 H132 M168 404 H182" strokeLinecap="round" />
+                          </g>
+                          <g fill={theme.accent} fillOpacity="0.8">
+                            <circle cx="110" cy="16" r="1.6" />
+                            <circle cx="190" cy="16" r="1.6" />
+                            <circle cx="110" cy="404" r="1.6" />
+                            <circle cx="190" cy="404" r="1.6" />
+                          </g>
+
+                          {/* Side mid diamonds */}
+                          <g fill={theme.accent} fillOpacity="0.85">
+                            <path d="M16 204 L21 210 L16 216 L11 210 Z" />
+                            <path d="M284 204 L289 210 L284 216 L279 210 Z" />
+                          </g>
                         </svg>
 
                         <div className="relative z-10 flex w-full max-w-full flex-col items-center">
@@ -417,8 +433,7 @@ export default function PdfFlipbookViewer({
           </button>
 
           <span
-            className="font-serif text-sm tabular-nums tracking-widest"
-            style={{ color: theme.secondary }}
+            className="font-serif text-sm tabular-nums tracking-widest text-[#ccc]"
           >
             {currentPage + 1} / {totalLeaves}
           </span>
