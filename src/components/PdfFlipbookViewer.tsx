@@ -89,11 +89,8 @@ export default function PdfFlipbookViewer({
       }
     };
     measure();
-    const observer = new ResizeObserver(measure);
-    if (containerRef.current) observer.observe(containerRef.current);
     window.addEventListener("resize", measure);
     return () => {
-      observer.disconnect();
       window.removeEventListener("resize", measure);
     };
   }, []);

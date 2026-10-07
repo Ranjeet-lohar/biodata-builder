@@ -331,7 +331,7 @@ export default function ExecutiveTemplate(props: ResumeTemplateDesignProps) {
           <span className="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-[#f1dcae] via-[#b58b45] to-[#8a6428]" />
           <svg className="pointer-events-none absolute right-2 top-2" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
             <path d="M0 8 V0 H8" stroke={GOLD} strokeWidth="1.4" transform="translate(14 0) scale(-1 1)" />
-            <path d="M14 22 H22 V14" stroke={GOLD} strokeWidth="1.4" />
+            {/* <path d="M14 22 H22 V14" stroke={GOLD} strokeWidth="1.4" /> */}
           </svg>
           <SectionTitle icon={Icons.summary()}>Summary</SectionTitle>
           <p className="whitespace-pre-wrap pr-4 text-slate-600">
