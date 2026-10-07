@@ -3,76 +3,6 @@ import { FontPack } from "@/lib/fontPacks";
 import { Theme } from "./theme";
 import { photoShapeClass } from "./Motifs";
 
-/* ---------- SVG DESIGN ELEMENTS ---------- */
-
-/** Petal / arc corner ornament, drawn in the top-right corner of its box.
- *  Use `flip` to rotate it 180° for the bottom-left corner. */
-function FloralCorner({
-  theme,
-  className = "",
-  flip = false,
-}: {
-  theme: Theme;
-  className?: string;
-  flip?: boolean;
-}) {
-  const angles = [0, 18, 36, 54, 72, 90];
-
-  return (
-    <svg
-      viewBox="0 0 200 200"
-      className={className}
-      style={flip ? { transform: "rotate(180deg)" } : undefined}
-      aria-hidden="true"
-    >
-      <g transform="translate(200 0)" fill="none">
-        {/* concentric arcs */}
-        <circle r="60" stroke={theme.primary} strokeWidth="0.8" opacity="0.5" />
-        <circle r="105" stroke={theme.secondary} strokeWidth="0.8" opacity="0.4" />
-        <circle r="150" stroke={theme.primary} strokeWidth="0.6" opacity="0.25" strokeDasharray="2 5" />
-
-        {/* large petals */}
-        {angles.map((a) => (
-          <ellipse
-            key={`p-${a}`}
-            cx="-80"
-            cy="0"
-            rx="38"
-            ry="9"
-            transform={`rotate(${-a})`}
-            fill={theme.primary}
-            fillOpacity="0.12"
-            stroke={theme.primary}
-            strokeWidth="0.8"
-            strokeOpacity="0.6"
-          />
-        ))}
-
-        {/* small petals between */}
-        {angles.slice(0, -1).map((a) => (
-          <ellipse
-            key={`s-${a}`}
-            cx="-125"
-            cy="0"
-            rx="16"
-            ry="4"
-            transform={`rotate(${-(a + 9)})`}
-            fill={theme.secondary}
-            fillOpacity="0.15"
-            stroke={theme.secondary}
-            strokeWidth="0.6"
-            strokeOpacity="0.6"
-          />
-        ))}
-
-        {/* center dot */}
-        <circle r="6" fill={theme.primary} fillOpacity="0.5" />
-      </g>
-    </svg>
-  );
-}
-
-
 /** Repeating diamond + dot pattern strip */
 function PatternBand({
   theme,
@@ -274,17 +204,7 @@ export default function MastheadLayout({
         fontFamily: body,
       }}
     >
-      {/* SVG corner ornaments */}
-      <FloralCorner
-        theme={theme}
-        className="pointer-events-none absolute right-0 top-0 h-[230px] w-[230px]"
-      />
-      <FloralCorner
-        theme={theme}
-        flip
-        className="pointer-events-none absolute bottom-0 left-0 h-[200px] w-[200px] opacity-70"
-      />
-
+     
       {/* A4 inner frame */}
       <div
         className="pointer-events-none absolute inset-[8mm]"

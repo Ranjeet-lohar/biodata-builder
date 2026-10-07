@@ -226,7 +226,11 @@ export default function PdfFlipbookViewer({
                 </div>
               }
             >
-              {isReady && numPages && pageWidth > 0 && (
+              {isReady &&
+                numPages &&
+                containerWidth > 0 &&
+                containerHeight > 0 &&
+                pageWidth > 0 && (
                 <div className="relative">
                   {!isPortraitMode && (
                     <div

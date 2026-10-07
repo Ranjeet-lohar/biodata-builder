@@ -97,6 +97,8 @@ export default function ResumeBuilder() {
   const [resume, setResume] = useState<ResumeDocument>(emptyResume);
   const [templateId, setTemplateId] =
     useState<ResumeTemplateId>(DEFAULT_TEMPLATE);
+  const [captureTemplateId, setCaptureTemplateId] =
+    useState<ResumeTemplateId>(DEFAULT_TEMPLATE);
   const [flipbookUrl, setFlipbookUrl] = useState<string | null>(null);
   const [showFlipbook, setShowFlipbook] = useState(false);
   const [flipbookLoading, setFlipbookLoading] = useState(false);
@@ -105,9 +107,7 @@ export default function ResumeBuilder() {
   const [hydrated, setHydrated] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
   const exportRef = useRef<HTMLDivElement>(null);
-  const templateRefs = useRef<
-    Partial<Record<ResumeTemplateId, HTMLDivElement | null>>
-  >({});
+  const captureTemplateRef = useRef<HTMLDivElement>(null);
   const flipbookRequestId = useRef(0);
   const templateTrackRef = useRef<HTMLDivElement>(null);
   const templateCardRefs = useRef<
@@ -144,7 +144,7 @@ export default function ResumeBuilder() {
             setResume(savedResume);
           }
           if (isResumeTemplateId(draft.templateId)) {
-            setTemplateId(draft.templateId);
+            selectTemplate(draft.templateId);
           }
         }
       }
@@ -173,11 +173,17 @@ export default function ResumeBuilder() {
   }, [flipbookUrl]);
 
   useEffect(() => {
-    exportRef.current = templateRefs.current[templateId] ?? null;
-  }, [resume, templateId]);
+    exportRef.current =
+      captureTemplateId === templateId ? captureTemplateRef.current : null;
+  }, [captureTemplateId, resume, templateId]);
 
   function update(patch: Partial<ResumeDocument>) {
     setResume((current) => ({ ...current, ...patch }));
+  }
+
+  function selectTemplate(id: ResumeTemplateId) {
+    setTemplateId(id);
+    setCaptureTemplateId(id);
   }
 
   function updateExperience(id: string, patch: Partial<ResumeExperience>) {
@@ -205,7 +211,7 @@ export default function ResumeBuilder() {
       Math.min(resumeTemplates.length - 1, currentIndex + direction)
     );
     const nextTemplate = resumeTemplates[nextIndex];
-    if (nextTemplate) setTemplateId(nextTemplate.id);
+    if (nextTemplate) selectTemplate(nextTemplate.id);
   }
 
   async function handlePreviewFlipbook() {
@@ -227,7 +233,13 @@ export default function ResumeBuilder() {
       let pdf: InstanceType<typeof jsPDF> | null = null;
       for (const [index, template] of resumeTemplates.entries()) {
         if (requestId !== flipbookRequestId.current) return;
-        const node = templateRefs.current[template.id];
+        setCaptureTemplateId(template.id);
+        await new Promise<void>((resolve) => {
+          requestAnimationFrame(() => resolve());
+        });
+        if (requestId !== flipbookRequestId.current) return;
+
+        const node = captureTemplateRef.current;
         if (!node) {
           throw new Error(`Resume template "${template.name}" is not ready.`);
         }
@@ -236,6 +248,9 @@ export default function ResumeBuilder() {
           scale: 1.5,
           useCORS: true,
           backgroundColor: "#ffffff",
+          onclone: (clonedDocument) => {
+            clonedDocument.querySelector(".resume-live-preview")?.remove();
+          },
         });
         if (requestId !== flipbookRequestId.current) return;
         if (canvas.width === 0 || canvas.height === 0) {
@@ -282,6 +297,7 @@ export default function ResumeBuilder() {
     } finally {
       if (requestId === flipbookRequestId.current) {
         setFlipbookLoading(false);
+        setCaptureTemplateId(templateId);
       }
     }
   }
@@ -289,6 +305,7 @@ export default function ResumeBuilder() {
   function closeFlipbook() {
     flipbookRequestId.current += 1;
     setFlipbookLoading(false);
+    setCaptureTemplateId(templateId);
     setFlipbookUrl((previousUrl) => {
       if (previousUrl) URL.revokeObjectURL(previousUrl);
       return null;
@@ -493,7 +510,7 @@ export default function ResumeBuilder() {
                         templateCardRefs.current[template.id] = node;
                       }}
                       aria-pressed={selected}
-                      onClick={() => setTemplateId(template.id)}
+                      onClick={() => selectTemplate(template.id)}
                       className="w-[42%] min-w-[132px] max-w-[190px] shrink-0 snap-center rounded border bg-white p-2 text-left transition hover:border-stone-400 sm:w-[31%]"
                       style={{
                         borderColor: selected ? template.accent : undefined,
@@ -652,7 +669,7 @@ export default function ResumeBuilder() {
                 {flipbookError}
               </p>
             )}
-            <div className="glass-well overflow-hidden rounded p-2 sm:p-4">
+            <div className="resume-live-preview glass-well overflow-hidden rounded p-2 sm:p-4">
               <PreviewScaler>
                 <ResumeTemplate resume={resume} templateId={templateId} />
               </PreviewScaler>
@@ -664,20 +681,9 @@ export default function ResumeBuilder() {
           className="pointer-events-none fixed left-[-10000px] top-0"
           aria-hidden="true"
         >
-          {resumeTemplates.map((template) => (
-            <div
-              className="pdf"
-              key={template.id}
-              ref={(node) => {
-                templateRefs.current[template.id] = node;
-              }}
-            >
-              <ResumeTemplate
-                resume={resume}
-                templateId={template.id}
-              />
-            </div>
-          ))}
+          <div className="pdf" ref={captureTemplateRef}>
+            <ResumeTemplate resume={resume} templateId={captureTemplateId} />
+          </div>
         </div>
       </main>
       <AppFooter />
