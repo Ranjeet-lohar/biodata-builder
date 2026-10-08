@@ -7,7 +7,6 @@ import {
   Palette,
   FileText,
   Download,
-  Languages,
   ArrowRight,
   Check,
   Users,

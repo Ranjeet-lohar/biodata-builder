@@ -16,6 +16,16 @@ import BotanicalTemplate from "./resume-templates/botanical";
 import GeometricTemplate from "./resume-templates/geometric";
 import MarigoldTemplate from "./resume-templates/marigold";
 import EditorialTemplate from "./resume-templates/editorial";
+import AtlasTemplate from "./resume-templates/atlas";
+import HarborTemplate from "./resume-templates/harbor";
+import SummitTemplate from "./resume-templates/summit";
+import AtelierTemplate from "./resume-templates/atelier";
+import CascadeTemplate from "./resume-templates/cascade";
+import LedgerTemplate from "./resume-templates/ledger";
+import NocturneTemplate from "./resume-templates/nocturne";
+import BloomTemplate from "./resume-templates/bloom";
+import BauhausTemplate from "./resume-templates/bauhaus";
+import DecoTemplate from "./resume-templates/deco";
 
 const ink = "#192b3a";
 const muted = "#627383";
@@ -37,6 +47,16 @@ const resumeTemplateComponents: Record<ResumeTemplateId, ComponentType<ResumeTem
   "geometric": GeometricTemplate,
   "marigold": MarigoldTemplate,
   "editorial": EditorialTemplate,
+  "atlas": AtlasTemplate,
+  "harbor": HarborTemplate,
+  "summit": SummitTemplate,
+  "atelier": AtelierTemplate,
+  "cascade": CascadeTemplate,
+  "ledger": LedgerTemplate,
+  "nocturne": NocturneTemplate,
+  "bloom": BloomTemplate,
+  "bauhaus": BauhausTemplate,
+  "deco": DecoTemplate,
 };
 
 export default function ResumeTemplate({

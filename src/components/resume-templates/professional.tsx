@@ -3,8 +3,6 @@ import type { ResumeTemplateDesignProps } from "./shared";
 
 const TEAL = "#247b83";
 const DEEP = "#1a5a60";
-const MIST = "#edf3f3";
-const LINE = "#dce5e7";
 const SUN = "#e9b44c";
 
 /* ---------- Icons (stroke-based, currentColor, no ids) ---------- */

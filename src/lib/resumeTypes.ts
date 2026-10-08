@@ -47,7 +47,17 @@ export type ResumeTemplateId =
   | "botanical"
   | "geometric"
   | "marigold"
-  | "editorial";
+  | "editorial"
+  | "atlas"
+  | "harbor"
+  | "summit"
+  | "atelier"
+  | "cascade"
+  | "ledger"
+  | "nocturne"
+  | "bloom"
+  | "bauhaus"
+  | "deco";
 
 export const resumeTemplates: {
   id: ResumeTemplateId;
@@ -160,6 +170,76 @@ export const resumeTemplates: {
     description: "A contemporary rust-and-sand profile with asymmetric structure",
     accent: "#a34f3d",
     background: "#f6eee7",
+  },
+  {
+    id: "atlas",
+    name: "Atlas",
+    description: "A structured navy-and-gold profile with a polished executive feel",
+    accent: "#10263e",
+    background: "#eef3f7",
+  },
+  {
+    id: "harbor",
+    name: "Harbor",
+    description: "A calm teal sidebar layout inspired by coastal soft tones",
+    accent: "#193d48",
+    background: "#f1f5f2",
+  },
+  {
+    id: "summit",
+    name: "Summit",
+    description: "A refined stately layout with warm neutral accents and clean hierarchy",
+    accent: "#ad8d5d",
+    background: "#faf7f1",
+  },
+  {
+    id: "atelier",
+    name: "Atelier",
+    description: "An editorial ivory style with soft terracotta details and serif elegance",
+    accent: "#8f5c52",
+    background: "#f9f4ef",
+  },
+  {
+    id: "cascade",
+    name: "Cascade",
+    description: "A modern green profile with layered blocks and lighter editorial rhythm",
+    accent: "#2f7c6f",
+    background: "#edf8f5",
+  },
+  {
+    id: "ledger",
+    name: "Ledger",
+    description: "A sharp black-and-white editorial layout with a vivid accent",
+    accent: "#ff4b2b",
+    background: "#f4f4f4",
+  },
+  {
+    id: "nocturne",
+    name: "Nocturne",
+    description: "A dark circuit-inspired header with a cool neon accent",
+    accent: "#22d3ee",
+    background: "#f1f3f9",
+  },
+  {
+    id: "bloom",
+    name: "Bloom",
+    description: "A friendly pastel design with soft rounded section cards",
+    accent: "#8b5cf6",
+    background: "#fdf8ff",
+  },
+  {
+    id: "bauhaus",
+    name: "Bauhaus",
+    description: "A bold geometric layout with primary colors and hard-edged shapes",
+    accent: "#e63423",
+    background: "#fffdf5",
+  },
+  {
+    id: "deco",
+    name: "Deco",
+    description: "An emerald-and-gold design with elegant art deco details",
+    accent: "#0b3b32",
+    background: "#f7f8f6",
   },
 ];
 

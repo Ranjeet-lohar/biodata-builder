@@ -7,7 +7,6 @@ const CYAN = "#42c4f5";
 const BLUE = "#1486b8";
 const MINT = "#3ddc97";
 const AMBER = "#f5b942";
-const LINE = "#dce9ef";
 
 /* ---------- Icons (stroke-based, currentColor, no ids) ---------- */
 const base = {
@@ -146,7 +145,7 @@ function SectionTitle({ no, icon, children }: { no: string; icon: ReactNode; chi
       <Badge icon={icon} />
       <span className="shrink-0 font-mono text-[10px] text-[#1486b8]/60">{no}</span>
       <h2 className="shrink-0 text-xs font-bold uppercase tracking-[0.12em] text-[#1486b8]">
-        <span className="font-mono text-[#1486b8]/50">// </span>
+        <span className="font-mono text-[#1486b8]/50">{"// "}</span>
         {children}
       </h2>
       <span className="h-px min-w-[8px] flex-1 bg-[#dce9ef]" />
@@ -228,7 +227,9 @@ export default function TechTemplate(props: ResumeTemplateDesignProps) {
         </div>
 
         <div className="relative max-w-[470px]">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#59c9f3]">Professional // Resume</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#59c9f3]">
+            {"Professional // Resume"}
+          </p>
 
           <p className="mt-4 font-mono text-[11px] text-[#3ddc97]">
             <span className="text-slate-400">$ </span>whoami
@@ -238,7 +239,7 @@ export default function TechTemplate(props: ResumeTemplateDesignProps) {
             <span className="ml-1 inline-block h-[28px] w-[12px] translate-y-[5px] bg-[#42c4f5]" />
           </h1>
           <p className="mt-2 text-lg text-slate-200">
-            <span className="font-mono text-slate-500">// </span>
+            <span className="font-mono text-slate-500">{"// "}</span>
             {props.resume.jobTitle || "Professional Title"}
           </p>
 

@@ -7,7 +7,6 @@ import {
   Upload,
   Loader2,
   AlertCircle,
-  Trash2,
 } from "lucide-react";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB

@@ -6,7 +6,6 @@ const NAVY = "#233e5b";
 const BLUE = "#315b83";
 const TEAL = "#69a8b7";
 const AMBER = "#d9a856";
-const ICE = "#a9d1df";
 const SKILL_TONES = [TEAL, AMBER, BLUE];
 
 /* ---------- Generated geometry ---------- */

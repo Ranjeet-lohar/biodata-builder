@@ -2,7 +2,6 @@ import { useId } from "react";
 import type { ReactNode } from "react";
 import type { ResumeTemplateDesignProps } from "./shared";
 
-const INK = "#232a32";
 const GOLD = "#b58b45";
 const LIGHT = "#d9b775";
 const PALE = "#f1dcae";

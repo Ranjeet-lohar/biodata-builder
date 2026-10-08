@@ -3,10 +3,8 @@ import type { ReactNode } from "react";
 import type { ResumeTemplateDesignProps } from "./shared";
 
 const RUST = "#a34f3d";
-const DEEP = "#7e3526";
 const CLAY = "#d2a17f";
 const PEACH = "#f3c5a9";
-const LINE = "#dfcfc2";
 
 /* Sunburst rays radiating from the top-right corner (svg is 440x440, origin at 440,0) */
 const RAYS = Array.from({ length: 13 }, (_, i) => {

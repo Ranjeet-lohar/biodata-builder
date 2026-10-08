@@ -27,6 +27,7 @@ export type Language = "en" | "hi";
 
 export interface BiodataDocument {
   photo: string;
+  photoPosition?: "left" | "right";
   fullName: string;
   fullNameHi: string;
   invocation: Invocation;

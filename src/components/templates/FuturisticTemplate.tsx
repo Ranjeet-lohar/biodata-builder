@@ -31,92 +31,6 @@ const PAGE_HEIGHT_MM = 297;
 // many fields the user adds.
 const MIN_FIT_SCALE = 0.55;
 
-const FuturisticFrame = () => {
-  const W = 794;
-  const H = 1123;
-  const inset = 26; // px in the 794x1123 viewBox, keeps the border off the trim edge
-
-  return (
-    <svg
-      className="absolute inset-0 w-full h-full pointer-events-none"
-      viewBox={`0 0 ${W} ${H}`}
-      preserveAspectRatio="xMidYMid slice"
-    >
-      <defs>
-        <radialGradient id="glowCyan" cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0%" stopColor={glow.cyan} stopOpacity="0.16" />
-          <stop offset="100%" stopColor={glow.cyan} stopOpacity="0" />
-        </radialGradient>
-        <radialGradient id="glowViolet" cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0%" stopColor={glow.violet} stopOpacity="0.14" />
-          <stop offset="100%" stopColor={glow.violet} stopOpacity="0" />
-        </radialGradient>
-        <linearGradient id="edgeLine" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor={glow.cyan} stopOpacity="0" />
-          <stop offset="45%" stopColor={glow.cyan} stopOpacity="0.55" />
-          <stop offset="55%" stopColor={glow.violet} stopOpacity="0.55" />
-          <stop offset="100%" stopColor={glow.violet} stopOpacity="0" />
-        </linearGradient>
-        <pattern id="dotGrid" width="18" height="18" patternUnits="userSpaceOnUse">
-          <circle cx="1.2" cy="1.2" r="1.2" fill={palette.primary} fillOpacity="0.14" />
-        </pattern>
-      </defs>
-
-      {/* ambient corner glows */}
-      <circle cx={W - 40} cy={40} r="220" fill="url(#glowCyan)" />
-      <circle cx={40} cy={H - 60} r="240" fill="url(#glowViolet)" />
-
-      {/* dot-grid texture, top-left corner only */}
-      <rect x="0" y="0" width="170" height="170" fill="url(#dotGrid)" />
-
-      {/* fine inset border */}
-      <rect
-        x={inset}
-        y={inset}
-        width={W - inset * 2}
-        height={H - inset * 2}
-        fill="none"
-        stroke={palette.line}
-        strokeWidth="1"
-      />
-
-      {/* gradient accent line tracing the top edge, just inside the border */}
-      <line x1={inset + 60} y1={inset + 14} x2={W - inset - 60} y2={inset + 14} stroke="url(#edgeLine)" strokeWidth="2" />
-      {/* circuit nodes along that trace */}
-      {[0.18, 0.36, 0.64, 0.82].map((t, i) => (
-        <circle
-          key={i}
-          cx={inset + 60 + (W - inset * 2 - 120) * t}
-          cy={inset + 14}
-          r="3"
-          fill={i % 2 === 0 ? glow.cyan : glow.violet}
-          fillOpacity="0.7"
-        />
-      ))}
-
-      {/* HUD-style open corner brackets */}
-      {[
-        { x: inset, y: inset, dx: 1, dy: 1 },
-        { x: W - inset, y: inset, dx: -1, dy: 1 },
-        { x: inset, y: H - inset, dx: 1, dy: -1 },
-        { x: W - inset, y: H - inset, dx: -1, dy: -1 },
-      ].map(({ x, y, dx, dy }, i) => {
-        const len = 34;
-        return (
-          <path
-            key={i}
-            d={`M ${x + dx * len} ${y} L ${x} ${y} L ${x} ${y + dy * len}`}
-            fill="none"
-            stroke={palette.accent}
-            strokeWidth="2.5"
-            strokeLinecap="round"
-          />
-        );
-      })}
-    </svg>
-  );
-};
-
 const PortraitFrame = ({ children }: { children: React.ReactNode }) => (
   <div className="relative w-[112px] h-[112px] shrink-0">
     <svg className="absolute -inset-2 pointer-events-none" viewBox="0 0 152 152" fill="none">
@@ -240,8 +154,6 @@ const FuturisticTemplate = forwardRef<
           which otherwise beats this element's inline style and washes
           the page to white during PDF export. */}
       <div className="absolute inset-0" style={{ backgroundColor: palette.bg }} />
-      {/* <FuturisticFrame /> */}
-
       <div ref={frameRef} className="relative w-full h-full overflow-hidden">
         <div
           ref={contentRef}

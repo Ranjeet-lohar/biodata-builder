@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import type { ResumeTemplateDesignProps } from "./shared";
 
 const SAGE = "#53665c";
-const INK = "#29342f";
 const MIST = "#dce2de";
 const CLAY = "#c8a27a";
 

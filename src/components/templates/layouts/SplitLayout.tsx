@@ -1,7 +1,6 @@
 import { BiodataDocument } from "@/lib/types";
 import { FontPack } from "@/lib/fontPacks";
 import { Theme } from "./theme";
-import { photoShapeClass } from "./Motifs";
 
 function GeoBackground({ theme }: { theme: Theme }) {
   return (

@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import type { ResumeTemplateDesignProps } from "./shared";
 
 const NAVY = "#273b59";
-const SLATE = "#53647a";
 const LINE = "#cbd3df";
 
 /* ---------- Icons (stroke-based, currentColor, no ids) ---------- */

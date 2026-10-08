@@ -7,7 +7,6 @@ const ORANGE = "#e8731a";
 const MARIGOLD = "#f4a62a";
 const DEEP = "#6b401b";
 const GOLD = "#d7ae68";
-const SAND = "#ead5ae";
 const CREAM = "#fffaf0";
 const LEAF = "#5f7f3a";
 

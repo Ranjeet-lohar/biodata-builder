@@ -164,9 +164,8 @@ export default function MastheadLayout({
   const lang = doc.language;
   const L = (en: string, hi: string) => (lang === "hi" ? hi : en);
 
-  // uses doc.photoPosition if your type has it, otherwise the prop, otherwise "left"
-  const side: "left" | "right" =
-    photoSide ?? (doc as any).photoPosition ?? "left";
+  const side =
+    photoSide ?? (doc.photoPosition === "right" ? "right" : "left");
 
   const heading = fonts.heading || theme.headingFont;
   const body = fonts.body || theme.bodyFont;

@@ -249,7 +249,7 @@ export default function FeaturesPage() {
 
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {features.map(
-              ({ icon: Icon, title, text, tag }, index) => (
+              ({ icon: Icon, title, text, tag }) => (
                 <div
                   key={title}
                   className="group relative overflow-hidden border border-stone-200/80 bg-white/80 p-6 shadow-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-stone-900/5"

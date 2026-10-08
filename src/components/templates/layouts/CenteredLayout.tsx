@@ -27,7 +27,6 @@ function PageOrnament({ theme }: { theme: Theme }) {
   const W = 210;
   const H = 297;
   const OUT = 6; // mm inset of the outer border
-  const IN = 8.5; // mm inset of the inner hairline
 
   const corner = (x: number, y: number, sx: number, sy: number, key: string) => (
     <g key={key} transform={`translate(${x} ${y}) scale(${sx} ${sy})`}>
@@ -55,16 +54,6 @@ function PageOrnament({ theme }: { theme: Theme }) {
         stroke={theme.primary}
         strokeWidth={0.5}
       />
-      {/* <rect
-        x={IN}
-        y={IN}
-        width={W - IN * 2}
-        height={H - IN * 2}
-        fill="none"
-        stroke={theme.secondary}
-        strokeWidth={0.2}
-      /> */}
-
       {/* Mid-edge diamonds (top & bottom), the page color hides the border behind them */}
       {[OUT, H - OUT].map((cy) => (
         <g key={cy}>
@@ -330,7 +319,6 @@ export default function HeritageArchLayout({
       ro.disconnect();
       cancelAnimationFrame(raf);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [doc, fonts, theme]);
 
   const richClasses =

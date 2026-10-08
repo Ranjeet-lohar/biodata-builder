@@ -106,15 +106,6 @@ function SectionTitle({ children }: { children: ReactNode }) {
   );
 }
 
-// function SidebarTitle({ children }: { children: ReactNode }) {
-//   return (
-//     <div className="flex items-center gap-2">
-//       <LeafIcon color="#d5d9b6" />
-//       <p className="text-[9px] font-semibold uppercase tracking-[0.24em] text-[#d5d9b6]">{children}</p>
-//     </div>
-//   );
-// }
-
 function VineNode() {
   return (
     <svg

@@ -60,6 +60,13 @@ interface PdfFlipbookViewerProps {
 
 const A4_RATIO = 210 / 297;
 
+interface FlipBookHandle {
+  pageFlip: () => {
+    flipPrev: () => void;
+    flipNext: () => void;
+  };
+}
+
 export default function PdfFlipbookViewer({
   fileUrl,
   title,
@@ -74,7 +81,7 @@ export default function PdfFlipbookViewer({
   const [isReady, setIsReady] = useState(false);
   const [isPortraitMode, setIsPortraitMode] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const flipBookRef = useRef<any>(null);
+  const flipBookRef = useRef<FlipBookHandle | null>(null);
 
   // Measure the fullscreen staging area so the book uses all available space
   // without exceeding either the viewport height or page-flip limits.
@@ -239,7 +246,8 @@ export default function PdfFlipbookViewer({
                     />
                   )}
 
-                  {/* @ts-ignore -- react-pageflip's types lag its runtime API */}
+                  {/* react-pageflip declares defaulted props as required. */}
+                  {/* @ts-expect-error -- the package types disagree with its runtime defaults. */}
                   <HTMLFlipBook
                     ref={flipBookRef}
                     width={pageWidth}
