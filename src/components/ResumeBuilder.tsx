@@ -4,6 +4,21 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import {
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import type { DragEndEvent } from "@dnd-kit/core";
+import {
+  SortableContext,
+  arrayMove,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import {
   BookOpen,
   ChevronLeft,
   ChevronRight,
@@ -16,6 +31,11 @@ import AppFooter from "@/components/AppFooter";
 import AppHeader from "@/components/AppHeader";
 import ExportBar from "@/components/ExportBar";
 import PreviewScaler from "@/components/PreviewScaler";
+import SortableResumeSection, {
+  DEFAULT_RESUME_EDITOR_ORDER,
+  normalizeResumeEditorOrder,
+} from "@/components/SortableResumeSection";
+import type { ResumeEditorSectionId } from "@/components/SortableResumeSection";
 import { TextField } from "@/components/Field";
 import ResumeTemplate from "@/components/ResumeTemplate";
 import {
@@ -95,6 +115,8 @@ function isResumeTemplateId(value: unknown): value is ResumeTemplateId {
 export default function ResumeBuilder() {
   const router = useRouter();
   const [resume, setResume] = useState<ResumeDocument>(emptyResume);
+  const [editorSectionOrder, setEditorSectionOrder] =
+    useState<ResumeEditorSectionId[]>([...DEFAULT_RESUME_EDITOR_ORDER]);
   const [templateId, setTemplateId] =
     useState<ResumeTemplateId>(DEFAULT_TEMPLATE);
   const [captureTemplateId, setCaptureTemplateId] =
@@ -113,6 +135,12 @@ export default function ResumeBuilder() {
   const templateCardRefs = useRef<
     Partial<Record<ResumeTemplateId, HTMLButtonElement | null>>
   >({});
+  const sectionSensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   useEffect(() => {
     if (localStorage.getItem("demo-auth") !== "true") {
@@ -132,6 +160,7 @@ export default function ResumeBuilder() {
           const draft = saved as {
             resume?: unknown;
             templateId?: unknown;
+            editorSectionOrder?: unknown;
           };
           const savedResume = isResumeDocument(draft.resume)
             ? draft.resume
@@ -143,6 +172,9 @@ export default function ResumeBuilder() {
             // eslint-disable-next-line react-hooks/set-state-in-effect -- restore the saved draft once on mount
             setResume(savedResume);
           }
+          setEditorSectionOrder(
+            normalizeResumeEditorOrder(draft.editorSectionOrder)
+          );
           if (isResumeTemplateId(draft.templateId)) {
             selectTemplate(draft.templateId);
           }
@@ -159,12 +191,12 @@ export default function ResumeBuilder() {
     try {
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ resume, templateId })
+        JSON.stringify({ resume, templateId, editorSectionOrder })
       );
     } catch (error) {
       console.error("Failed to save the resume draft:", error);
     }
-  }, [hydrated, resume, templateId]);
+  }, [hydrated, resume, templateId, editorSectionOrder]);
 
   useEffect(() => {
     return () => {
@@ -184,6 +216,29 @@ export default function ResumeBuilder() {
   function selectTemplate(id: ResumeTemplateId) {
     setTemplateId(id);
     setCaptureTemplateId(id);
+  }
+
+  function handleEditorSectionDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    setEditorSectionOrder((currentOrder) => {
+      const oldIndex = currentOrder.findIndex((id) => id === active.id);
+      const newIndex = currentOrder.findIndex((id) => id === over.id);
+      if (oldIndex < 0 || newIndex < 0) return currentOrder;
+      return arrayMove(currentOrder, oldIndex, newIndex);
+    });
+  }
+
+  function moveEditorSection(id: ResumeEditorSectionId, direction: -1 | 1) {
+    setEditorSectionOrder((currentOrder) => {
+      const currentIndex = currentOrder.indexOf(id);
+      const nextIndex = currentIndex + direction;
+      if (currentIndex < 0 || nextIndex < 0 || nextIndex >= currentOrder.length) {
+        return currentOrder;
+      }
+      return arrayMove(currentOrder, currentIndex, nextIndex);
+    });
   }
 
   function updateExperience(id: string, patch: Partial<ResumeExperience>) {
@@ -348,123 +403,180 @@ export default function ResumeBuilder() {
         </div>
 
         <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-          <section className="glass-panel space-y-6 rounded p-4 sm:p-6">
-            <div>
-              <h2 className="mb-3 text-lg font-semibold text-stone-900">
-                Personal information
+          <section className="glass-panel rounded p-4 sm:p-6">
+            <div className="mb-4">
+              <h2 className="text-lg font-semibold text-stone-900">
+                Resume sections
               </h2>
-              <div className="grid gap-x-4 sm:grid-cols-2">
-                <TextField label="Full name" value={resume.fullName} onChange={(value) => update({ fullName: value })} placeholder="Jordan Lee" />
-                <TextField label="Professional title" value={resume.jobTitle} onChange={(value) => update({ jobTitle: value })} placeholder="Product Designer" />
-                <TextField label="Email" value={resume.email} onChange={(value) => update({ email: value })} placeholder="jordan@example.com" />
-                <TextField label="Phone" value={resume.phone} onChange={(value) => update({ phone: value })} placeholder="+1 555 010 1234" />
-                <TextField label="Location" value={resume.location} onChange={(value) => update({ location: value })} placeholder="City, Country" />
-                <TextField label="Website or LinkedIn" value={resume.website} onChange={(value) => update({ website: value })} placeholder="linkedin.com/in/jordanlee" />
-              </div>
-              <TextField label="Professional summary" value={resume.summary} onChange={(value) => update({ summary: value })} placeholder="A short overview of your experience, strengths, and goals." textarea />
-              <TextField label="Skills (comma separated)" value={resume.skills} onChange={(value) => update({ skills: value })} placeholder="Research, Figma, Prototyping" textarea />
-              <TextField label="Certifications (one per line)" value={resume.certifications} onChange={(value) => update({ certifications: value })} placeholder={"Certification name\nIssuing organization"} textarea />
+              <p className="mt-1 text-xs text-stone-500">
+                Drag a section to organize your editing workspace. This order
+                does not change the resume preview or export.
+              </p>
             </div>
+            <DndContext
+              sensors={sectionSensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleEditorSectionDragEnd}
+            >
+              <SortableContext
+                items={editorSectionOrder}
+                strategy={verticalListSortingStrategy}
+              >
+                <div className="space-y-4">
+                  {editorSectionOrder.map((sectionId, sectionIndex) => {
+                    if (sectionId === "profile") {
+                      return (
+                        <SortableResumeSection
+                          key={sectionId}
+                          id={sectionId}
+                          title="Profile"
+                          index={sectionIndex}
+                          total={editorSectionOrder.length}
+                          onMove={moveEditorSection}
+                        >
+                          <h3 className="mb-3 text-sm font-medium text-stone-700">
+                            Personal information
+                          </h3>
+                          <div className="grid gap-x-4 sm:grid-cols-2">
+                            <TextField label="Full name" value={resume.fullName} onChange={(value) => update({ fullName: value })} placeholder="Jordan Lee" />
+                            <TextField label="Professional title" value={resume.jobTitle} onChange={(value) => update({ jobTitle: value })} placeholder="Product Designer" />
+                            <TextField label="Email" value={resume.email} onChange={(value) => update({ email: value })} placeholder="jordan@example.com" />
+                            <TextField label="Phone" value={resume.phone} onChange={(value) => update({ phone: value })} placeholder="+1 555 010 1234" />
+                            <TextField label="Location" value={resume.location} onChange={(value) => update({ location: value })} placeholder="City, Country" />
+                            <TextField label="Website or LinkedIn" value={resume.website} onChange={(value) => update({ website: value })} placeholder="linkedin.com/in/jordanlee" />
+                          </div>
+                          <TextField label="Professional summary" value={resume.summary} onChange={(value) => update({ summary: value })} placeholder="A short overview of your experience, strengths, and goals." textarea />
+                          <TextField label="Skills (comma separated)" value={resume.skills} onChange={(value) => update({ skills: value })} placeholder="Research, Figma, Prototyping" textarea />
+                          <TextField label="Certifications (one per line)" value={resume.certifications} onChange={(value) => update({ certifications: value })} placeholder={"Certification name\nIssuing organization"} textarea />
+                        </SortableResumeSection>
+                      );
+                    }
 
-            <section>
-              <div className="mb-3 flex items-center justify-between gap-3">
-                <h2 className="text-lg font-semibold text-stone-900">Experience</h2>
-                <button
-                  type="button"
-                  onClick={() =>
-                    update({
-                      experience: [
-                        ...resume.experience,
-                        newExperience(),
-                      ],
-                    })
-                  }
-                  className="btn-outline"
-                >
-                  <Plus className="h-4 w-4" /> Add role
-                </button>
-              </div>
-              {resume.experience.length === 0 && (
-                <p className="text-sm text-stone-500">Add your current or most recent role.</p>
-              )}
-              <div className="space-y-4">
-                {resume.experience.map((entry, index) => (
-                  <div key={entry.id} className="rounded border border-stone-200 bg-white/50 p-3">
-                    <div className="mb-2 flex items-center justify-between">
-                      <h3 className="text-sm font-semibold text-stone-700">Role {index + 1}</h3>
-                      <button
-                        type="button"
-                        aria-label={`Remove role ${index + 1}`}
-                        onClick={() => update({ experience: resume.experience.filter((item) => item.id !== entry.id) })}
-                        className="text-stone-500 transition hover:text-red-600"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </div>
-                    <div className="grid gap-x-4 sm:grid-cols-2">
-                      <TextField label="Job title" value={entry.role} onChange={(value) => updateExperience(entry.id, { role: value })} />
-                      <TextField label="Company" value={entry.company} onChange={(value) => updateExperience(entry.id, { company: value })} />
-                      <TextField label="Location" value={entry.location} onChange={(value) => updateExperience(entry.id, { location: value })} />
-                      <div className="grid grid-cols-2 gap-2">
-                        <TextField label="Start date" value={entry.startDate} onChange={(value) => updateExperience(entry.id, { startDate: value })} placeholder="Jan 2022" />
-                        <TextField label="End date" value={entry.endDate} onChange={(value) => updateExperience(entry.id, { endDate: value })} placeholder="Present" />
-                      </div>
-                    </div>
-                    <TextField label="Highlights and achievements" value={entry.description} onChange={(value) => updateExperience(entry.id, { description: value })} textarea />
-                  </div>
-                ))}
-              </div>
-            </section>
+                    if (sectionId === "experience") {
+                      return (
+                        <SortableResumeSection
+                          key={sectionId}
+                          id={sectionId}
+                          title="Experience"
+                          index={sectionIndex}
+                          total={editorSectionOrder.length}
+                          onMove={moveEditorSection}
+                          actions={
+                            <button
+                              type="button"
+                              onClick={() =>
+                                update({
+                                  experience: [
+                                    ...resume.experience,
+                                    newExperience(),
+                                  ],
+                                })
+                              }
+                              className="btn-outline"
+                            >
+                              <Plus className="h-4 w-4" /> Add role
+                            </button>
+                          }
+                        >
+                          {resume.experience.length === 0 && (
+                            <p className="text-sm text-stone-500">
+                              Add your current or most recent role.
+                            </p>
+                          )}
+                          <div className="space-y-4">
+                            {resume.experience.map((entry, index) => (
+                              <div key={entry.id} className="rounded border border-stone-200 bg-white/50 p-3">
+                                <div className="mb-2 flex items-center justify-between">
+                                  <h3 className="text-sm font-semibold text-stone-700">Role {index + 1}</h3>
+                                  <button
+                                    type="button"
+                                    aria-label={`Remove role ${index + 1}`}
+                                    onClick={() => update({ experience: resume.experience.filter((item) => item.id !== entry.id) })}
+                                    className="text-stone-500 transition hover:text-red-600"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </button>
+                                </div>
+                                <div className="grid gap-x-4 sm:grid-cols-2">
+                                  <TextField label="Job title" value={entry.role} onChange={(value) => updateExperience(entry.id, { role: value })} />
+                                  <TextField label="Company" value={entry.company} onChange={(value) => updateExperience(entry.id, { company: value })} />
+                                  <TextField label="Location" value={entry.location} onChange={(value) => updateExperience(entry.id, { location: value })} />
+                                  <div className="grid grid-cols-2 gap-2">
+                                    <TextField label="Start date" value={entry.startDate} onChange={(value) => updateExperience(entry.id, { startDate: value })} placeholder="Jan 2022" />
+                                    <TextField label="End date" value={entry.endDate} onChange={(value) => updateExperience(entry.id, { endDate: value })} placeholder="Present" />
+                                  </div>
+                                </div>
+                                <TextField label="Highlights and achievements" value={entry.description} onChange={(value) => updateExperience(entry.id, { description: value })} textarea />
+                              </div>
+                            ))}
+                          </div>
+                        </SortableResumeSection>
+                      );
+                    }
 
-            <section>
-              <div className="mb-3 flex items-center justify-between gap-3">
-                <h2 className="text-lg font-semibold text-stone-900">Education</h2>
-                <button
-                  type="button"
-                  onClick={() =>
-                    update({
-                      education: [
-                        ...resume.education,
-                        newEducation(),
-                      ],
-                    })
-                  }
-                  className="btn-outline"
-                >
-                  <Plus className="h-4 w-4" /> Add education
-                </button>
-              </div>
-              {resume.education.length === 0 && (
-                <p className="text-sm text-stone-500">Add your most relevant education.</p>
-              )}
-              <div className="space-y-4">
-                {resume.education.map((entry, index) => (
-                  <div key={entry.id} className="rounded border border-stone-200 bg-white/50 p-3">
-                    <div className="mb-2 flex items-center justify-between">
-                      <h3 className="text-sm font-semibold text-stone-700">Education {index + 1}</h3>
-                      <button
-                        type="button"
-                        aria-label={`Remove education ${index + 1}`}
-                        onClick={() => update({ education: resume.education.filter((item) => item.id !== entry.id) })}
-                        className="text-stone-500 transition hover:text-red-600"
+                    return (
+                      <SortableResumeSection
+                        key={sectionId}
+                        id={sectionId}
+                        title="Education"
+                        index={sectionIndex}
+                        total={editorSectionOrder.length}
+                        onMove={moveEditorSection}
+                        actions={
+                          <button
+                            type="button"
+                            onClick={() =>
+                              update({
+                                education: [
+                                  ...resume.education,
+                                  newEducation(),
+                                ],
+                              })
+                            }
+                            className="btn-outline"
+                          >
+                            <Plus className="h-4 w-4" /> Add education
+                          </button>
+                        }
                       >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </div>
-                    <div className="grid gap-x-4 sm:grid-cols-2">
-                      <TextField label="Degree or qualification" value={entry.degree} onChange={(value) => updateEducation(entry.id, { degree: value })} />
-                      <TextField label="School or institution" value={entry.institution} onChange={(value) => updateEducation(entry.id, { institution: value })} />
-                      <TextField label="Location" value={entry.location} onChange={(value) => updateEducation(entry.id, { location: value })} />
-                      <div className="grid grid-cols-2 gap-2">
-                        <TextField label="Start date" value={entry.startDate} onChange={(value) => updateEducation(entry.id, { startDate: value })} placeholder="2018" />
-                        <TextField label="End date" value={entry.endDate} onChange={(value) => updateEducation(entry.id, { endDate: value })} placeholder="2022" />
-                      </div>
-                    </div>
-                    <TextField label="Additional details" value={entry.details} onChange={(value) => updateEducation(entry.id, { details: value })} textarea />
-                  </div>
-                ))}
-              </div>
-            </section>
+                        {resume.education.length === 0 && (
+                          <p className="text-sm text-stone-500">
+                            Add your most relevant education.
+                          </p>
+                        )}
+                        <div className="space-y-4">
+                          {resume.education.map((entry, index) => (
+                            <div key={entry.id} className="rounded border border-stone-200 bg-white/50 p-3">
+                              <div className="mb-2 flex items-center justify-between">
+                                <h3 className="text-sm font-semibold text-stone-700">Education {index + 1}</h3>
+                                <button
+                                  type="button"
+                                  aria-label={`Remove education ${index + 1}`}
+                                  onClick={() => update({ education: resume.education.filter((item) => item.id !== entry.id) })}
+                                  className="text-stone-500 transition hover:text-red-600"
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </button>
+                              </div>
+                              <div className="grid gap-x-4 sm:grid-cols-2">
+                                <TextField label="Degree or qualification" value={entry.degree} onChange={(value) => updateEducation(entry.id, { degree: value })} />
+                                <TextField label="School or institution" value={entry.institution} onChange={(value) => updateEducation(entry.id, { institution: value })} />
+                                <TextField label="Location" value={entry.location} onChange={(value) => updateEducation(entry.id, { location: value })} />
+                                <div className="grid grid-cols-2 gap-2">
+                                  <TextField label="Start date" value={entry.startDate} onChange={(value) => updateEducation(entry.id, { startDate: value })} placeholder="2018" />
+                                  <TextField label="End date" value={entry.endDate} onChange={(value) => updateEducation(entry.id, { endDate: value })} placeholder="2022" />
+                                </div>
+                              </div>
+                              <TextField label="Additional details" value={entry.details} onChange={(value) => updateEducation(entry.id, { details: value })} textarea />
+                            </div>
+                          ))}
+                        </div>
+                      </SortableResumeSection>
+                    );
+                  })}
+                </div>
+              </SortableContext>
+            </DndContext>
           </section>
 
           <section className="min-w-0 lg:sticky lg:top-24">

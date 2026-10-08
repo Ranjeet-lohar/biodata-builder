@@ -147,7 +147,7 @@ export default function AppHeader() {
             </Link>
             <Link
               href="/"
-              className="relative inline-flex items-center gap-1.5 rounded border px-3 py-2 text-sm font-semibold text-[#0a0912] transition"
+              className="relative hidden sm:inline-flex items-center gap-1.5 rounded border px-3 py-2 text-sm font-semibold text-[#0a0912] transition"
               style={{
                 background: "#4fd8ff",
                 borderColor: "#4fd8ff",
